@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: SplashScreen(),
+    home: ProvincesList(),
   ));
 }
 
@@ -27,9 +27,17 @@ class _SplashScreenState extends State<SplashScreen> {
               Container(
                 height: fullHeight(context) * 0.62,
                 alignment: Alignment.bottomCenter,
-                child: Image.asset(
-                  "assets/logo.png",
-                  height: 200,
+                child: Container(
+                  height: 220,
+                  width: 220,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(110),
+                    color: Colors.amber,
+                  ),
+                  child: Image.asset(
+                    "assets/test.gif",
+                    // height: 200,
+                  ),
                 ),
               ),
               Expanded(
@@ -48,6 +56,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-
-

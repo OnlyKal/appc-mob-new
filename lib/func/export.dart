@@ -1,2 +1,10 @@
 export './size.dart';
 export './constant.dart';
+export '../pages/signin.dart';
+export '../pages/signup.dart';
+export '../func/components.dart';
+export '../pages/provinces.dart';
+export '../func/color.dart';
+export '../api/host.token.dart';
+export '../api/api.method.dart';
+export '../api/entrypoint.dart';

@@ -1,2 +1,6 @@
+import 'package:appc/func/export.dart';
 
-// import 'package:http/http.dart' as http;
+
+Future getProvices() async {
+  return apigetData("api/auth/provinces/");
+}
