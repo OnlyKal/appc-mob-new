@@ -1,4 +1,5 @@
 import 'package:appc/func/export.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
@@ -10,6 +11,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController controllerProvice = TextEditingController();
   TextEditingController controllerNom = TextEditingController();
   TextEditingController controllerPostNom = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
@@ -17,6 +19,16 @@ class _SignUpState extends State<SignUp> {
   TextEditingController controllerFunction = TextEditingController();
   TextEditingController controllerAdress = TextEditingController();
   var ctrcodepin = "";
+
+  bool isAdding = false;
+
+  @override
+  void initState() {
+    setState(() => controllerProvice.text =
+        widget.province['name'].toString().toUpperCase());
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -27,10 +39,14 @@ class _SignUpState extends State<SignUp> {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(26),
-            // height: fullHeight(context),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,10 +70,22 @@ class _SignUpState extends State<SignUp> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Définissez votre CODE-PIN",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    const Row(
+                      children: [
+                        Text(
+                          "Définissez votre CODE-PIN",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          CupertinoIcons.staroflife_fill,
+                          size: 8,
+                          color: Colors.red,
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
@@ -72,42 +100,70 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 30,
                     ),
-                    inputText(context, controllerNom, "Nom", null, true),
-                    inputText(
-                        context, controllerPostNom, "Postnom", null, true),
-                    inputText(
-                        context, controllerEmail, "Adresse mail", null, true),
-                    inputText(
-                        context, controllerPhone, "Téléphone", null, false),
-                    inputText(
-                        context, controllerPhone, "Votre fonction", null, true),
-                    inputText(context, controllerPhone, "Adresse de résidence",
-                        null, true),
+                    inputText(context, controllerProvice, "Provice", null,
+                        false, true),
+                    inputText(context, controllerNom, "Nom", null, true, false),
+                    inputText(context, controllerPostNom, "Postnom", null, true,
+                        false),
+                    inputText(context, controllerEmail, "Adresse mail", null,
+                        true, false),
+                    inputText(context, controllerPhone, "Téléphone", null,
+                        false, false),
+                    inputText(context, controllerFunction, "Votre fonction",
+                        null, true, false),
+                    inputText(context, controllerAdress, "Adresse de résidence",
+                        null, true, false),
                   ],
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
+                isAdding == true
+                    ? loading(context)
+                    : InkWell(
+                        onTap: () {
+                          setState(() => isAdding = true);
+                          addMember(
+                                  widget.province['id'],
+                                  ctrcodepin,
+                                  controllerNom.text,
+                                  controllerPostNom.text,
+                                  controllerEmail.text,
+                                  controllerPhone.text,
+                                  controllerFunction.text,
+                                  controllerAdress.text)
+                              .then((member) {
+                            setState(() => isAdding = false);
+                            if (member['id'] != null) {
+                              storeUserDetails(
+                                  member['matricule'],
+                                  member['first_name'],
+                                  member['last_name'],
+                                  member['email'],
+                                  member['url'],
+                                  member['auth_token']);
+                              goTo(context, ProfileImagePage(member: member));
+                            }
+                          });
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          width: fullHeight(context),
+                          child: const Center(
+                              child: Text(
+                            "VALIDER",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: Colors.white),
+                          )),
+                        ),
+                      ),
                 const SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10)),
-                  width: fullHeight(context),
-                  child: const Center(
-                      child: Text(
-                    "VALIDER",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white),
-                  )),
-                ),
-                const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +175,7 @@ class _SignUpState extends State<SignUp> {
                           height: 1.8, fontSize: 16, color: Colors.grey),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => goTo(context, const SignIn()),
                       child: const Text(
                         "Connectez-vous",
                         textAlign: TextAlign.center,
@@ -128,6 +184,15 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ],
+                ),
+                TextButton(
+                  onPressed: () => goTo(context, const ProvincesList()),
+                  child: const Text(
+                    "Changer la province",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        height: 1.8, fontSize: 16, color: Colors.blue),
+                  ),
                 ),
               ],
             ),

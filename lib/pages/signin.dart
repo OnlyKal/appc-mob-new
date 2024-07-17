@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -20,7 +21,7 @@ class _SignInState extends State<SignIn> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? qrController;
-
+  bool isLoading = false;
   @override
   void reassemble() {
     super.reassemble();
@@ -64,7 +65,6 @@ class _SignInState extends State<SignIn> {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(26),
-            // height: fullHeight(context),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,10 +128,13 @@ class _SignInState extends State<SignIn> {
                               suffixIcon: IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      issCannig = true;
+                                      issCannig = !issCannig;
                                     });
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
+                                      color: issCannig == true
+                                          ? Colors.blue
+                                          : Colors.black,
                                       CupertinoIcons.qrcode_viewfinder))),
                         )),
                     const SizedBox(
@@ -157,21 +160,41 @@ class _SignInState extends State<SignIn> {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10)),
-                  width: fullHeight(context),
-                  child: const Center(
-                      child: Text(
-                    "VALIDER",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white),
-                  )),
-                ),
+                isLoading == true
+                    ? loading(context)
+                    : InkWell(
+                        onTap: () async {
+                          setState(() => isLoading = true);
+                          login(ctrmatricule.text, ctrcodepin).then((member) {
+                            setState(() => isLoading = false);
+                            if (member['id'] != null) {
+                              storeUserDetails(
+                                  member['matricule'],
+                                  member['first_name'],
+                                  member['last_name'],
+                                  member['email'],
+                                  member['url'],
+                                  member['auth_token']);
+                              goTo(context, const HomePage());
+                            }
+                          });
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          width: fullHeight(context),
+                          child: const Center(
+                              child: Text(
+                            "VALIDER",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: Colors.white),
+                          )),
+                        ),
+                      ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -185,7 +208,7 @@ class _SignInState extends State<SignIn> {
                           height: 1.8, fontSize: 16, color: Colors.grey),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => goTo(context, const ProvincesList()),
                       child: const Text(
                         "Adhérer maintenant ",
                         textAlign: TextAlign.center,

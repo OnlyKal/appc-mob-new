@@ -12,7 +12,10 @@ double topHeight(context) {
   return MediaQuery.of(context).padding.top;
 }
 
-
 void goTo(context, page) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+}
+
+void back(context) {
+  Navigator.of(context).pop();
 }
