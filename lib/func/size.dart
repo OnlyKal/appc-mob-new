@@ -17,9 +17,12 @@ void goTo(context, page) {
 }
 
 void back(context) {
-  Navigator.of(context).pop();
+  // Navigator.of(context).pop();
+  Navigator.pop(context, true);
 }
 
 void printData(data) {
   debugPrint(data.toString());
 }
+
+

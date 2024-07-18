@@ -30,7 +30,7 @@ class _ActualitiesState extends State<Actualities> {
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => goTo(context, const Actualities()),
+            onPressed: () => goTo(context, const HomePage()),
             icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(

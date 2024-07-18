@@ -21,6 +21,7 @@ class _ActualityCardState extends State<ActualityCard> {
     super.initState();
   }
 
+  bool isposting = false;
   refresh() {
     getOnenews(widget.article['id']).then((news) {
       (news != null)
@@ -45,7 +46,9 @@ class _ActualityCardState extends State<ActualityCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: backPage(context),
+        leading: IconButton(
+            onPressed: () => goTo(context, const Actualities()),
+            icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(
           "Actualité détaillée",
@@ -80,16 +83,25 @@ class _ActualityCardState extends State<ActualityCard> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            IconButton(
+                            TextButton(
                               onPressed: () => scrollToPosition(800.0),
-                              icon: badges.Badge(
-                                badgeContent: Text(
-                                  actuality['comment'].length.toString(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                              child: Row(
+                                children: [
+                                  badges.Badge(
+                                    badgeContent: Text(
+                                      actuality['comment'].length.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    child:
+                                        const Icon(CupertinoIcons.bubble_left),
                                   ),
-                                ),
-                                child: const Icon(CupertinoIcons.bubble_left),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  const Text('Commentairess')
+                                ],
                               ),
                             )
                           ],
@@ -181,9 +193,9 @@ class _ActualityCardState extends State<ActualityCard> {
                         child: TextField(
                           controller: ctrollerComent,
                           keyboardType: TextInputType.multiline,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           maxLines: null,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Laisser nous un commentaire',
                             hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
@@ -191,17 +203,25 @@ class _ActualityCardState extends State<ActualityCard> {
                         ),
                       ),
                       IconButton(
-                        icon: CircleAvatar(
-                          backgroundColor: mainColor,
-                          child: const Icon(CupertinoIcons.paperplane,
-                              color: Colors.white),
-                        ),
+                        icon: isposting == true
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ))
+                            : CircleAvatar(
+                                backgroundColor: mainColor,
+                                child: const Icon(CupertinoIcons.paperplane,
+                                    color: Colors.white),
+                              ),
                         onPressed: () {
+                          setState(() => isposting = true);
                           postNewsComment(
                                   widget.article['id'], ctrollerComent.text)
                               .then((comment) {
-                            print(comment);
                             refresh();
+                            setState(() => isposting = false);
                           });
                         },
                       ),
