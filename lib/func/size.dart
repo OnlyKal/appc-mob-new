@@ -19,3 +19,7 @@ void goTo(context, page) {
 void back(context) {
   Navigator.of(context).pop();
 }
+
+void printData(data) {
+  debugPrint(data.toString());
+}

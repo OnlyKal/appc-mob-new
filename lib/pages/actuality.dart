@@ -1,6 +1,7 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Actualities extends StatefulWidget {
@@ -12,76 +13,7 @@ class Actualities extends StatefulWidget {
 
 class _ActualitiesState extends State<Actualities> {
   late Future allnews;
-
-  List questionData = [
-    {
-      "question": "Qui est le président de la RDC ici à Mangurujipa ?",
-      "response":
-          "Quelle est la capitale de la République Démocratique du Congo ?",
-      "status": true
-    },
-    {
-      "question":
-          "Quelle est la capitale de la République Démocratique du Congo ?",
-      "response":
-          "Quelle est la capitale de la République Démocratique du Congo ?",
-      "status": false
-    },
-    {
-      "question": "Quel est le plus grand fleuve de la RDC ?",
-      "response": "Le plus grand fleuve de la RDC est le fleuve Congo.",
-      "status": true
-    },
-    {
-      "question": "Quelle est la langue officielle de la RDC ?",
-      "response": "La langue officielle de la RDC est le français.",
-      "status": true
-    },
-    {
-      "question":
-          "Quels sont les principaux produits d'exportation de la RDC ?",
-      "response":
-          "Les principaux produits d'exportation de la RDC sont le cuivre, le cobalt, le café, et le pétrole.",
-      "status": true
-    },
-    {
-      "question": "Quelle est la langue officielle de la RDC ?",
-      "response": "La langue officielle de la RDC est le français.",
-      "status": true
-    },
-    {
-      "question":
-          "Quels sont les principaux produits d'exportation de la RDC ?",
-      "response":
-          "Les principaux produits d'exportation de la RDC sont le cuivre, le cobalt, le café, et le pétrole.",
-      "status": true
-    },
-    {
-      "question": "Quelle est la langue officielle de la RDC ?",
-      "response": "La langue officielle de la RDC est le français.",
-      "status": true
-    },
-    {
-      "question":
-          "Quels sont les principaux produits d'exportation de la RDC ?",
-      "response":
-          "Les principaux produits d'exportation de la RDC sont le cuivre, le cobalt, le café, et le pétrole.",
-      "status": true
-    },
-    {
-      "question": "Quelle est la langue officielle de la RDC ?",
-      "response": "La langue officielle de la RDC est le français.",
-      "status": true
-    },
-    {
-      "question": "ikkk les principaux produits d'exportation de la RDC ?",
-      "response":
-          "Les principaux produits d'exportation de la RDC sont le cuivre, le cobalt, le café, et le pétrole.",
-      "status": true
-    }
-  ];
-
-  int limit = 1;
+  int limit = 20;
   int page = 1;
 
   @override
@@ -95,14 +27,13 @@ class _ActualitiesState extends State<Actualities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
         leading: backPage(context),
-        backgroundColor: mainColor,
-        title: const Text(
+        backgroundColor: Colors.white,
+        title: Text(
           "Nos Actualités",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
         ),
       ),
       body: Column(
@@ -112,58 +43,115 @@ class _ActualitiesState extends State<Actualities> {
               child: FutureBuilder(
                   future: allnews,
                   builder: (context, AsyncSnapshot news) {
-                    print(news.data);
                     if (news.hasData) {
+                      List actualityList = news.data['data'].reversed.toList();
                       return SizedBox(
                         height: fullHeight(context),
                         child: Skeletonizer(
+                          enabled: false,
                           child: ListView.builder(
-                              reverse: true,
-                              itemCount: questionData.length,
+                              itemCount: actualityList.length,
                               itemBuilder: (context, i) {
-                                return ListTile(
-                                  isThreeLine: true,
-                                  trailing: Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: const BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 230, 230, 230)),
-                                  ),
-                                  title: Text(
-                                    questionData[i]['question'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        questionData[i]['response'].length > 100
-                                            ? "${questionData[i]['response'].substring(0, 100)}..."
-                                            : questionData[i]['response'] ?? "",
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                      const Row(
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.bubble_middle_bottom,
-                                            size: 12,
+                                var imageUrl = actualityList[i]['image'];
+                                return InkWell(
+                                  onTap: () => goTo(context,
+                                      ActualityCard(article: actualityList[i])),
+                                  child: Container(
+                                    width: fullHeight(context),
+                                    margin: const EdgeInsets.only(bottom: 4),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 72, 72, 72),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: imageUrl == null
+                                                      ? const AssetImage(
+                                                          "assets/bgCard.png")
+                                                      : NetworkImage(
+                                                          imageUrl))),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            color: Colors.white,
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            height: 100,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Text(
+                                                      actualityList[i]['title'],
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      "${convertHtmlToText(newVal(actualityList[i]['message'])).toString().substring(0, 54)}...",
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w300),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 3),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Row(
+                                                        children: [
+                                                          Icon(
+                                                            CupertinoIcons
+                                                                .bubble_middle_bottom,
+                                                            size: 12,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            '10',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Text(
+                                                        timeAgo(actualityList[i]
+                                                            ['posted_at']),
+                                                        style: const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            '10',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ],
-                                      ),
-                                      const Divider()
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 );
                               }),

@@ -14,9 +14,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 231, 230, 230),
+      backgroundColor: const Color.fromARGB(255, 231, 230, 230),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 231, 230, 230),
+        backgroundColor: const Color.fromARGB(255, 231, 230, 230),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
                   future: login("APPC01-0010-140724", "3370"),
                   builder: (context, AsyncSnapshot user) {
                     if (user.hasData) {
+                    
                       List cards = user.data['cards'].toList();
 
                       return CarouselSlider(
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                               return Stack(
                                 children: [
                                   Container(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(13),
                                       width: fullWidth(context),
                                       decoration: BoxDecoration(
                                           color: getMembershipColor(
@@ -79,14 +80,6 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                 ],
                                               ),
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                    CupertinoIcons
-                                                        .qrcode_viewfinder,
-                                                    size: 32,
-                                                    color: Colors.white,
-                                                  ))
                                             ],
                                           ),
                                           Text(
@@ -156,11 +149,46 @@ class _HomePageState extends State<HomePage> {
                                   Positioned(
                                       child: Container(
                                     height: 220,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 13),
+                                    alignment: Alignment.topRight,
                                     decoration: const BoxDecoration(
                                         image: DecorationImage(
                                             opacity: 0.5,
                                             image:
                                                 AssetImage("assets/logo.png"))),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              printData("jello");
+                                            },
+                                            icon: const Icon(
+                                              CupertinoIcons.qrcode_viewfinder,
+                                              size: 32,
+                                              color: Colors.white,
+                                            )),
+                                        InkWell(
+                                          onTap: () {
+                                            print(card);
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 5, horizontal: 10),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(3),
+                                                color: Colors.white),
+                                            child: const Text(
+                                              "ABONNEMENT",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ))
                                 ],
                               );
@@ -182,9 +210,9 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.all(13),
                 child: Column(
                   children: [
-                    optionElement("Abonnement", "Gestions des abonnements",
-                        CupertinoIcons.square_line_vertical_square, () {}),
-                    const Divider(),
+                    // optionElement("Abonnement", "Gestions des abonnements",
+                    //     CupertinoIcons.square_line_vertical_square, () {}),
+                    // const Divider(),
                     optionElement(
                         "Cartes",
                         "Passer une commande d'une nouvelle carte",
@@ -195,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                         "Profile",
                         "Gestions votre compte membre APPC",
                         CupertinoIcons.person,
-                        () {}),
+                        () => goTo(context, const ProfilePage())),
                     const Divider(),
                     optionElement(
                         "Actualités",

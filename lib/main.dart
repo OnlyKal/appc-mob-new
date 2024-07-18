@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/bgsplash.png"), fit: BoxFit.cover),
+                  image: AssetImage("assets/bgsplash2.png"), fit: BoxFit.cover),
             ),
             height: fullHeight(context),
             width: fullWidth(context),
@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   padding: const EdgeInsets.all(20),
                   child: const Text(
                     "APPC SERVICES © 2024",
-                    style: TextStyle(color: Color.fromARGB(255, 122, 122, 122)),
+                    style: TextStyle(color: Color.fromARGB(255, 112, 111, 111)),
                   ),
                 ))
               ],

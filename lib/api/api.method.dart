@@ -20,7 +20,7 @@ Future addMember(
 }
 
 Future login(matricule, codepin) async {
-  return apipostData("api/auth/member/signin/",
+  return apipostDataAuth("api/auth/member/signin/",
       {"matricule": matricule, "pin": codepin.toString()});
 }
 

@@ -69,12 +69,12 @@ class _CardDetailState extends State<CardDetail> {
                         GestureDetector(
                           onTap: () {
                             showDialog(
-                               barrierDismissible: false,
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
                                     title: const Text(
-                                      "PAIEMENT",
+                                      "ACHAT CARTE APPC",
                                       style: TextStyle(
                                           fontSize: 19,
                                           fontWeight: FontWeight.w600),
@@ -86,7 +86,7 @@ class _CardDetailState extends State<CardDetail> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text(
-                                            "Paiements acceptés",
+                                            "Méthodes de paiement acceptées",
                                             style: TextStyle(
                                                 fontSize: 19,
                                                 fontWeight: FontWeight.w300),

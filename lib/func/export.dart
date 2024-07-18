@@ -14,4 +14,6 @@ export '../pages/home.page.dart';
 export '../pages/questions.dart';
 export '../pages/order.card.dart';
 export '../pages/actuality.dart';
+export '../pages/profile.dart';
 export '../pages/order.card.details.dart';
+export '../pages/actuality.details.dart';

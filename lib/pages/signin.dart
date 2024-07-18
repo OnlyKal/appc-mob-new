@@ -174,6 +174,7 @@ class _SignInState extends State<SignIn> {
                                   member['last_name'],
                                   member['email'],
                                   member['url'],
+                                  member['phone_number'],
                                   member['auth_token']);
                               goTo(context, const HomePage());
                             }

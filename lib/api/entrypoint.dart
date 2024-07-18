@@ -13,7 +13,12 @@ Future apipostData(endpoint, data) async {
   var token = auth.getString("token") ?? "";
   var response = await http.post(Uri.parse("$serveradress$endpoint"),
       headers: {"Authorization": "Token $token"}, body: data);
-
+  return response.statusCode != 404 || response.statusCode != 406
+      ? jsonDecode(response.body)
+      : null;
+}
+Future apipostDataAuth(endpoint, data) async {
+  var response = await http.post(Uri.parse("$serveradress$endpoint"), body: data);
   return response.statusCode != 404 || response.statusCode != 406
       ? jsonDecode(response.body)
       : null;
