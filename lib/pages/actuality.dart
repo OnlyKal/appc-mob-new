@@ -29,7 +29,9 @@ class _ActualitiesState extends State<Actualities> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
-        leading: backPage(context),
+        leading: IconButton(
+            onPressed: () => goTo(context, const Actualities()),
+            icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(
           "Nos Actualités",
@@ -116,7 +118,7 @@ class _ActualitiesState extends State<Actualities> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const Row(
+                                                      Row(
                                                         children: [
                                                           Icon(
                                                             CupertinoIcons
@@ -127,7 +129,10 @@ class _ActualitiesState extends State<Actualities> {
                                                             width: 5,
                                                           ),
                                                           Text(
-                                                            '10',
+                                                            actualityList[i]
+                                                                    ['comment']
+                                                                .length
+                                                                .toString(),
                                                             style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
@@ -149,7 +154,7 @@ class _ActualitiesState extends State<Actualities> {
                                               ],
                                             ),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),

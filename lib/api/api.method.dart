@@ -29,8 +29,17 @@ Future updateImage(base64String) async {
       {"image": "data:image/png;base64,$base64String"});
 }
 
+Future postNewsComment(newsId, commentaire) async {
+  return apipostData("api/news/comment/add/",
+      {"comment": commentaire, "news_id": newsId.toString()});
+}
+
 Future getAllCardType() async {
   return apigetData("api/subscription/cards/");
+}
+
+Future getOnenews(id) async {
+  return apigetData("api/news/news/$id/");
 }
 
 Future getAllnews(limit, page) async {
