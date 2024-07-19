@@ -25,18 +25,17 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               FutureBuilder(
-                  future: login("APPC01-0010-140724", "3370"),
+                  future: getUserCards(),
                   builder: (context, AsyncSnapshot user) {
                     if (user.hasData) {
-                    
-                      List cards = user.data['cards'].toList();
-
+                       localListCards = user.data.toList();
+                      // print(localListCards);
                       return CarouselSlider(
                         options: CarouselOptions(
                             height: 220.0,
                             enlargeCenterPage: true,
                             enableInfiniteScroll: false),
-                        items: cards.map((card) {
+                        items: localListCards.map((card) {
                           return Builder(
                             builder: (BuildContext context) {
                               return Stack(
@@ -83,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                                             ],
                                           ),
                                           Text(
-                                            user.data['matricule'] ?? '',
+                                            card['number'] ?? '',
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w800,
                                                 fontSize: 21,
@@ -105,28 +104,49 @@ class _HomePageState extends State<HomePage> {
                                                         fontWeight:
                                                             FontWeight.w300),
                                                   ),
-                                                  Text(
-                                                    converToUpperCase(
-                                                        "${user.data['first_name'] ?? ''} ${user.data['last_name'] ?? ''}"),
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                                  ),
-                                                  Text(
-                                                    "${user.data['function'] ?? 'Compte Professionel'}",
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w300),
-                                                  ),
+                                                  FutureBuilder(
+                                                      future:
+                                                          getSessionDetails(),
+                                                      builder: (context,
+                                                          AsyncSnapshot
+                                                              session) {
+                                                        if (session.hasData) {
+                                                          return Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                converToUpperCase(
+                                                                    "${session.data['first_name'] ?? ''} ${session.data['last_name'] ?? ''}"),
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Text(
+                                                                "${session.data['function'] ?? 'Compte Professionel'}",
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }
+                                                        return Container();
+                                                      })
                                                 ],
                                               ),
-                                              const Column(
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     "VALIDITE",
                                                     style: TextStyle(
                                                         color: Colors.white,
@@ -134,8 +154,8 @@ class _HomePageState extends State<HomePage> {
                                                             FontWeight.w300),
                                                   ),
                                                   Text(
-                                                    "30 Jours",
-                                                    style: TextStyle(
+                                                    "${card['wallet'][0]['stock']} Jours",
+                                                    style: const TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w700),
@@ -181,8 +201,9 @@ class _HomePageState extends State<HomePage> {
                                                     BorderRadius.circular(3),
                                                 color: Colors.white),
                                             child: const Text(
-                                              "ABONNEMENT",
+                                              "PAYER ABONNEMENT",
                                               style: TextStyle(
+                                                  fontSize: 11,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),

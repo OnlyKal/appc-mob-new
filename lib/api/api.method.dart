@@ -1,7 +1,7 @@
 import 'package:appc/func/export.dart';
 
 Future getProvices() async {
-  return apigetData("api/auth/provinces/");
+  return apigetDataNoAuth("api/auth/provinces/");
 }
 
 Future addMember(
@@ -20,7 +20,7 @@ Future addMember(
 }
 
 Future login(matricule, codepin) async {
-  return apipostDataAuth("api/auth/member/signin/",
+  return apipostDataNoAuth("api/auth/member/signin/",
       {"matricule": matricule, "pin": codepin.toString()});
 }
 
@@ -35,13 +35,16 @@ Future postNewsComment(newsId, commentaire) async {
 }
 
 Future getAllCardType() async {
-  return apigetData("api/subscription/cards/");
+  return apigetDataNoAuth("api/subscription/cards/");
+}
+Future getUserCards() async {
+  return apigetData("api/subscription/member-cards/");
 }
 
 Future getOnenews(id) async {
-  return apigetData("api/news/news/$id/");
+  return apigetDataNoAuth("api/news/news/$id/");
 }
 
 Future getAllnews(limit, page) async {
-  return apigetData("api/news/get-all/?limit=$limit&page=$page");
+  return apigetDataNoAuth("api/news/get-all/?limit=$limit&page=$page");
 }

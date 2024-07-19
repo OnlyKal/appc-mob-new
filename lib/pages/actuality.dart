@@ -29,9 +29,10 @@ class _ActualitiesState extends State<Actualities> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => goTo(context, const HomePage()),
-            icon: const Icon(CupertinoIcons.back)),
+        leading: backPage(context),
+        // leading: IconButton(
+        //     onPressed: () => goTo(context, const HomePage()),
+        //     icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(
           "Nos Actualités",
@@ -60,7 +61,11 @@ class _ActualitiesState extends State<Actualities> {
                                       ActualityCard(article: actualityList[i])),
                                   child: Container(
                                     width: fullHeight(context),
-                                    margin: const EdgeInsets.only(bottom: 4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                    ),
+                                    padding: const EdgeInsets.all(6),
+                                    margin: const EdgeInsets.only(bottom: 2),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -69,6 +74,8 @@ class _ActualitiesState extends State<Actualities> {
                                           height: 100,
                                           width: 150,
                                           decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
                                               color: const Color.fromARGB(
                                                   255, 72, 72, 72),
                                               image: DecorationImage(
@@ -79,11 +86,12 @@ class _ActualitiesState extends State<Actualities> {
                                                       : NetworkImage(
                                                           imageUrl))),
                                         ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
                                         Expanded(
                                           child: Container(
                                             color: Colors.white,
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
                                             height: 100,
                                             child: Column(
                                               mainAxisAlignment:
@@ -118,28 +126,28 @@ class _ActualitiesState extends State<Actualities> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            CupertinoIcons
-                                                                .bubble_middle_bottom,
-                                                            size: 12,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Text(
-                                                            actualityList[i]
-                                                                    ['comment']
-                                                                .length
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                      // Row(
+                                                      //   children: [
+                                                      //     const Icon(
+                                                      //       CupertinoIcons
+                                                      //           .bubble_middle_bottom,
+                                                      //       size: 12,
+                                                      //     ),
+                                                      //     const SizedBox(
+                                                      //       width: 5,
+                                                      //     ),
+                                                      //     Text(
+                                                      //       actualityList[i]
+                                                      //               ['comment']
+                                                      //           .length
+                                                      //           .toString(),
+                                                      //       style: const TextStyle(
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .w400),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
                                                       Text(
                                                         timeAgo(actualityList[i]
                                                             ['posted_at']),

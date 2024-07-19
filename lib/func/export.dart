@@ -17,3 +17,4 @@ export '../pages/actuality.dart';
 export '../pages/profile.dart';
 export '../pages/order.card.details.dart';
 export '../pages/actuality.details.dart';
+export '../func/local.data.dart';

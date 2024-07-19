@@ -46,9 +46,10 @@ class _ActualityCardState extends State<ActualityCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => goTo(context, const Actualities()),
-            icon: const Icon(CupertinoIcons.back)),
+        leading: backPage(context),
+        // leading: IconButton(
+        //     onPressed: () => goTo(context, const Actualities()),
+        //     icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(
           "Actualité détaillée",
