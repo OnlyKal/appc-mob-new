@@ -102,7 +102,7 @@ class ProfilePage extends StatelessWidget {
                   CupertinoIcons.circle_fill,
                   size: 15,
                 ),
-                null),
+                () => message("Pas encore disponible", context)),
             _buildOption(context, 'Déconnexion', Icons.logout, null,
                 () => logout(context)),
           ],

@@ -53,3 +53,9 @@ void logout(context) async {
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
+
+message(stringMessage, context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(stringMessage)),
+  );
+}

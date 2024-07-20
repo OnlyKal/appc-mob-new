@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:appc/func/export.dart';
+import 'package:appc/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -176,7 +177,7 @@ class _SignInState extends State<SignIn> {
                                   member['url'],
                                   member['phone_number'],
                                   member['auth_token']);
-                              goTo(context, const HomePage());
+                              goTo(context, const SplashScreen());
                             }
                           });
                         },

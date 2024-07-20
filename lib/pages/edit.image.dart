@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appc/func/color.dart';
 import 'package:appc/func/export.dart';
 import 'package:appc/func/size.dart';
+import 'package:appc/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -139,7 +140,7 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
                     height: 50,
                   ),
                   TextButton(
-                    onPressed: () => goTo(context, const HomePage()),
+                    onPressed: () => goTo(context, const SplashScreen()),
                     child: const Text(
                       "COMMENCER",
                       textAlign: TextAlign.center,

@@ -34,11 +34,28 @@ Future postNewsComment(newsId, commentaire) async {
       {"comment": commentaire, "news_id": newsId.toString()});
 }
 
+Future postNewssubComment(newsId, parentId, commentaire) async {
+  return apipostData("api/news/comment/add/", {
+    "comment": commentaire,
+    "comment_parent_id": parentId.toString(),
+    "news_id": newsId.toString()
+  });
+}
+
+Future postAddQuestion(question) async {
+  return apipostData("api/news/question/add/", {"question": question});
+}
+
 Future getAllCardType() async {
   return apigetDataNoAuth("api/subscription/cards/");
 }
+
 Future getUserCards() async {
   return apigetData("api/subscription/member-cards/");
+}
+
+Future getUserQuestions() async {
+  return apipostData("api/news/question/get-all/", {});
 }
 
 Future getOnenews(id) async {

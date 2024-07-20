@@ -1,2 +1,2 @@
-List localListCards = [];
-
+List<dynamic> localListCards = [];
+late Future allcards;
