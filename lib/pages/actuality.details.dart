@@ -461,10 +461,14 @@ class _ActualityCardState extends State<ActualityCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Image.network(
-                    actuality['image'].toString(),
-                    fit: BoxFit.cover,
-                    height: 300,
+                  InkWell(
+                    onTap: () => goTo(context,
+                        PhotoViewer(image: actuality['image'].toString())),
+                    child: Image.network(
+                      actuality['image'].toString(),
+                      fit: BoxFit.cover,
+                      height: 300,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20),

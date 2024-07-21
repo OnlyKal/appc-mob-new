@@ -46,6 +46,11 @@ Future postAddQuestion(question) async {
   return apipostData("api/news/question/add/", {"question": question});
 }
 
+Future updatePIN(oldPIN, newPIN) async {
+  return apipostData(
+      "api/auth/member/update-pin/", {"old_pin": oldPIN, "new_pin": newPIN});
+}
+
 Future getAllCardType() async {
   return apigetDataNoAuth("api/subscription/cards/");
 }

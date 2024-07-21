@@ -1,6 +1,7 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ProfilePage extends StatelessWidget {
   final String imageUrl = 'https://example.com/image.jpg';
@@ -33,11 +34,14 @@ class ProfilePage extends StatelessWidget {
                   if (user.hasData) {
                     return Stack(
                       children: [
-                        CircleAvatar(
-                          radius: 70,
-                          backgroundColor: Colors.grey,
-                          backgroundImage: NetworkImage(
-                            user.data['image'].toString(),
+                        InkWell(
+                          onTap: ()=>goTo(context, PhotoViewer(image:user.data['image'].toString())),
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: NetworkImage(
+                              user.data['image'].toString(),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -87,13 +91,15 @@ class ProfilePage extends StatelessWidget {
                 }),
             const SizedBox(height: 24),
             const Divider(),
+            _buildOption(context, 'Accueil', CupertinoIcons.home, null,
+                () => goTo(context, const HomePage())),
             _buildOption(
                 context, 'Paramètres', CupertinoIcons.gear_alt, null, null),
             _buildOption(context, 'Nouvelle Carte', CupertinoIcons.creditcard,
-                null, null),
-            _buildOption(context, 'Éditer le Profil', Icons.edit, null, null),
-            _buildOption(
-                context, 'Changer le PIN', CupertinoIcons.lock, null, null),
+                null, () => goTo(context, const OrderCard())),
+            // _buildOption(context, 'Éditer le Profil', Icons.edit, null, null),
+            _buildOption(context, 'Changer le PIN', CupertinoIcons.lock, null,
+                () => goTo(context, const UpdatePinPage())),
             _buildOption(
                 context,
                 'Compte Revendeur',

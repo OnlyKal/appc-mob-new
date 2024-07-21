@@ -54,79 +54,91 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
           Expanded(
             child: SingleChildScrollView(
               child: SizedBox(
-                height: fullHeight(context),
-                child: questionData.isEmpty
-                    ? noElementFount(context)
-                    : ListView.builder(
-                        itemCount: questionData.length,
-                        itemBuilder: (context, i) {
-                          // print(questionData);
-                          return Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 1),
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(3),
-                              color: const Color.fromARGB(255, 236, 236, 236),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  newUtf("Q$i. ${questionData[i]['question']}"),
-                                  style: TextStyle(
-                                      color: questionData[i]
+                  height: fullHeight(context),
+                  child: FutureBuilder(
+                      future: getUserQuestions(),
+                      builder: (context, question) {
+                        if (question.hasData) {
+                          return questionData.isEmpty
+                              ? noElementFount(context)
+                              : ListView.builder(
+                                  itemCount: questionData.length,
+                                  itemBuilder: (context, i) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 1),
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: const Color.fromARGB(
+                                            255, 236, 236, 236),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            newUtf(
+                                                "Q$i. ${questionData[i]['question']}"),
+                                            style: TextStyle(
+                                                color: questionData[i][
+                                                            'already_answered'] ==
+                                                        false
+                                                    ? Colors.grey
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          const SizedBox(
+                                            height: 7,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                questionData[i][
+                                                            'already_answered'] ==
+                                                        true
+                                                    ? Icons.check_circle
+                                                    : Icons.timelapse_rounded,
+                                                size: 13,
+                                                color: questionData[i][
+                                                            'already_answered'] ==
+                                                        false
+                                                    ? Colors.black
+                                                    : Colors.green,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(timeAgo(questionData[i]
+                                                  ['created_at'])),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 7,
+                                          ),
+                                          if (questionData[i]
                                                   ['already_answered'] ==
-                                              false
-                                          ? Colors.grey
-                                          : Colors.black,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      questionData[i]['already_answered'] ==
-                                              true
-                                          ? Icons.check_circle
-                                          : Icons.timelapse_rounded,
-                                      size: 13,
-                                      color: questionData[i]
-                                                  ['already_answered'] ==
-                                              false
-                                          ? Colors.black
-                                          : Colors.green,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                        timeAgo(questionData[i]['created_at'])),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                if (questionData[i]['already_answered'] == true)
-                                  Container(
-                                    padding: const EdgeInsets.all(7),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(6)),
-                                    child: Text(
-                                      "R. ${newUtf(questionData[i]['answer'] ?? '')}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          color: mainColor),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        }),
-              ),
+                                              true)
+                                            Container(
+                                              padding: const EdgeInsets.all(7),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6)),
+                                              child: Text(
+                                                "R. ${newUtf(questionData[i]['answer'] ?? '')}",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: mainColor),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                        }
+                        return loading(context);
+                      })),
             ),
           ),
           KeyboardVisibilityBuilder(

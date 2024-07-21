@@ -46,13 +46,43 @@ loading(context) {
   );
 }
 
-Widget noCardyet() {
-  return Container(
-    height: 220.0,
-    margin: const EdgeInsets.all(18),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: Color.fromARGB(255, 255, 255, 255),
+Widget noCardyet(context) {
+  return InkWell(
+    onTap: () => goTo(context, const OrderCard()),
+    child: Container(
+      width: fullWidth(context),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(255, 255, 255, 255),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset(
+            "assets/Delivery-bro.png",
+            height: 110,
+          ),
+          const Text(
+            "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
+            style: TextStyle(height: 1.8, color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: mainColor,
+              borderRadius: BorderRadius.circular(3),
+            ),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(6),
+            child: const Text(
+              "COMMANDER",
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

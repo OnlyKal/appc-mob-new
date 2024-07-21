@@ -142,7 +142,8 @@ class _SignUpState extends State<SignUp> {
                                   member['email'],
                                   member['phone_number'],
                                   member['url'],
-                                  member['auth_token']);
+                                  member['auth_token'],
+                                  member['function']);
                               goTo(context, ProfileImagePage(member: member));
                             }
                           });

@@ -168,6 +168,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => isLoading = true);
                           login(ctrmatricule.text, ctrcodepin).then((member) {
                             setState(() => isLoading = false);
+                            print(member);
                             if (member['id'] != null) {
                               storeUserDetails(
                                   member['matricule'],
@@ -176,7 +177,9 @@ class _SignInState extends State<SignIn> {
                                   member['email'],
                                   member['url'],
                                   member['phone_number'],
-                                  member['auth_token']);
+                                  member['auth_token'],
+                                  member['function'],
+                                  );
                               goTo(context, const SplashScreen());
                             }
                           });
