@@ -42,8 +42,8 @@ class _OrderCardState extends State<OrderCard> {
                                     border: Border(
                                       bottom: BorderSide(
                                         color: Color.fromARGB(255, 206, 206,
-                                            206), // Color of the border
-                                        width: 1.0, // Width of the border
+                                            206), 
+                                        width: 1.0,
                                       ),
                                     ),
                                   ),

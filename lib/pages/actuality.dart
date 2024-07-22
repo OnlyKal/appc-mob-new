@@ -46,6 +46,7 @@ class _ActualitiesState extends State<Actualities> {
               child: FutureBuilder(
                   future: allnews,
                   builder: (context, AsyncSnapshot news) {
+                    print(news);
                     if (news.hasData) {
                       List actualityList = news.data['data'].reversed.toList();
                       return SizedBox(
@@ -95,26 +96,27 @@ class _ActualitiesState extends State<Actualities> {
                                             height: 100,
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Column(
                                                   children: [
                                                     Text(
-                                                      actualityList[i]['title'],
+                                                      newUtf(actualityList[i]
+                                                          ['title']),
                                                       style: const TextStyle(
+                                                          fontSize: 16.6,
                                                           fontWeight:
                                                               FontWeight.w600),
                                                     ),
                                                     const SizedBox(
                                                       height: 5,
                                                     ),
-                                                    Text(
-                                                      "${convertHtmlToText(newVal(actualityList[i]['message'])).toString().substring(0, 54)}...",
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                    ),
+                                                    // Text(
+                                                    //   "${convertHtmlToText(newVal(actualityList[i]['message'])).toString().substring(0, 54)}...",
+                                                    //   style: const TextStyle(
+                                                    //       fontWeight:
+                                                    //           FontWeight.w300),
+                                                    // ),
                                                   ],
                                                 ),
                                                 Padding(

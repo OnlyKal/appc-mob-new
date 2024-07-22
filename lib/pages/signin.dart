@@ -175,8 +175,8 @@ class _SignInState extends State<SignIn> {
                                   member['first_name'],
                                   member['last_name'],
                                   member['email'],
+                                   member['phone_number'],
                                   member['url'],
-                                  member['phone_number'],
                                   member['auth_token'],
                                   member['function'],
                                   );

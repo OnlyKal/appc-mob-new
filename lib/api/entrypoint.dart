@@ -17,6 +17,8 @@ Future apigetData(endpoint) async {
 
 Future apigetDataNoAuth(endpoint) async {
   var response = await http.get(Uri.parse("$serveradress$endpoint"));
+  print(response.statusCode);
+  print(response.body);
   return response.statusCode == 200 ? jsonDecode(response.body) : null;
 }
 

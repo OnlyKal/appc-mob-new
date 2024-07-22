@@ -39,7 +39,7 @@ loading(context) {
       width: 20,
       child: CircularProgressIndicator(
         strokeAlign: 1,
-        color: Color.fromARGB(255, 217, 217, 217),
+        color: Color.fromARGB(255, 193, 191, 191),
         backgroundColor: Colors.blue,
       ),
     ),
@@ -47,29 +47,29 @@ loading(context) {
 }
 
 Widget noCardyet(context) {
-  return InkWell(
-    onTap: () => goTo(context, const OrderCard()),
-    child: Container(
-      width: fullWidth(context),
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color.fromARGB(255, 255, 255, 255),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(
-            "assets/Delivery-bro.png",
-            height: 110,
-          ),
-          const Text(
-            "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
-            style: TextStyle(height: 1.8, color: Colors.grey),
-            textAlign: TextAlign.center,
-          ),
-          Container(
+  return Container(
+    width: fullWidth(context),
+    padding: const EdgeInsets.all(10),
+    margin: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: const Color.fromARGB(255, 255, 255, 255),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(
+          "assets/Delivery-bro.png",
+          height: 110,
+        ),
+        const Text(
+          "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
+          style: TextStyle(height: 1.8, color: Colors.grey),
+          textAlign: TextAlign.center,
+        ),
+        InkWell(
+          onTap: () => goTo(context, const OrderCard()),
+          child: Container(
             decoration: BoxDecoration(
               color: mainColor,
               borderRadius: BorderRadius.circular(3),
@@ -80,8 +80,24 @@ Widget noCardyet(context) {
               "COMMANDER",
               style: TextStyle(color: Colors.white),
             ),
-          )
-        ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget noCardy(context) {
+  return InkWell(
+    onTap: () => goTo(context, const OrderCard()),
+    child: Container(
+      height: 220,
+      width: fullWidth(context),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(255, 255, 255, 255),
       ),
     ),
   );

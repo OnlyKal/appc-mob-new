@@ -10,7 +10,7 @@ Future<void> storeUserDetails(
   await prefs.setString('first_name', name);
   await prefs.setString('last_name', lastname);
   await prefs.setString('email', email);
-  await prefs.setString('phone', email);
+  await prefs.setString('phone', phone);
   await prefs.setString('token', token);
   await prefs.setString('url', url);
   await prefs.setString('function', function);
@@ -45,6 +45,8 @@ void logout(context) async {
       label: 'OK',
       onPressed: () async {
         await prefs.remove("matricule");
+        await prefs.remove("phone");
+        await prefs.remove("email");
         await prefs.remove("token");
         goTo(context, const SignIn());
         ScaffoldMessenger.of(context).showSnackBar(

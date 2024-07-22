@@ -45,7 +45,7 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
         leading: backPage(context),
         backgroundColor: Colors.white,
         title: Text(
-          "Section Q&A",
+          "Section FAQ s",
           style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
         ),
       ),

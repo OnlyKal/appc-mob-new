@@ -2,6 +2,7 @@ import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,10 +22,27 @@ class _HomePageState extends State<HomePage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 231, 230, 230),
+        backgroundColor: const Color.fromARGB(255, 238, 237, 237),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 231, 230, 230),
           automaticallyImplyLeading: false,
+          actions: [
+            InkWell(
+              onTap: () {},
+              child: const badges.Badge(
+                badgeContent: Text(
+                  "2",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                child: Icon(CupertinoIcons.bell),
+              ),
+            ),
+            const SizedBox(
+              width: 40,
+            )
+          ],
         ),
         body: SingleChildScrollView(
           child: SizedBox(
@@ -36,21 +54,25 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, AsyncSnapshot user) {
                       if (user.hasData) {
                         localListCards = user.data.toList();
-                        return CarouselSlider(
-                          options: CarouselOptions(
-                              height: 220.0,
-                              enlargeCenterPage: true,
-                              enableInfiniteScroll: false),
-                          items: localListCards.map((card) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return cardMember(card, context);
-                              },
-                            );
-                          }).toList(),
-                        );
+                        if (localListCards.isEmpty) {
+                          return noCardyet(context);
+                        } else {
+                          return CarouselSlider(
+                            options: CarouselOptions(
+                                height: 220.0,
+                                enlargeCenterPage: true,
+                                enableInfiniteScroll: false),
+                            items: localListCards.map((card) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return cardMember(card, context);
+                                },
+                              );
+                            }).toList(),
+                          );
+                        }
                       }
-                      return noCardyet(context);
+                      return noCardy(context);
                     }),
                 const SizedBox(
                   height: 20,
