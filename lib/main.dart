@@ -1,10 +1,13 @@
 import 'dart:async';
-
 import 'package:appc/func/export.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationClass.initializeNotif();
+  NotificationClass.openNotifMono("APPC SERVICE-RDC",
+      "Bienvenue chez APPC SERVICES-DRC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain");
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: PopScope(canPop: false, child: SplashScreen()),
@@ -20,10 +23,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   checkSession() async {
     hideKeyboard();
+    NotificationClass.askPermission(context);
     Timer(const Duration(seconds: 3), () async {
       SharedPreferences auth = await SharedPreferences.getInstance();
       var matricule = auth.getString("matricule");
-      print(auth.getString("function"));
       if (matricule == null || matricule == "") {
         goTo(context, const SignIn());
       } else {

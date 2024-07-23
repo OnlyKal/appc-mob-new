@@ -20,3 +20,5 @@ export '../pages/actuality.details.dart';
 export '../func/local.data.dart';
 export '../pages/update.pin.dart';
 export '../pages/photoview.dart';
+export '../func/notification.dart';
+export '../pages/settings.dart';

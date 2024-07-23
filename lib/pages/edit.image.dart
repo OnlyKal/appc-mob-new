@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:appc/func/color.dart';
 import 'package:appc/func/export.dart';
-import 'package:appc/func/size.dart';
 import 'package:appc/main.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +11,7 @@ class ProfileImagePage extends StatefulWidget {
   const ProfileImagePage({super.key, this.member});
 
   @override
-  _ProfileImagePageState createState() => _ProfileImagePageState();
+  State<ProfileImagePage> createState() => _ProfileImagePageState();
 }
 
 class _ProfileImagePageState extends State<ProfileImagePage> {

@@ -27,9 +27,11 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color.fromARGB(255, 231, 230, 230),
           automaticallyImplyLeading: false,
           actions: [
-            InkWell(
-              onTap: () {},
-              child: const badges.Badge(
+            IconButton(
+              onPressed: () => NotificationClass.openNotifMono(
+                  "APPC SERVICE-RDC",
+                  "Bienvenue chez APPC SERVICES-RDC, nous sommes là pour vous faciliter la vie."),
+              icon: const badges.Badge(
                 badgeContent: Text(
                   "2",
                   style: TextStyle(

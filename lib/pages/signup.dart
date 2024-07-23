@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class SignUp extends StatefulWidget {
+  
   final province;
   const SignUp({super.key, this.province});
   @override

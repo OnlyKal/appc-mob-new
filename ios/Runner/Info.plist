@@ -49,5 +49,10 @@
 	<string>Allow this app access to your camera for changing your profile image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow this app access to your photo for changing your profile image</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

@@ -63,3 +63,8 @@ message(stringMessage, context) {
     SnackBar(content: Text(stringMessage)),
   );
 }
+
+Future enableNoti() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("state-notif");
+}

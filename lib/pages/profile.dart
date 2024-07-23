@@ -1,17 +1,9 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String imageUrl = 'https://example.com/image.jpg';
-  final String firstName = 'John';
-  final String lastName = 'Doe';
-  final String email = 'john.doe@example.com';
-  final String phone = '+1234567890';
-
   const ProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +27,10 @@ class ProfilePage extends StatelessWidget {
                     return Stack(
                       children: [
                         InkWell(
-                          onTap: ()=>goTo(context, PhotoViewer(image:user.data['image'].toString())),
+                          onTap: () => goTo(
+                              context,
+                              PhotoViewer(
+                                  image: user.data['image'].toString())),
                           child: CircleAvatar(
                             radius: 70,
                             backgroundColor: Colors.grey,
@@ -93,11 +88,10 @@ class ProfilePage extends StatelessWidget {
             const Divider(),
             _buildOption(context, 'Accueil', CupertinoIcons.home, null,
                 () => goTo(context, const HomePage())),
-            _buildOption(
-                context, 'Paramètres', CupertinoIcons.gear_alt, null, null),
+            _buildOption(context, 'Paramètres', CupertinoIcons.gear_alt, null,
+                () => goTo(context, const Settings())),
             _buildOption(context, 'Nouvelle Carte', CupertinoIcons.creditcard,
                 null, () => goTo(context, const OrderCard())),
-            // _buildOption(context, 'Éditer le Profil', Icons.edit, null, null),
             _buildOption(context, 'Changer le PIN', CupertinoIcons.lock, null,
                 () => goTo(context, const UpdatePinPage())),
             _buildOption(
@@ -109,6 +103,8 @@ class ProfilePage extends StatelessWidget {
                   size: 15,
                 ),
                 () => message("Pas encore disponible", context)),
+            _buildOption(context, 'Parrainage', Icons.logout, null,
+                () => logout(context)),
             _buildOption(context, 'Déconnexion', Icons.logout, null,
                 () => logout(context)),
           ],

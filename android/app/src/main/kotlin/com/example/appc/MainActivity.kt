@@ -1,4 +1,4 @@
-package com.example.appc
+package com.appc.services
 
 import io.flutter.embedding.android.FlutterActivity
 
