@@ -16,7 +16,6 @@ class _ProvincesListState extends State<ProvincesList> {
   @override
   void initState() {
     getProvices().then((allprovinces) {
-      print(allprovinces);
       if (allprovinces != null) {
         setState(() => _provinces = allprovinces.toList());
       }

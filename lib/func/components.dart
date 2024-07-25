@@ -2,6 +2,27 @@ import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
+Future<void> goTLaunchUrl(url) async {
+  try {
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  } catch (error) {
+    null;
+  }
+}
+
+htmlWiget(htm) {
+  return HtmlWidget(
+    htm,
+    onTapUrl: (url) async {
+      goTLaunchUrl(url);
+      return true;
+    },
+  );
+}
 
 inputText(context, controller, hint, onchange, isRequired, isReadOnly) {
   return Container(

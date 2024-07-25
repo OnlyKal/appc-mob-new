@@ -168,7 +168,6 @@ class _SignInState extends State<SignIn> {
                           setState(() => isLoading = true);
                           login(ctrmatricule.text, ctrcodepin).then((member) {
                             setState(() => isLoading = false);
-                            print(member);
                             if (member['id'] != null) {
                               storeUserDetails(
                                   member['matricule'],

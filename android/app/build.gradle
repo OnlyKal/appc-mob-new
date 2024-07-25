@@ -36,18 +36,23 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility =JavaVersion.VERSION_1_8
+        targetCompatibility =JavaVersion.VERSION_1_8
     }
-
+    
     defaultConfig {
         applicationId = "com.appc.services"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        multiDexEnabled true
     }
-
+    dependencies {
+    //add these lines
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
+    }
     buildTypes {
         release {
             signingConfig = signingConfigs.debug

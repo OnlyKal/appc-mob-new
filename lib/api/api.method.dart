@@ -63,8 +63,18 @@ Future getUserQuestions() async {
   return apipostData("api/news/question/get-all/", {});
 }
 
-Future getOnenews(id) async {
+Future getNewsDetails(id) async {
   return apigetDataNoAuth("api/news/news/$id/");
+}
+
+Future getCommentNews(newsId) async {
+  return apipostDataNoAuth(
+      "api/news/comment/get-by-news/", {"news_id": newsId.toString()});
+}
+
+Future getSubCommentsnews(commentId) async {
+  return apipostDataNoAuth(
+      "api/news/get-by-comment/", {"comment_id": commentId.toString()});
 }
 
 Future getAllnews(limit, page) async {

@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:html/dom.dart' as html_dom;
 import 'package:get_time_ago/get_time_ago.dart';
+
 
 converToUpperCase(word) {
   return word.toUpperCase();
@@ -16,6 +16,7 @@ String newVal(dynamic value) {
   }
   return value.toString();
 }
+
 
 String convertHtmlToText(String htmlContent) {
   html_dom.Document document = html_parser.parse(htmlContent);

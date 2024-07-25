@@ -16,7 +16,6 @@ class _CardDetailState extends State<CardDetail> {
   @override
   void initState() {
     setState(() => currentCard = widget.card);
-    print(widget.card);
     super.initState();
   }
 
@@ -231,9 +230,7 @@ class _CardDetailState extends State<CardDetail> {
                                             tileColor: const Color.fromARGB(
                                                 255, 239, 239, 239),
                                             onTap: () {
-                                              print(cardsList[i]);
                                               setState(() {
-                                                print(cardsList[i]);
                                                 currentCard = cardsList[i];
                                               });
                                             },

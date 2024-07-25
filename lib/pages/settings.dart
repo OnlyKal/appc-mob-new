@@ -16,7 +16,6 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     enableNoti().then((state) {
-      print(state);
       if (state == 'enable') {
         setState(() {
           isSwidhed = true;

@@ -27,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       SharedPreferences auth = await SharedPreferences.getInstance();
       var matricule = auth.getString("matricule");
+      print(auth.getString("token"));
       if (matricule == null || matricule == "") {
         goTo(context, const SignIn());
       } else {
