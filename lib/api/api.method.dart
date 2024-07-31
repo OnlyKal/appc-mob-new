@@ -16,7 +16,7 @@ Future addMember(
     "phone_number": phone.toString(),
     "address": adress
   };
-  return apipostData("api/auth/member/create/", data);
+  return apipostDataNoAuth("api/auth/member/create/", data);
 }
 
 Future login(matricule, codepin) async {

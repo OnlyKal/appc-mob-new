@@ -5,7 +5,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 Future<void> goTLaunchUrl(url) async {
   try {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
@@ -71,7 +70,7 @@ Widget noCardyet(context) {
   return Container(
     width: fullWidth(context),
     padding: const EdgeInsets.all(10),
-    margin: const EdgeInsets.all(20),
+    // margin: const EdgeInsets.all(20),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: const Color.fromARGB(255, 255, 255, 255),

@@ -161,6 +161,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                   hideBottomField = false;
                                   isPosting = false;
                                 });
+                                back(context);
                               });
                             } else {
                               message(
@@ -214,80 +215,95 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   }
 
   Widget commentaireElement(Map<String, dynamic> comment) {
-    return Column(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 255, 255, 255),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-          child: Column(
+    return comment['parent_comment'] == null
+        ? Column(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 10,
-                    backgroundColor: const Color.fromARGB(255, 62, 62, 62),
-                    child: Text(
-                      comment['first_name']!.substring(0, 1).toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+              Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 221, 219, 219),
+                    borderRadius: BorderRadius.circular(8)),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  children: [
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${comment['first_name'] ?? ''} ${comment['last_name'] ?? ''}",
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          newUtf(comment['message']),
-                          style: const TextStyle(fontWeight: FontWeight.w300),
-                        ),
-                        if (comment['sub_comment'].isNotEmpty)
-                          const SizedBox(height: 6),
-                        if (comment['sub_comment'].isNotEmpty)
-                          InkWell(
-                            onTap: () {
-                              // Handle showing sub-comments
-                            },
-                            child: Text(
-                              comment['sub_comment'].length == 1
-                                  ? "Réponse (${comment['sub_comment'].length})"
-                                  : "Réponses (${comment['sub_comment'].length})",
-                              style: TextStyle(
-                                color: mainColor,
-                                fontWeight: FontWeight.w600,
-                              ),
+                        CircleAvatar(
+                          radius: 10,
+                          backgroundColor:
+                              const Color.fromARGB(255, 62, 62, 62),
+                          child: Text(
+                            comment['first_name']!
+                                .substring(0, 1)
+                                .toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${comment['first_name'] ?? ''} ${comment['last_name'] ?? ''}",
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                newUtf(comment['message']),
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w300),
+                              ),
+                              Text(
+                                timeAgo(comment['created_at']),
+                                style: const TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w600),
+                              ),
+                              if (comment['sub_comment'].isNotEmpty)
+                                const SizedBox(height: 6),
+                              if (comment['sub_comment'].isNotEmpty)
+                                InkWell(
+                                  onTap: () {
+                                    // Handle showing sub-comments
+                                  },
+                                  child: Text(
+                                    comment['sub_comment'].length == 1
+                                        ? "Réponse (${comment['sub_comment'].length})"
+                                        : "Réponses (${comment['sub_comment'].length})",
+                                    style: TextStyle(
+                                      color: mainColor,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              subComment(comment),
             ],
-          ),
-        ),
-        subComment(comment),
-      ],
-    );
+          )
+        : Container();
   }
 
   TextEditingController subCommentCtrl = TextEditingController();
@@ -308,17 +324,17 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 60, right: 7, top: 0.6),
+                  margin: const EdgeInsets.only(left: 60, right: 18, top: 1),
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
-                    color: const Color.fromARGB(255, 231, 229, 229),
+                    color: const Color.fromARGB(255, 242, 241, 241),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.only(left: 4, right: 8),
                         child: CircleAvatar(
                           radius: 8,
                           backgroundColor:
@@ -348,6 +364,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                               newUtf(comment['sub_comment'][a]['message']),
                               style:
                                   const TextStyle(fontWeight: FontWeight.w300),
+                            ),
+                            Text(
+                              timeAgo(comment['created_at']),
+                              style: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
@@ -386,7 +407,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   },
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 3),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -434,6 +455,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               controller: controller,
               maxLines: null,
               decoration: InputDecoration(
+                border: InputBorder.none,
                 hintText: hint,
                 suffixIcon: isPostingSub
                     ? CircleAvatar(
@@ -452,7 +474,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 10,
-                  vertical: 3,
+                  vertical: 40,
                 ),
               ),
             ),

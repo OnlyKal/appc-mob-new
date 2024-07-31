@@ -12,19 +12,14 @@ class NotificationClass {
         null,
         [
           NotificationChannel(
-              channelGroupKey: 'basic_channel_group',
               channelKey: 'basic_channel',
               channelName: 'Basic notifications',
+              channelGroupKey: 'basic_channel_group',
               channelDescription: 'APPC SERVICES NOTIFICATION',
               defaultColor: mainColor,
-              channelShowBadge: false,
+              importance: NotificationImportance.High,
+              channelShowBadge: true,
               ledColor: Colors.white)
-        ],
-        channelGroups: [
-          NotificationChannelGroup(
-            channelGroupName: 'basic_channel_group',
-            channelGroupKey: 'basic_channel_group',
-          )
         ],
         debug: true);
   }
@@ -61,7 +56,7 @@ class NotificationClass {
   }
 
   static Future<void> openNotifActuality(title, message) async {
-    int min = 100;
+    int min = 1;
     int max = 3000;
     int randomnum = min + Random().nextInt((max + 1) - min);
     SharedPreferences notif = await SharedPreferences.getInstance();
@@ -69,15 +64,15 @@ class NotificationClass {
         notif.getString("state-notif") != "desable") {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: randomnum,
-          channelKey: 'basic_channel',
-          title: title,
-          body: message,
-
-          bigPicture:
-              'https://media.newyorker.com/photos/5909780a019dfc3494ea3018/master/w_2240,c_limit/Brody-Tarzan-Reboot.jpg',
-          notificationLayout: NotificationLayout.BigPicture,
-        ),
+            id: randomnum,
+            channelKey: 'basic_channel',
+            title: title,
+            body: message,
+            largeIcon:
+                "https://media.newyorker.com/photos/5909780a019dfc3494ea3018/master/w_2240,c_limit/Brody-Tarzan-Reboot.jpg",
+            bigPicture: '',
+            notificationLayout: NotificationLayout.BigPicture,
+            payload: {"notification": "4o28727237626356254"}),
         actionButtons: [],
       );
     }
