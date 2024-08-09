@@ -1,3 +1,4 @@
+import 'package:appc/func/color.dart';
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ Widget noCardyet(context) {
   return Container(
     width: fullWidth(context),
     padding: const EdgeInsets.all(10),
-    // margin: const EdgeInsets.all(20),
+    margin: const EdgeInsets.symmetric(horizontal: 20),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: const Color.fromARGB(255, 255, 255, 255),
@@ -84,7 +85,7 @@ Widget noCardyet(context) {
         ),
         const Text(
           "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
-          style: TextStyle(height: 1.8, color: Colors.grey),
+          style: TextStyle(height: 1.8, color: Color.fromARGB(255, 65, 64, 64)),
           textAlign: TextAlign.center,
         ),
         InkWell(
@@ -352,5 +353,51 @@ Widget cardMember(card, BuildContext context) {
 roundAlert() {
   return RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(6.0),
+  );
+}
+
+void cardSuccessDialod(context, message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        scrollable: false,
+        title: Text(
+          'Transaction Réussie',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w600, color: mainColor),
+        ),
+        content: SingleChildScrollView(
+          child: SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w400),
+                    message),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Icon(
+                  CupertinoIcons.check_mark_circled_solid,
+                  color: Colors.green,
+                  size: 60,
+                )
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
   );
 }

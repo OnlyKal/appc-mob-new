@@ -22,3 +22,4 @@ export '../pages/update.pin.dart';
 export '../pages/photoview.dart';
 export '../func/notification.dart';
 export '../pages/settings.dart';
+export '../api/payement.dart';

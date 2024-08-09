@@ -12,11 +12,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Future userscard;
+
   @override
   void initState() {
+    getUsercard();
     super.initState();
   }
 
+  getUsercard() => setState(() {
+        userscard = getUserCards();
+      });
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -45,7 +51,8 @@ class _HomePageState extends State<HomePage> {
                 width: 20,
               ),
               IconButton(
-                  onPressed: () {}, icon: const Icon(CupertinoIcons.info)),
+                  onPressed: () => getUsercard(),
+                  icon: const Icon(CupertinoIcons.info)),
               const SizedBox(
                 width: 20,
               )
@@ -57,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   FutureBuilder(
-                      future: getUserCards(),
+                      future: userscard,
                       builder: (context, AsyncSnapshot user) {
                         if (user.hasData) {
                           localListCards = user.data.toList();

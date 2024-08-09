@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class CardDetail extends StatefulWidget {
   final card;
   const CardDetail({super.key, this.card});
-
   @override
   State<CardDetail> createState() => _CardDetailState();
 }
@@ -16,6 +15,9 @@ class _CardDetailState extends State<CardDetail> {
   @override
   void initState() {
     setState(() => currentCard = widget.card);
+    getSessionDetails().then((user) {
+      setState(() => ctrNumber.text = user['phone'].toString());
+    });
     super.initState();
   }
 
@@ -55,6 +57,7 @@ class _CardDetailState extends State<CardDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
@@ -65,76 +68,69 @@ class _CardDetailState extends State<CardDetail> {
                             color: Colors.white,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                      "ACHAT CARTE APPC",
-                                      style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    content: SizedBox(
-                                      width: fullWidth(context),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Méthodes de paiement acceptées",
-                                            style: TextStyle(
-                                                fontSize: 19,
-                                                fontWeight: FontWeight.w300),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/airtel.png",
-                                                height: 40,
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Image.asset(
-                                                "assets/orange.png",
-                                                height: 40,
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Image.asset(
-                                                "assets/mpsa.png",
-                                                height: 40,
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () => payementMobileModal(currentCard),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: const Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.device_phone_portrait,
+                                        size: 18,
+                                        color:
+                                            Color.fromARGB(255, 197, 198, 208),
                                       ),
-                                    ),
-                                    actions: [],
-                                  );
-                                });
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: mainColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: const Text(
-                                "COMMANDER",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                        )
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        "PAIEMENT MOBILE",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: const Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.creditcard,
+                                        size: 18,
+                                        color:
+                                            Color.fromARGB(255, 197, 198, 208),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        " CARTE DE CREDIT ",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     Row(
@@ -308,5 +304,215 @@ class _CardDetailState extends State<CardDetail> {
         ),
       ),
     );
+  }
+
+  TextEditingController ctrNumber = TextEditingController();
+  bool isUsd = true;
+  String devise = 'USD';
+  bool isPaying = false;
+  payementMobileModal(card) {
+    var price = card['current_price']
+        .where((element) => element['is_current'] == true)
+        .first;
+
+    void checkPayment(payement, useState, card, price) {
+      var transaction = {
+        "type": "ACHAT CARTE APPC",
+        "amount": price.toString(),
+        "currency": devise.toString(),
+        "status": true.toString(),
+        "date": DateTime.now().toIso8601String(),
+      };
+
+      checkPaymentBilling(payement['orderNumber']).then((checking) {
+        if (checking['code'].toString().contains("0")) {
+          createCard(card['id'], transaction).then((card) {
+            useState(() => isPaying = false);
+            back(context);
+            cardSuccessDialod(context,
+                'Félicitations, votre commande a été enregistrée, veuillez patienter 24h pour que votre carte APPC vous soit livrée !');
+          });
+        } else {
+          message("Désolé, la transaction n'est pas verifiée..", context);
+        }
+      });
+    }
+
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: roundAlert(),
+      context: context,
+      isDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, useState) {
+          return Scaffold(
+            body: Container(
+              // height: 400,
+              color: Colors.white,
+              width: fullWidth(context),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "ACHAT CARTE APPC | PAIEMENT MOBILE (${card['name']})",
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w700),
+                      ),
+                      IconButton(
+                          onPressed: () => back(context),
+                          icon: const Icon(
+                            Icons.close,
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Mode de paiement pris en charge :",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      methodePayment("AIRTEL MONEY"),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      methodePayment("ORANGE MONEY"),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      methodePayment("M-PESA"),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Switch(
+                          value: isUsd,
+                          onChanged: (value) {
+                            useState(() {
+                              isUsd = value;
+                              value == true ? devise = 'USD' : devise = 'CDF';
+                            });
+                          }),
+                      Text(
+                        isUsd == true ? "USD" : "CDF",
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Si vous ne souhaitez pas utiliser ce numéro, veuillez le remplacer par celui qui contient suffisamment d'argent pour payer la carte APPC.",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: ctrNumber,
+                    maxLength: 12,
+                    onChanged: (value) {},
+                    decoration: const InputDecoration(
+                        labelText:
+                            "Le numéro de téléphone doit commencer par 243",
+                        hintText:
+                            "Le numéro de téléphone doit commencer par 243"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  isPaying == true
+                      ? loading(context)
+                      : InkWell(
+                          onTap: () async {
+                            if (ctrNumber.text.startsWith("243") &&
+                                ctrNumber.text.length == 12) {
+                              useState(() => isPaying = true);
+                              payementBilling(ctrNumber.text, "1.0", devise)
+                                  // ctrNumber.text, price['price'], devise)
+                                  .then((payement) {
+                                if (payement['code'].toString().contains("0")) {
+                                  checkPayment(
+                                      payement, useState, card, price['price']);
+                                } else if (payement['code']
+                                    .toString()
+                                    .contains("0")) {
+                                  message(
+                                      "Désolé, la transaction a échoué, veuillez réessayer !!",
+                                      context);
+                                } else {}
+                              });
+                            } else {
+                              message(
+                                  "Le numéro doit commencer par 243 et contenir 12 caractères.",
+                                  context);
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(10)),
+                            width: fullHeight(context),
+                            child: Center(
+                                child: Text(
+                              "VALIDER TRANSACTION (${price['price']} $devise)",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: Colors.white),
+                            )),
+                          ),
+                        ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  methodePayment(title) {
+    return Container(
+        decoration: BoxDecoration(
+            color: colorRandom(), borderRadius: BorderRadius.circular(2)),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+        child: Row(
+          children: [
+            const Icon(
+              CupertinoIcons.square_grid_2x2,
+              size: 15,
+              color: Color.fromARGB(255, 197, 198, 208),
+            ),
+            const SizedBox(
+              width: 3,
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
+        ));
   }
 }

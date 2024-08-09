@@ -80,3 +80,8 @@ Future getSubCommentsnews(commentId) async {
 Future getAllnews(limit, page) async {
   return apigetDataNoAuth("api/news/get-all/?limit=$limit&page=$page");
 }
+
+Future createCard(cardId, transaction) async {
+  return apipostData("api/subscription/member-card/create/",
+      {"card_id": cardId.toString(), "transaction": transaction.toString()});
+}
