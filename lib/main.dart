@@ -84,9 +84,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Container(
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.all(20),
-                child: const Text(
-                  "APPC SERVICES © 2024",
-                  style: TextStyle(color: Color.fromARGB(255, 112, 111, 111)),
+                child: Container(
+                  child: const Text(
+                    "APPC SERVICES © 2024",
+                    style: TextStyle(color: Color.fromARGB(255, 112, 111, 111)),
+                  ),
                 ),
               ))
             ],

@@ -23,3 +23,4 @@ export '../pages/photoview.dart';
 export '../func/notification.dart';
 export '../pages/settings.dart';
 export '../api/payement.dart';
+export '../pages/presentation.dart';

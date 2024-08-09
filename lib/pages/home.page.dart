@@ -20,9 +20,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  // REFRESH CARDS
   getUsercard() => setState(() {
         userscard = getUserCards();
       });
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -30,13 +32,17 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 238, 237, 237),
           appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 231, 230, 230),
-            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            leading: Image.asset(
+              "assets/logo.png",
+            ),
+            title: const Text(
+              "APPC SERVICES",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
             actions: [
               IconButton(
-                onPressed: () => NotificationClass.openNotifActuality(
-                    "APPC SERVICE-RDC",
-                    "Bienvenue chez APPC SERVICES-RDC, nous sommes là pour vous faciliter la vie."),
+                onPressed: () {},
                 icon: const badges.Badge(
                   badgeContent: Text(
                     "2",
@@ -50,12 +56,6 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 width: 20,
               ),
-              IconButton(
-                  onPressed: () => getUsercard(),
-                  icon: const Icon(CupertinoIcons.info)),
-              const SizedBox(
-                width: 20,
-              )
             ],
           ),
           body: SingleChildScrollView(
@@ -79,7 +79,10 @@ class _HomePageState extends State<HomePage> {
                               items: localListCards.map((card) {
                                 return Builder(
                                   builder: (BuildContext context) {
-                                    return cardMember(card, context);
+                                    return Container(
+                                      margin: const EdgeInsets.only(top: 10),
+                                      child: cardMember(card, context),
+                                    );
                                   },
                                 );
                               }).toList(),
@@ -88,9 +91,7 @@ class _HomePageState extends State<HomePage> {
                         }
                         return noCardy(context);
                       }),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 5),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
