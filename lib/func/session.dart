@@ -44,10 +44,7 @@ void logout(context) async {
     action: SnackBarAction(
       label: 'OK',
       onPressed: () async {
-        await prefs.remove("matricule");
-        await prefs.remove("phone");
-        await prefs.remove("email");
-        await prefs.remove("token");
+        await prefs.clear();
         goTo(context, const SignIn());
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Déconnecté avec succès')),

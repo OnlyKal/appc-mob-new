@@ -33,8 +33,11 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color.fromARGB(255, 238, 237, 237),
           appBar: AppBar(
             backgroundColor: Colors.white,
-            leading: Image.asset(
-              "assets/logo.png",
+            leading: InkWell(
+              onTap: () => goTo(context, const PresentationPage()),
+              child: Image.asset(
+                "assets/logo.png",
+              ),
             ),
             title: const Text(
               "APPC SERVICES",
@@ -60,7 +63,6 @@ class _HomePageState extends State<HomePage> {
           ),
           body: SingleChildScrollView(
             child: SizedBox(
-              // height: fullHeight(context),
               child: Column(
                 children: [
                   FutureBuilder(

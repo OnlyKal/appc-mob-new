@@ -258,6 +258,9 @@ Widget cardMember(card, BuildContext context) {
           children: [
             IconButton(
                 onPressed: () {
+                  getSubscription(card['number']).then((elements) {
+                    print(elements);
+                  });
                   showDialog(
                       barrierDismissible: false,
                       context: context,

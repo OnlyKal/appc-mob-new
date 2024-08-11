@@ -113,7 +113,7 @@ class _PresentationPageState extends State<PresentationPage> {
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/bosss.png'),
+                  image: AssetImage('assets/boos.s.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -146,7 +146,7 @@ class _PresentationPageState extends State<PresentationPage> {
                       ),
                     ),
                     const Text(
-                      'Amour du Prochain et pour la Patrie "APPC"',
+                      'Amour du Prochain et de la Patrie Congo "APPC"',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
