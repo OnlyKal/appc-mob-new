@@ -22,88 +22,44 @@ class ProfilePage extends StatelessWidget {
           children: <Widget>[
             FutureBuilder(
               future: getImageSession(),
-              builder: (context, AsyncSnapshot snapshot) {
-                return InkWell(
-                  onTap: snapshot.hasData
-                      ? () => print(snapshot.data.toString())
-                      : null,
-                  child: Stack(
+              builder: (context, AsyncSnapshot user) {
+                if (user.hasData) {
+                  final imageUrl = user.data['image'].toString();
+                  return Stack(
                     children: [
-                      CircleAvatar(
-                        radius: 70,
-                        backgroundColor: Colors.grey,
-                        backgroundImage:
-                            snapshot.hasData && snapshot.data['image'] is String
-                                ? NetworkImage(snapshot.data['image'])
-                                : const AssetImage("assets/user.png"),
+                      InkWell(
+                        onTap: () =>
+                            goTo(context, PhotoViewer(image: imageUrl)),
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: NetworkImage(imageUrl),
+                        ),
                       ),
-                      if (snapshot.hasData && snapshot.data['image'] is String)
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: () =>
-                                goTo(context, const ProfileImagePage()),
-                            child: CircleAvatar(
-                              backgroundColor: mainColor,
-                              child: const Icon(
-                                CupertinoIcons.camera,
-                                size: 16,
-                                color: Colors.white,
-                              ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () => goTo(context, const ProfileImagePage()),
+                          child: CircleAvatar(
+                            backgroundColor: mainColor,
+                            child: const Icon(
+                              CupertinoIcons.camera,
+                              size: 16,
+                              color: Colors.white,
                             ),
                           ),
                         ),
+                      ),
                     ],
-                  ),
+                  );
+                }
+                return const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage("assets/user.png"),
                 );
               },
             ),
-            // FutureBuilder(
-            //     future: getImageSession(),
-            //     builder: (context, AsyncSnapshot user) {
-            //       if (user.hasData && user.data['image'].runtimeType("String")) {
-            //         return Stack(
-            //           children: [
-            //             InkWell(
-            //               onTap: () {
-            //                 print(user.data.toString());
-            //               },
-            //               // onTap: () => goTo(
-            //               //     context,
-            //               //     PhotoViewer(
-            //               //         image: user.data['image'].toString())),
-            //               child: CircleAvatar(
-            //                 radius: 70,
-            //                 backgroundColor: Colors.grey,
-            //                 backgroundImage: NetworkImage(
-            //                   user.data['image'].toString(),
-            //                 ),
-            //               ),
-            //             ),
-            //             Positioned(
-            //                 bottom: 0,
-            //                 right: 0,
-            //                 child: GestureDetector(
-            //                   onTap: () =>
-            //                       goTo(context, const ProfileImagePage()),
-            //                   child: CircleAvatar(
-            //                     backgroundColor: mainColor,
-            //                     child: const Icon(
-            //                       CupertinoIcons.camera,
-            //                       size: 16,
-            //                       color: Colors.white,
-            //                     ),
-            //                   ),
-            //                 ))
-            //           ],
-            //         );
-            //       }
-            //       return const CircleAvatar(
-            //         radius: 50,
-            //         backgroundImage: AssetImage("assets/user.png"),
-            //       );
-            //     }),
             const SizedBox(height: 16),
             FutureBuilder(
                 future: getSessionDetails(),

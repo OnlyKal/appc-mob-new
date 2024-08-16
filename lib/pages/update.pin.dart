@@ -7,27 +7,34 @@ class UpdatePinPage extends StatefulWidget {
 }
 
 class _UpdatePinPageState extends State<UpdatePinPage> {
-  final TextEditingController _oldPinController = TextEditingController();
-  final TextEditingController _newPinController = TextEditingController();
-  final TextEditingController _confirmPinController = TextEditingController();
+  final TextEditingController _oldCtlr = TextEditingController();
+  final TextEditingController newCtrl = TextEditingController();
+  final TextEditingController _cftCtrl = TextEditingController();
   bool isUpdating = false;
   void _updatePin() {
-    setState(() => isUpdating = true);
-    if (_oldPinController.text.length == 4) {
-      if (_newPinController.text.length == 4) {
-        if (_confirmPinController.text.length == 4) {
-          updatePIN(_oldPinController.text, _newPinController.text).then((pin) {
+    if (_oldCtlr.text.length == 4) {
+      if (newCtrl.text.length == 4) {
+        if (_cftCtrl.text.length == 4) {
+          setState(() => isUpdating = true);
+          updatePIN(_oldCtlr.text, newCtrl.text).then((pin) {
             setState(() => isUpdating = false);
             if (pin['matricule'] != null &&
                 pin['matricule'].toString().contains("APPC")) {
-              goTo(context, const ProfilePage());
+              _oldCtlr.text = newCtrl.text = _cftCtrl.text = "";
+              back(context);
               message("Code PIN modifié avec succès", context);
             } else {
               message(pin['detail'], context);
             }
           });
+        } else {
+          message("Le code doit avoir 4 chiffres", context);
         }
+      } else {
+        message("Le code doit avoir 4 chiffres", context);
       }
+    } else {
+      message("Le code doit avoir 4 chiffres", context);
     }
   }
 
@@ -48,12 +55,10 @@ class _UpdatePinPageState extends State<UpdatePinPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            inputText(
-                context, _oldPinController, "Ancien PIN", null, true, false),
-            inputText(
-                context, _newPinController, "Nouveau PIN", null, true, false),
-            inputText(context, _confirmPinController,
-                "Confirmer le nouveau PIN", null, true, false),
+            inputText(context, _oldCtlr, "Ancien PIN", null, true, false),
+            inputText(context, newCtrl, "Nouveau PIN", null, true, false),
+            inputText(context, _cftCtrl, "Confirmer le nouveau PIN", null, true,
+                false),
             const SizedBox(height: 20),
             isUpdating == true
                 ? loading(context)
