@@ -54,5 +54,15 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>processing</string>
+	    <string>fetch</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>task-identifier</string>
+		<string>be.tramckrijte.workmanagerExample.iOSBackgroundAppRefresh</string>
+	</array>
 </dict>
 </plist>

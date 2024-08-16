@@ -167,19 +167,22 @@ class _SignInState extends State<SignIn> {
                         onTap: () async {
                           setState(() => isLoading = true);
                           login(ctrmatricule.text, ctrcodepin).then((member) {
+                            print(member);
                             setState(() => isLoading = false);
                             if (member['id'] != null) {
                               storeUserDetails(
-                                  member['matricule'],
-                                  member['first_name'],
-                                  member['last_name'],
-                                  member['email'],
-                                   member['phone_number'],
-                                  member['url'],
-                                  member['auth_token'],
-                                  member['function'],
-                                  );
+                                member['matricule'],
+                                member['first_name'],
+                                member['last_name'],
+                                member['email'],
+                                member['phone_number'],
+                                member['url'],
+                                member['auth_token'],
+                                member['function'],
+                              );
                               goTo(context, const SplashScreen());
+                            } else {
+                              message(member['detail'], context);
                             }
                           });
                         },

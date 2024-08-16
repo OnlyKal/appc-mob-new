@@ -71,7 +71,7 @@ Widget noCardyet(context) {
   return Container(
     width: fullWidth(context),
     padding: const EdgeInsets.all(10),
-    margin: const EdgeInsets.symmetric(horizontal: 20),
+    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       color: const Color.fromARGB(255, 255, 255, 255),

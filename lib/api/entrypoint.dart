@@ -33,7 +33,6 @@ Future apipostData(endpoint, data) async {
 Future apipostDataNoAuth(endpoint, data) async {
   var response =
       await http.post(Uri.parse("$serveradress$endpoint"), body: data);
-  print(response.body);
   return response.statusCode != 404 || response.statusCode != 406
       ? jsonDecode(response.body)
       : null;

@@ -10,6 +10,7 @@ converToUpperCase(word) {
 }
 
 hideKeyboard() => SystemChannels.textInput.invokeMethod('TextInput.hide');
+
 String newVal(dynamic value) {
   if (value == null || value == "" || value == "null") {
     return "";

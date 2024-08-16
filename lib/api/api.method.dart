@@ -63,6 +63,11 @@ Future getUserQuestions() async {
   return apipostData("api/news/question/get-all/", {});
 }
 
+// NEW
+Future getUserCardInfo(idcard) async {
+  return apigetData("api/subscription/member-cards/$idcard/");
+}
+
 Future getNewsDetails(id) async {
   return apigetDataNoAuth("api/news/news/$id/");
 }
@@ -82,10 +87,16 @@ Future getAllnews(limit, page) async {
 }
 
 Future getSubscription(number) async {
-  return apipostDataNoAuth("api/subscription/get/", {"member_card": number});
+  return apipostData("api/subscription/get/", {"member_card": number});
 }
 
 Future createCard(cardId, transaction) async {
   return apipostData("api/subscription/member-card/create/",
       {"card_id": cardId.toString(), "transaction": transaction.toString()});
+}
+
+//NEW
+Future updateStatusCard(matricule, status) async {
+  return apipostData("api/subscription/update-card-status/",
+      {"matricule": matricule, "status": status});
 }
