@@ -21,47 +21,89 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             FutureBuilder(
-                future: getImageSession(),
-                builder: (context, AsyncSnapshot user) {
-                  if (user.hasData) {
-                    return Stack(
-                      children: [
-                        InkWell(
-                          onTap: () => goTo(
-                              context,
-                              PhotoViewer(
-                                  image: user.data['image'].toString())),
-                          child: CircleAvatar(
-                            radius: 70,
-                            backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(
-                              user.data['image'].toString(),
+              future: getImageSession(),
+              builder: (context, AsyncSnapshot snapshot) {
+                return InkWell(
+                  onTap: snapshot.hasData
+                      ? () => print(snapshot.data.toString())
+                      : null,
+                  child: Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundColor: Colors.grey,
+                        backgroundImage:
+                            snapshot.hasData && snapshot.data['image'] is String
+                                ? NetworkImage(snapshot.data['image'])
+                                : const AssetImage("assets/user.png"),
+                      ),
+                      if (snapshot.hasData && snapshot.data['image'] is String)
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () =>
+                                goTo(context, const ProfileImagePage()),
+                            child: CircleAvatar(
+                              backgroundColor: mainColor,
+                              child: const Icon(
+                                CupertinoIcons.camera,
+                                size: 16,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () =>
-                                  goTo(context, const ProfileImagePage()),
-                              child: CircleAvatar(
-                                backgroundColor: mainColor,
-                                child: const Icon(
-                                  CupertinoIcons.camera,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ))
-                      ],
-                    );
-                  }
-                  return const CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage("assets/user.png"),
-                  );
-                }),
+                    ],
+                  ),
+                );
+              },
+            ),
+            // FutureBuilder(
+            //     future: getImageSession(),
+            //     builder: (context, AsyncSnapshot user) {
+            //       if (user.hasData && user.data['image'].runtimeType("String")) {
+            //         return Stack(
+            //           children: [
+            //             InkWell(
+            //               onTap: () {
+            //                 print(user.data.toString());
+            //               },
+            //               // onTap: () => goTo(
+            //               //     context,
+            //               //     PhotoViewer(
+            //               //         image: user.data['image'].toString())),
+            //               child: CircleAvatar(
+            //                 radius: 70,
+            //                 backgroundColor: Colors.grey,
+            //                 backgroundImage: NetworkImage(
+            //                   user.data['image'].toString(),
+            //                 ),
+            //               ),
+            //             ),
+            //             Positioned(
+            //                 bottom: 0,
+            //                 right: 0,
+            //                 child: GestureDetector(
+            //                   onTap: () =>
+            //                       goTo(context, const ProfileImagePage()),
+            //                   child: CircleAvatar(
+            //                     backgroundColor: mainColor,
+            //                     child: const Icon(
+            //                       CupertinoIcons.camera,
+            //                       size: 16,
+            //                       color: Colors.white,
+            //                     ),
+            //                   ),
+            //                 ))
+            //           ],
+            //         );
+            //       }
+            //       return const CircleAvatar(
+            //         radius: 50,
+            //         backgroundImage: AssetImage("assets/user.png"),
+            //       );
+            //     }),
             const SizedBox(height: 16),
             FutureBuilder(
                 future: getSessionDetails(),
@@ -103,8 +145,6 @@ class ProfilePage extends StatelessWidget {
                   size: 15,
                 ),
                 () => message("Pas encore disponible", context)),
-            // _buildOption(context, 'Parrainage', Icons.logout, null,
-            //     () => logout(context)),
             _buildOption(context, 'Déconnexion', Icons.logout, null,
                 () => logout(context)),
           ],

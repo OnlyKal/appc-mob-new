@@ -133,7 +133,6 @@ class _SignUpState extends State<SignUp> {
                                   controllerFunction.text,
                                   controllerAdress.text)
                               .then((member) {
-                            print(member);
                             setState(() => isAdding = false);
                             if (member['id'] != null) {
                               storeUserDetails(
@@ -144,7 +143,8 @@ class _SignUpState extends State<SignUp> {
                                   member['phone_number'],
                                   member['url'],
                                   member['auth_token'],
-                                  member['function']);
+                                  member['function'],
+                                  null);
                               goTo(context, ProfileImagePage(member: member));
                             }
                           });

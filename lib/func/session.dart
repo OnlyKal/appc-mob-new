@@ -3,8 +3,8 @@ import 'package:appc/pages/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> storeUserDetails(
-    matricule, name, lastname, email, phone, url, token, function) async {
+Future<void> storeUserDetails(matricule, name, lastname, email, phone, url,
+    token, function, image) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('matricule', matricule);
   await prefs.setString('first_name', name);
@@ -14,6 +14,7 @@ Future<void> storeUserDetails(
   await prefs.setString('token', token);
   await prefs.setString('url', url);
   await prefs.setString('function', function);
+  prefs.setString("image", image);
 }
 
 Future getSessionDetails() async {

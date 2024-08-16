@@ -179,7 +179,9 @@ class _SignInState extends State<SignIn> {
                                 member['url'],
                                 member['auth_token'],
                                 member['function'],
+                                member['image']
                               );
+                              
                               goTo(context, const SplashScreen());
                             } else {
                               message(member['detail'], context);

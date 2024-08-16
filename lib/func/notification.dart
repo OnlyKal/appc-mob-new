@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationClass {
   static initializeNotif() async {
-    SharedPreferences notif = await SharedPreferences.getInstance();
-    notif.setString("state-notif", "enable");
     AwesomeNotifications().initialize(
         null,
         [
@@ -39,8 +37,7 @@ class NotificationClass {
     int max = 2000;
     int randomnum = min + Random().nextInt((max + 1) - min);
     SharedPreferences notif = await SharedPreferences.getInstance();
-    if (notif.getString("state-notif") != null ||
-        notif.getString("state-notif") != "desable") {
+    if (notif.getString("state-notif") == "enable") {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: randomnum,
@@ -60,8 +57,7 @@ class NotificationClass {
     int max = 3000;
     int randomnum = min + Random().nextInt((max + 1) - min);
     SharedPreferences notif = await SharedPreferences.getInstance();
-    if (notif.getString("state-notif") != null ||
-        notif.getString("state-notif") != "desable") {
+    if (notif.getString("state-notif") == "enable") {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
             id: randomnum,
@@ -81,8 +77,7 @@ class NotificationClass {
   static Future<void> openNotifMono(title, message) async {
     int randomnum = 02;
     SharedPreferences notif = await SharedPreferences.getInstance();
-    if (notif.getString("state-notif") != null ||
-        notif.getString("state-notif") != "desable") {
+    if (notif.getString("state-notif") == "enable") {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: randomnum,
