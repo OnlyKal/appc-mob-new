@@ -14,9 +14,10 @@ Future<void> goTLaunchUrl(url) async {
   }
 }
 
-htmlWiget(htm) {
+htmlWiget(htm, double sized) {
   return HtmlWidget(
     htm,
+    textStyle: TextStyle(fontSize: sized),
     onTapUrl: (url) async {
       goTLaunchUrl(url);
       return true;

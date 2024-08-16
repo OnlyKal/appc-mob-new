@@ -22,6 +22,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   bool hideBottomField = false;
   late Future commentaSync;
 
+  double fontSize = 14.0;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +66,38 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           "Actualité détaillée",
           style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
         ),
+        actions: [
+          InkWell(
+            onTap: () => setState(() => fontSize = 19),
+            child: const Text(
+              "A",
+              style: TextStyle(fontSize: 35),
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          InkWell(
+            onTap: () => setState(() => fontSize = 17),
+            child: const Text(
+              "A",
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          InkWell(
+            onTap: () => setState(() => fontSize = 15),
+            child: const Text(
+              "A",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -74,22 +108,25 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   InkWell(
-                    onTap: () => goTo(
-                      context,
-                      PhotoViewer(image: actuality['image'].toString()),
-                    ),
+                    onTap: () {
+                      goTo(
+                        context,
+                        PhotoViewer(image: actuality['image'].toString()),
+                      );
+                    },
                     child: Image.network(
                       actuality['image'].toString(),
                       fit: BoxFit.cover,
                       height: 300,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 15),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -120,89 +157,148 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             ),
                           ],
                         ),
-                        Text(
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 15),
+                        child: Text(
                           newUtf(actuality['title']),
                           style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          timeAgo(actuality['posted_at']),
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
-                        const SizedBox(height: 10),
-                        htmlWiget(newUtf(actuality['message'])),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "COMMENTAIRES (${actuality['comment'].length})",
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          commenterZone('Laissez un commentaire', () {
-                            if (ctrollerComent.text.isNotEmpty) {
-                              setState(() => isPosting = true);
-                              postNewsComment(
-                                widget.article['id'],
-                                ctrollerComent.text,
-                              ).then((_) {
-                                refresh();
-                                setState(() {
-                                  hideBottomField = false;
-                                  isPosting = false;
-                                });
-                                back(context);
-                              });
-                            } else {
-                              message(
-                                  "Veuillez entrer un commentaire", context);
-                            }
-                          }, ctrollerComent);
-                        },
-                        child: Row(
+                      const SizedBox(height: 10),
+                      if (actuality['image_attachement'] != null &&
+                          actuality['image_attachement'].isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          color: Colors.white,
+                          width: fullWidth(context),
+                          height: 100,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: actuality['image_attachement']
+                                .map<Widget>((element) => Container(
+                                      height: 100,
+                                      width: 100,
+                                      margin: const EdgeInsets.only(right: 10),
+                                      color: const Color.fromARGB(
+                                          255, 224, 224, 224),
+                                      child: element != null
+                                          ? InkWell(
+                                              onTap: () {
+                                                goTo(
+                                                  context,
+                                                  PhotoViewer(
+                                                      image: element['image']
+                                                          .toString()),
+                                                );
+                                              },
+                                              child: Image.network(
+                                                element['image'],
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )
+                                          : const Icon(Icons.error),
+                                    ))
+                                .toList(),
+                          ),
+                        ),
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (isPosting == true)
-                              const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1,
-                                  )),
                             Text(
-                              "Commenter",
-                              style: TextStyle(color: mainColor),
+                              timeAgo(actuality['posted_at']),
+                              style: TextStyle(color: Colors.grey[600]),
                             ),
+                            const SizedBox(height: 10),
+                            htmlWiget(newUtf(actuality['message']), fontSize),
                           ],
                         ),
                       ),
                     ],
                   ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "COMMENTAIRES (${actuality['comment'].length})",
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            commenterZone('Laissez un commentaire', () {
+                              if (ctrollerComent.text.isNotEmpty) {
+                                setState(() => isPosting = true);
+                                postNewsComment(
+                                  widget.article['id'],
+                                  ctrollerComent.text,
+                                ).then((_) {
+                                  refresh();
+                                  setState(() {
+                                    hideBottomField = false;
+                                    isPosting = false;
+                                  });
+                                  back(context);
+                                });
+                              } else {
+                                message(
+                                    "Veuillez entrer un commentaire", context);
+                              }
+                            }, ctrollerComent);
+                          },
+                          child: Row(
+                            children: [
+                              if (isPosting == true)
+                                const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                    )),
+                              Text(
+                                "Commenter",
+                                style: TextStyle(color: mainColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
-                  FutureBuilder(
-                    future: commentaSync,
-                    builder: (context, AsyncSnapshot comment) {
-                      if (comment.hasData) {
-                        List commentairesList = comment.data.toList();
-                        return Column(
-                          children: commentairesList.reversed
-                              .map<Widget>((c) => commentaireElement(c))
-                              .toList(),
-                        );
-                      }
-                      return const Text("Aucune donnée");
-                    },
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+                    child: FutureBuilder(
+                      future: commentaSync,
+                      builder: (context, AsyncSnapshot comment) {
+                        if (comment.hasData) {
+                          List commentairesList = comment.data.toList();
+                          return Column(
+                            children: commentairesList.reversed
+                                .map<Widget>((c) => commentaireElement(c))
+                                .toList(),
+                          );
+                        }
+                        return const Text("Aucune donnée");
+                      },
+                    ),
                   ),
                   const SizedBox(height: 100),
                 ],

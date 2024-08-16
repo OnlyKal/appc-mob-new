@@ -46,7 +46,6 @@ class _ActualitiesState extends State<Actualities> {
               child: FutureBuilder(
                   future: allnews,
                   builder: (context, AsyncSnapshot news) {
-                 
                     if (news.hasData) {
                       List actualityList = news.data['data'].reversed.toList();
                       return SizedBox(
@@ -58,10 +57,13 @@ class _ActualitiesState extends State<Actualities> {
                               itemBuilder: (context, i) {
                                 var imageUrl = actualityList[i]['image'];
                                 return InkWell(
-                                  onTap: () => goTo(
-                                      context,
-                                      NewsDetailPage(
-                                          article: actualityList[i])),
+                                  onTap: () {
+                                    // print(actualityList[i]);
+                                    goTo(
+                                        context,
+                                        NewsDetailPage(
+                                            article: actualityList[i]));
+                                  },
                                   child: Container(
                                     width: fullHeight(context),
                                     decoration: const BoxDecoration(
@@ -104,7 +106,13 @@ class _ActualitiesState extends State<Actualities> {
                                                   children: [
                                                     Text(
                                                       newUtf(actualityList[i]
-                                                          ['title']),
+                                                                      ['title'])
+                                                                  .length <=
+                                                              110
+                                                          ? newUtf(
+                                                              actualityList[i]
+                                                                  ['title'])
+                                                          : "${newUtf(actualityList[i]['title']).toString().substring(0, 130)}...",
                                                       style: const TextStyle(
                                                           fontSize: 16.6,
                                                           fontWeight:
