@@ -26,3 +26,4 @@ export '../api/payement.dart';
 export '../pages/presentation.dart';
 export '../func/backgound.dart';
 export '../func/background.func.dart';
+export '../pages/statistique.dart';

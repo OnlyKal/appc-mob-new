@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             "Statistique",
                             "Contrôle de la fréquence d'utilisation",
                             CupertinoIcons.chart_bar_alt_fill,
-                            () {}),
+                            () => goTo(context, const Frequentation())),
                       ],
                     ),
                   )

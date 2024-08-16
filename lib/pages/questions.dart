@@ -40,7 +40,7 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 242, 241, 241),
       appBar: AppBar(
         leading: backPage(context),
         backgroundColor: Colors.white,
@@ -153,14 +153,14 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                   builder: (context) {
                     return Container(
                       padding: const EdgeInsets.all(8.0),
-                      color: const Color.fromARGB(255, 76, 75, 75),
+                      color: Color.fromARGB(255, 255, 255, 255),
                       child: Row(
                         children: [
                           Expanded(
                             child: TextField(
                               controller: questionController,
                               keyboardType: TextInputType.multiline,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(),
                               maxLines: null,
                               decoration: const InputDecoration(
                                 hintText: 'Écrivez votre question ici...',
