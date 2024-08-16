@@ -13,6 +13,7 @@ class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 242, 242, 242),
       appBar: AppBar(
         leading: backPage(context),
         backgroundColor: Colors.white,
@@ -38,81 +39,93 @@ class _OrderCardState extends State<OrderCard> {
                                 List currentPrice =
                                     cardsList[i]['current_price'].toList();
                                 return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 2),
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 5),
                                   decoration: const BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Color.fromARGB(255, 206, 206,
-                                            206), 
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                  ),
+                                      border: Border.symmetric(
+                                    vertical: BorderSide(
+                                        color: Colors.blue, width: 5),
+                                  )),
                                   child: ListTile(
-                                    tileColor: Colors.white,
-                                    onTap: () {
-                                      goTo(
-                                          context,
-                                          CardDetail(
-                                            card: cardsList[i],
-                                          ));
-                                    },
-                                    title: Text(
-                                      converToUpperCase(cardsList[i]['name']),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            for (var a = 0;
-                                                a <
-                                                    cardsList[i]
-                                                        ['stars_number'];
-                                                a++)
-                                              const Icon(
-                                                CupertinoIcons.star_fill,
-                                                size: 14,
-                                                color: Color.fromARGB(
-                                                    255, 215, 152, 6),
-                                              ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
+                                      tileColor: Colors.white,
+                                      onTap: () {
+                                        goTo(
+                                            context,
+                                            CardDetail(
+                                              card: cardsList[i],
+                                            ));
+                                      },
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            converToUpperCase(
+                                                cardsList[i]['name']),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Row(
+                                            children: [
+                                              for (var a = 0;
+                                                  a <
+                                                      cardsList[i]
+                                                          ['stars_number'];
+                                                  a++)
+                                                const Icon(
+                                                  CupertinoIcons.star_fill,
+                                                  size: 14,
+                                                  color: Color.fromARGB(
+                                                      255, 215, 152, 6),
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: Container(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        width: fullWidth(context),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             if (currentPrice.isNotEmpty)
-                                              for (var i = 0;
-                                                  i < currentPrice.length;
-                                                  i++)
-                                                if (currentPrice[i]
-                                                        ['is_current'] ==
-                                                    true)
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(6),
-                                                    color: const Color.fromARGB(
-                                                        255, 225, 223, 223),
-                                                    child: Text(
-                                                      "USD ${newVal(currentPrice[0]['price'])}",
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
-                                                  ),
+                                              Row(
+                                                children: currentPrice
+                                                    .where((price) =>
+                                                        price['is_current'] ==
+                                                        true)
+                                                    .map((price) => Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(6),
+                                                          color: const Color
+                                                              .fromARGB(255,
+                                                              167, 212, 247),
+                                                          child: Text(
+                                                            "USD ${newVal(price['price'])}",
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          ),
+                                                        ))
+                                                    .toList(),
+                                              ),
+                                            Text(
+                                              "Réduction ${cardsList[i]['reduction'].toString()}%",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.black),
+                                            )
                                           ],
                                         ),
-                                        // const Divider()
-                                      ],
-                                    ),
-                                  ),
+                                      )),
                                 );
                               }));
                 }

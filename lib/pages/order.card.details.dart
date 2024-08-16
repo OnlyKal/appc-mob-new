@@ -209,91 +209,105 @@ class _CardDetailState extends State<CardDetail> {
                                                 ['current_price']
                                             .toList();
                                         return Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 2),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 0),
                                           decoration: const BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Color.fromARGB(
-                                                    255,
-                                                    206,
-                                                    206,
-                                                    206), // Color of the border
-                                                width:
-                                                    1.0, // Width of the border
-                                              ),
-                                            ),
-                                          ),
+                                              border: Border.symmetric(
+                                            vertical: BorderSide(
+                                                color: Colors.blue, width: 5),
+                                          )),
                                           child: ListTile(
-                                            tileColor: const Color.fromARGB(
-                                                255, 239, 239, 239),
-                                            onTap: () {
-                                              setState(() {
-                                                currentCard = cardsList[i];
-                                              });
-                                            },
-                                            title: Text(
-                                              converToUpperCase(
-                                                  cardsList[i]['name']),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    for (var a = 0;
-                                                        a <
-                                                            cardsList[i][
-                                                                'stars_number'];
-                                                        a++)
-                                                      const Icon(
-                                                        CupertinoIcons
-                                                            .star_fill,
-                                                        size: 14,
-                                                        color: Color.fromARGB(
-                                                            255, 215, 152, 6),
-                                                      ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
+                                              tileColor: const Color.fromARGB(
+                                                  255, 239, 239, 239),
+                                              onTap: () {
+                                                setState(() {
+                                                  currentCard = cardsList[i];
+                                                });
+                                              },
+                                              title: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    converToUpperCase(
+                                                        cardsList[i]['name']),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      for (var a = 0;
+                                                          a <
+                                                              cardsList[i][
+                                                                  'stars_number'];
+                                                          a++)
+                                                        const Icon(
+                                                          CupertinoIcons
+                                                              .star_fill,
+                                                          size: 14,
+                                                          color: Color.fromARGB(
+                                                              255, 215, 152, 6),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              subtitle: SizedBox(
+                                                width: fullWidth(context),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     if (currentPrice.isNotEmpty)
-                                                      for (var i = 0;
-                                                          i <
-                                                              currentPrice
-                                                                  .length;
-                                                          i++)
-                                                        if (currentPrice[i][
-                                                                'is_current'] ==
-                                                            true)
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(6),
-                                                            color: const Color
-                                                                .fromARGB(255,
-                                                                225, 223, 223),
-                                                            child: Text(
-                                                              "USD ${newVal(currentPrice[0]['price'])}",
-                                                              style: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
-                                                            ),
-                                                          ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8.0),
+                                                        child: Row(
+                                                          children: currentPrice
+                                                              .where((price) =>
+                                                                  price[
+                                                                      'is_current'] ==
+                                                                  true)
+                                                              .map(
+                                                                  (price) =>
+                                                                      Container(
+                                                                        padding: const EdgeInsets
+                                                                            .all(
+                                                                            6),
+                                                                        color: const Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            167,
+                                                                            212,
+                                                                            247),
+                                                                        child:
+                                                                            Text(
+                                                                          "USD ${newVal(price['price'])}",
+                                                                          style:
+                                                                              const TextStyle(fontWeight: FontWeight.w400),
+                                                                        ),
+                                                                      ))
+                                                              .toList(),
+                                                        ),
+                                                      ),
+                                                    Text(
+                                                      "Réduction ${cardsList[i]['reduction'].toString()}%",
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: Colors.black),
+                                                    )
                                                   ],
                                                 ),
-                                                // const Divider()
-                                              ],
-                                            ),
-                                          ),
+                                              )),
                                         );
                                       }));
                         }
