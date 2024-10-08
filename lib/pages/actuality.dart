@@ -30,9 +30,6 @@ class _ActualitiesState extends State<Actualities> {
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
         leading: backPage(context),
-        // leading: IconButton(
-        //     onPressed: () => goTo(context, const HomePage()),
-        //     icon: const Icon(CupertinoIcons.back)),
         backgroundColor: Colors.white,
         title: Text(
           "Nos Actualités",
@@ -53,6 +50,8 @@ class _ActualitiesState extends State<Actualities> {
                         child: Skeletonizer(
                           enabled: false,
                           child: ListView.builder(
+                              padding:
+                                  const EdgeInsetsDirectional.only(bottom: 200),
                               itemCount: actualityList.length,
                               itemBuilder: (context, i) {
                                 var imageUrl = actualityList[i]['image'];
@@ -101,75 +100,32 @@ class _ActualitiesState extends State<Actualities> {
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Column(
-                                                  children: [
-                                                    Text(
-                                                      newUtf(actualityList[i]
-                                                                      ['title'])
-                                                                  .length <=
-                                                              110
-                                                          ? newUtf(
-                                                              actualityList[i]
+                                                Text(
+                                                  newUtf(actualityList[i]
                                                                   ['title'])
-                                                          : "${newUtf(actualityList[i]['title']).toString().substring(0, 130)}...",
-                                                      style: const TextStyle(
-                                                          fontSize: 16.6,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    // Text(
-                                                    //   "${convertHtmlToText(newVal(actualityList[i]['message'])).toString().substring(0, 54)}...",
-                                                    //   style: const TextStyle(
-                                                    //       fontWeight:
-                                                    //           FontWeight.w300),
-                                                    // ),
-                                                  ],
+                                                              .length <=
+                                                          110
+                                                      ? newUtf(actualityList[i]
+                                                          ['title'])
+                                                      : "${newUtf(actualityList[i]['title']).toString().substring(0, 130)}...",
+                                                  style: const TextStyle(
+                                                      fontSize: 16.6,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 3),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      // Row(
-                                                      //   children: [
-                                                      //     const Icon(
-                                                      //       CupertinoIcons
-                                                      //           .bubble_middle_bottom,
-                                                      //       size: 12,
-                                                      //     ),
-                                                      //     const SizedBox(
-                                                      //       width: 5,
-                                                      //     ),
-                                                      //     Text(
-                                                      //       actualityList[i]
-                                                      //               ['comment']
-                                                      //           .length
-                                                      //           .toString(),
-                                                      //       style: const TextStyle(
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .w400),
-                                                      //     ),
-                                                      //   ],
-                                                      // ),
-                                                      Text(
-                                                        timeAgo(actualityList[i]
-                                                            ['posted_at']),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  timeAgo(actualityList[i]
+                                                      ['posted_at']),
+                                                  style: const TextStyle(
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w400),
                                                 ),
                                               ],
                                             ),

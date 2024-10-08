@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future userscard;
+  late Future notificationsCount;
 
   @override
   void initState() {
@@ -21,9 +22,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   // REFRESH CARDS
-  getUsercard() => setState(() {
-        userscard = getUserCards();
+  getUsercard() {
+    setState(() {
+      userscard = getUserCards();
+      notificationsCount = getNotifCount();
+    });
+
+    socket?.on("emit-new-actuality", (data) {
+      setState(() {
+        notificationsCount = getNotifCount();
       });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +55,31 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
-                icon: const badges.Badge(
-                  badgeContent: Text(
-                    "2",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  child: Icon(CupertinoIcons.bell),
+                onPressed: () async {
+                  await clearNotifCount();
+                  goTo(context, const NotificationPage());
+                },
+                icon: badges.Badge(
+                  badgeContent: FutureBuilder(
+                      future: notificationsCount,
+                      builder: (context, AsyncSnapshot notif) {
+                        print(notif.data);
+                        if (notif.hasData) {
+                          return Text(
+                            notif.data.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          );
+                        }
+                        return const Text(
+                          "0",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        );
+                      }),
+                  child: const Icon(CupertinoIcons.bell),
                 ),
               ),
               const SizedBox(
@@ -124,9 +150,9 @@ class _HomePageState extends State<HomePage> {
                             () => goTo(context, const Actualities())),
                         const Divider(),
                         optionElement(
-                            "Q&A",
-                            "Decouvrer plus sur les services APPC",
-                            CupertinoIcons.question,
+                            "Discussion",
+                            "Decouvrer plus sur la plateforme APPC et ses projets",
+                            CupertinoIcons.bubble_middle_bottom,
                             () => goTo(context, const QuestionsReponses())),
                         const Divider(),
                         optionElement(

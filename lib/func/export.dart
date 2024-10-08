@@ -27,3 +27,5 @@ export '../pages/presentation.dart';
 export '../func/backgound.dart';
 export '../func/background.func.dart';
 export '../pages/statistique.dart';
+export '../api/socket.init.dart';
+export '../pages/notifications.dart';

@@ -134,8 +134,10 @@ class _SignUpState extends State<SignUp> {
                                   controllerAdress.text)
                               .then((member) {
                             setState(() => isAdding = false);
+                          
                             if (member['id'] != null) {
                               storeUserDetails(
+                                  member['id'].toString(),
                                   member['matricule'],
                                   member['first_name'],
                                   member['last_name'],

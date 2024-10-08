@@ -215,7 +215,8 @@ Widget cardMember(card, BuildContext context) {
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    "${session.data['function'] ?? 'Compte Professionel'}",
+                                    newUtf(
+                                        "${session.data['function'] ?? 'Compte Professionel'}"),
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w300),

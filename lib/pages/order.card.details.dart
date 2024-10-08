@@ -82,7 +82,7 @@ class _CardDetailState extends State<CardDetail> {
                                     children: [
                                       Icon(
                                         CupertinoIcons.device_phone_portrait,
-                                        size: 18,
+                                        size: 15,
                                         color:
                                             Color.fromARGB(255, 197, 198, 208),
                                       ),
@@ -93,6 +93,7 @@ class _CardDetailState extends State<CardDetail> {
                                         "PAIEMENT MOBILE",
                                         style: TextStyle(
                                             color: Colors.white,
+                                            fontSize: 11,
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ],
@@ -113,7 +114,7 @@ class _CardDetailState extends State<CardDetail> {
                                     children: [
                                       Icon(
                                         CupertinoIcons.creditcard,
-                                        size: 18,
+                                        size: 15,
                                         color:
                                             Color.fromARGB(255, 197, 198, 208),
                                       ),
@@ -124,6 +125,7 @@ class _CardDetailState extends State<CardDetail> {
                                         " CARTE DE CREDIT ",
                                         style: TextStyle(
                                             color: Colors.white,
+                                            fontSize: 11,
                                             fontWeight: FontWeight.w700),
                                       ),
                                     ],

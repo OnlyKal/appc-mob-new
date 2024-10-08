@@ -3,7 +3,7 @@ import 'package:appc/pages/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> storeUserDetails(matricule, name, lastname, email, phone, url,
+Future<void> storeUserDetails(id,matricule, name, lastname, email, phone, url,
     token, function, image) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('matricule', matricule);
@@ -14,7 +14,8 @@ Future<void> storeUserDetails(matricule, name, lastname, email, phone, url,
   await prefs.setString('token', token);
   await prefs.setString('url', url);
   await prefs.setString('function', function);
-  prefs.setString("image", image);
+  await prefs.setString("image", image);
+  await prefs.setString("user_id", id);
 }
 
 Future getSessionDetails() async {
@@ -27,7 +28,8 @@ Future getSessionDetails() async {
     'phone': prefs.getString('phone') ?? '',
     'token': prefs.getString('token') ?? '',
     'url': prefs.getString('url') ?? '',
-    'function': prefs.getString('function') ?? ''
+    'function': prefs.getString('function') ?? '',
+    'user_id': prefs.getString('user_id') ?? ''
   };
 }
 
@@ -65,4 +67,20 @@ message(stringMessage, context) {
 Future enableNoti() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString("state-notif");
+}
+
+Future<void> addNotifCount() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  int count = (prefs.getInt("count-notif") ?? 0) + 1;
+  prefs.setInt("count-notif", count);
+}
+
+Future getNotifCount() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt("count-notif") ?? 0;
+}
+
+Future clearNotifCount() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setInt("count-notif", 0);
 }

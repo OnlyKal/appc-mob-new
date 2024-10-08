@@ -6,10 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationClass.initializeNotif();
-  NotificationClass.openNotifMono("APPC SERVICE-RDC",
+  NotificationClass.openNotifMono("APPC ALERTE",
       "Bienvenue chez APPC SERVICES-DRC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain");
   initBackgroundFetch();
-
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: PopScope(canPop: false, child: SplashScreen()),
@@ -29,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       SharedPreferences auth = await SharedPreferences.getInstance();
       var matricule = auth.getString("matricule");
-      print(auth.getString("state-notif"));
       if (matricule == null || matricule == "") {
         goTo(context, const SignIn());
       } else {
@@ -41,8 +39,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     refresh();
+    init();
     checkSession();
     super.initState();
+  }
+
+  init() async {
+    SharedPreferences session = await SharedPreferences.getInstance();
+    var token = session.getString("token");
+    var id = session.getString("user_id");
+
+    if (token != null) {
+      APPSocket.initSocket();
+      socket?.on("emit-new-actuality", (data) {
+        List<dynamic> actuality = data.toList();
+        var imagename =
+            actuality[0]['fields']['image'].toString().replaceAll(" ", "_");
+        var imageUrl = "${serveradress}media/news/$imagename";
+        NotificationClass.openNotifActuality(actuality[0]['fields']['title'],
+            actuality[0]['fields']['message'], imageUrl);
+        addNotifCount();
+      });
+
+      socket?.on("emit-new-response", (data) {
+        List<dynamic> feedback = data.toList();
+        var answer = feedback[0]['fields']['answer'];
+        var user = feedback[0]['fields']['asked_by'];
+        // if (id.toString().contains(user.toString())) {
+        NotificationClass.openNotif("Reponse", "Un nouveau message APPC");
+        // }
+      });
+    }
   }
 
   refresh() {
@@ -60,7 +87,6 @@ class _SplashScreenState extends State<SplashScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/bgsplash2.png"), fit: BoxFit.cover),
-            // image: AssetImage("assets/bgsplash2.png"), fit: BoxFit.cover),
           ),
           height: fullHeight(context),
           width: fullWidth(context),
@@ -78,7 +104,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   child: Image.asset(
                     "assets/giflogo.gif",
-                    // height: 200,
                   ),
                 ),
               ),

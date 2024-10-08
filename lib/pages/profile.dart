@@ -24,7 +24,9 @@ class ProfilePage extends StatelessWidget {
               future: getImageSession(),
               builder: (context, AsyncSnapshot user) {
                 if (user.hasData) {
-                  final imageUrl = user.data['image'].toString();
+                  String currentUrl = user.data['image'].toString();
+                  String newImage = currentUrl.split("/media").last.toString();
+                  final imageUrl = "$serveradress/media/$newImage";
                   return Stack(
                     children: [
                       InkWell(

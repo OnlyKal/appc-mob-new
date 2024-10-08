@@ -40,12 +40,12 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 242, 241, 241),
+      backgroundColor: const Color.fromARGB(255, 221, 221, 221),
       appBar: AppBar(
         leading: backPage(context),
         backgroundColor: Colors.white,
         title: Text(
-          "Section FAQ s",
+          "DISCUSSION",
           style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
         ),
       ),
@@ -65,13 +65,11 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                                   itemCount: questionData.length,
                                   itemBuilder: (context, i) {
                                     return Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 1),
-                                      padding: const EdgeInsets.all(8),
+                                      padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(3),
                                         color: const Color.fromARGB(
-                                            255, 236, 236, 236),
+                                            255, 244, 241, 241),
                                       ),
                                       child: Column(
                                         crossAxisAlignment:

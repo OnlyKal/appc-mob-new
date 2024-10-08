@@ -63,11 +63,6 @@ Future getUserQuestions() async {
   return apipostData("api/news/question/get-all/", {});
 }
 
-// NEW
-Future getUserCardInfo(idcard) async {
-  return apigetData("api/subscription/member-cards/$idcard/");
-}
-
 Future getNewsDetails(id) async {
   return apigetDataNoAuth("api/news/news/$id/");
 }
@@ -99,4 +94,20 @@ Future createCard(cardId, transaction) async {
 Future updateStatusCard(matricule, status) async {
   return apipostData("api/subscription/update-card-status/",
       {"matricule": matricule, "status": status});
+}
+
+//NEW
+Future getMyFrenquency(matricule) async {
+  return apigetData("api/auth/frenquecies/get-user-frequencies/$matricule/");
+}
+
+// NEW
+Future getUserCardInfo(idcard) async {
+  return apigetData("api/subscription/member-cards/$idcard/");
+}
+
+// NEW
+Future addFrequency(memberId, service) async {
+  return apipostData("api/auth/frenquecies/add-user-frequency/",
+      {"owner": 12, "service": "transport", "frequentation": 1});
 }

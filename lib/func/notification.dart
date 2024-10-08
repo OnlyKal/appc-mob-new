@@ -52,7 +52,7 @@ class NotificationClass {
     }
   }
 
-  static Future<void> openNotifActuality(title, message) async {
+  static Future<void> openNotifActuality(title, message, image) async {
     int min = 1;
     int max = 3000;
     int randomnum = min + Random().nextInt((max + 1) - min);
@@ -64,9 +64,8 @@ class NotificationClass {
             channelKey: 'basic_channel',
             title: title,
             body: message,
-            largeIcon:
-                "https://media.newyorker.com/photos/5909780a019dfc3494ea3018/master/w_2240,c_limit/Brody-Tarzan-Reboot.jpg",
-            bigPicture: '',
+            largeIcon: image,
+            bigPicture: image,
             notificationLayout: NotificationLayout.BigPicture,
             payload: {"notification": "4o28727237626356254"}),
         actionButtons: [],
