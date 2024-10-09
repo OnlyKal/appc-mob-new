@@ -99,38 +99,38 @@ class _CardDetailState extends State<CardDetail> {
                                     ],
                                   )),
                             ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: mainColor,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  child: const Row(
-                                    children: [
-                                      Icon(
-                                        CupertinoIcons.creditcard,
-                                        size: 15,
-                                        color:
-                                            Color.fromARGB(255, 197, 198, 208),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(
-                                        " CARTE DE CREDIT ",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  )),
-                            ),
+                            // const SizedBox(
+                            //   height: 4,
+                            // ),
+                            // GestureDetector(
+                            //   onTap: () {},
+                            //   child: Container(
+                            //       decoration: BoxDecoration(
+                            //           color: mainColor,
+                            //           borderRadius: BorderRadius.circular(5)),
+                            //       padding: const EdgeInsets.symmetric(
+                            //           horizontal: 15, vertical: 10),
+                            //       child: const Row(
+                            //         children: [
+                            //           Icon(
+                            //             CupertinoIcons.creditcard,
+                            //             size: 15,
+                            //             color:
+                            //                 Color.fromARGB(255, 197, 198, 208),
+                            //           ),
+                            //           SizedBox(
+                            //             width: 8,
+                            //           ),
+                            //           Text(
+                            //             " CARTE DE CREDIT ",
+                            //             style: TextStyle(
+                            //                 color: Colors.white,
+                            //                 fontSize: 11,
+                            //                 fontWeight: FontWeight.w700),
+                            //           ),
+                            //         ],
+                            //       )),
+                            // ),
                           ],
                         ),
                       ],
@@ -341,16 +341,16 @@ class _CardDetailState extends State<CardDetail> {
       };
 
       checkPaymentBilling(payement['orderNumber']).then((checking) {
-        if (checking['code'].toString().contains("0")) {
-          createCard(card['id'], transaction).then((card) {
-            useState(() => isPaying = false);
-            back(context);
-            cardSuccessDialod(context,
-                'Félicitations, votre commande a été enregistrée, veuillez patienter 24h pour que votre carte APPC vous soit livrée !');
-          });
-        } else {
-          message("Désolé, la transaction n'est pas verifiée..", context);
-        }
+        // if (checking['code'].toString().contains("0")) {
+        //   createCard(card['id'], transaction).then((card) {
+        //     useState(() => isPaying = false);
+        //     back(context);
+        //     cardSuccessDialod(context,
+        //         'Félicitations, votre commande a été enregistrée, veuillez patienter 24h pour que votre carte APPC vous soit livrée !');
+        //   });
+        // } else {
+        //   message("Désolé, la transaction n'est pas verifiée..", context);
+        // }
       });
     }
 
@@ -364,6 +364,7 @@ class _CardDetailState extends State<CardDetail> {
           return Scaffold(
             body: Container(
               // height: 400,
+              
               color: Colors.white,
               width: fullWidth(context),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
@@ -506,6 +507,10 @@ class _CardDetailState extends State<CardDetail> {
     );
   }
 
+
+}
+
+
   methodePayment(title) {
     return Container(
         decoration: BoxDecoration(
@@ -531,4 +536,3 @@ class _CardDetailState extends State<CardDetail> {
           ],
         ));
   }
-}

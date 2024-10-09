@@ -85,6 +85,14 @@ Future getSubscription(number) async {
   return apipostData("api/subscription/get/", {"member_card": number});
 }
 
+Future getbuyAbonnement(cardnumber, qty, trans) async {
+  return apipostData("api/subscription/add/", {
+    "member_card": cardnumber.toString(),
+    "quantity": qty.toString(),
+    "transaction": trans.toString()
+  });
+}
+
 Future createCard(cardId, transaction) async {
   return apipostData("api/subscription/member-card/create/",
       {"card_id": cardId.toString(), "transaction": transaction.toString()});

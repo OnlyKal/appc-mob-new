@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:appc/func/color.dart';
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
@@ -334,7 +336,22 @@ Widget cardMember(card, BuildContext context) {
                 )),
             InkWell(
               onTap: () {
-                print(card);
+                // print(card['card']['current_subscription_price']);
+
+                // var price = card['card']['current_subscription_price']
+                //     .where((element) => element['is_current'] == true)
+                //     .first;
+                // print(price['price']);
+                // print(card['number']);
+                // var transaction = {
+                //   "type": "ACHAT CARTE APPC",
+                //   "amount": price.toString(),
+                //   "currency": devise.toString(),
+                //   "status": true.toString(),
+                //   "date": DateTime.now().toIso8601String(),
+                // };
+
+                payAbonnement(context, card);
               },
               child: Container(
                 padding:
