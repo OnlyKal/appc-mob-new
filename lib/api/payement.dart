@@ -30,7 +30,6 @@ Future payementBilling(numberPhone, amount, devise) async {
 }
 
 Future checkPaymentBilling(orderNumber) async {
-  print(orderNumber);
   final response = await http.get(
     Uri.parse('https://backend.flexpay.cd/api/rest/v1/check/$orderNumber'),
     headers: <String, String>{

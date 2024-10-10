@@ -239,7 +239,7 @@ Widget cardMember(card, BuildContext context) {
                             color: Colors.white, fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        "${card['wallet'][0]['stock']} Jours",
+                        "${card['stock']} Jours",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       ),

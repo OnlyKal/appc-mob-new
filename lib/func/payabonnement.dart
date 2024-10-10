@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:appc/func/export.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 TextEditingController ctrNumberPhone = TextEditingController();
 TextEditingController ctrQty = TextEditingController();
@@ -13,6 +16,18 @@ payAbonnement(context, card) async {
   ctrNumberPhone.text = prefs.getString("phone")!;
   ctrQty.text = 1.toString();
 
+  var price = card['card']['current_subscription_price']
+      .where((element) => element['is_current'] == true)
+      .first;
+
+  var transaction = {
+    "type": "ABONNEMENT",
+    "amount": double.parse(price['price'].toString()),
+    "currency": devise.toString(),
+    "status": true.toString(),
+    "date": DateTime.now().toIso8601String(),
+  };
+
   showModalBottomSheet(
     isScrollControlled: true,
     shape: roundAlert(),
@@ -20,8 +35,6 @@ payAbonnement(context, card) async {
     isDismissible: false,
     builder: (context) {
       return StatefulBuilder(builder: (context, useState) {
-        // Déplacer les variables dans le StatefulBuilder
-
         return Scaffold(
           body: Container(
             color: Colors.white,
@@ -120,38 +133,71 @@ payAbonnement(context, card) async {
                     ? loading(context)
                     : InkWell(
                         onTap: () async {
-                          // if (ctrNumberPhone.text.startsWith("243") &&
-                          //     ctrNumberPhone.text.length == 12) {
-                          //   useState(() => isPaying = true);
-                          //   try {
-                          //     final payement = await payementBilling(
-                          //         ctrNumberPhone.text, "1.0", devise);
+                          if (ctrNumberPhone.text.startsWith("243") &&
+                              ctrNumberPhone.text.length == 12) {
+                            useState(() => isPaying = true);
 
-                          //     if (payement['code'].toString() == "0") {
-                          //       print(
-                          //           "Paiement réussi ${payement['code'].toString()}");
-                          //       if (payement['code'].toString().contains("0")) {
-                          paimentValidation(card, ctrQty.text);
-                          // }
+                            payementBilling(
+                                    ctrNumberPhone.text, price['price'], devise)
+                                .then((payement) {
+                              if (payement['code'].toString() == "0") {
+                                if (payement['code'].toString().contains("0")) {
+                                  int time = 0;
+                                  Timer.periodic(const Duration(seconds: 5),
+                                      (timer) async {
+                                    time += 1;
+                                    checkPaymentBilling(payement['orderNumber'])
+                                        .then((checking) {
+                                      if (checking['transaction']['status']
+                                          .toString()
+                                          .contains("0")) {
+                                        buyAbonnement(card['number'],
+                                                ctrQty.text, transaction)
+                                            .then((response) {
+                                          //                 print(response);
+                                          if (response['transaction_date'] !=
+                                              null) {
+                                            useState(() => isPaying = false);
+                                            goTo(
+                                              context,
+                                              TransactionSuccess(
+                                                  amount: price['price'],
+                                                  type: transaction['type']
+                                                      .toString(),
+                                                  currency: devise,
+                                                  transactionId:
+                                                      "${Random().nextInt(1000)}APPC"),
+                                            );
 
-                          //     } else {
-                          //       message(
-                          //           "Désolé, la transaction a échoué, veuillez réessayer !!",
-                          //           context);
-                          //     }
-                          //   } catch (e) {
-                          //     message(
-                          //         "Une erreur est survenue : ${e.toString()}",
-                          //         context);
-                          //     useState(() => isPaying = false);
-                          //   } finally {
-                          //     useState(() => isPaying = false);
-                          //   }
-                          // } else {
-                          //   message(
-                          //       "Le numéro doit commencer par 243 et contenir 12 caractères.",
-                          //       context);
-                          // }
+                                            timer.cancel();
+                                            useState(() => isPaying = false);
+                                          } else {
+                                            message(
+                                                "Désolé, la transaction a échoué, veuillez réessayer !!",
+                                                context);
+                                          }
+                                        });
+                                      } else if (checking['transaction']
+                                              ['status']
+                                          .toString()
+                                          .contains("2")) {
+                                      } else {
+                                        message(
+                                            "Désolé, la transaction n'est pas verifiée..",
+                                            context);
+                                        useState(() => isPaying = false);
+                                        timer.cancel();
+                                      }
+                                    });
+                                  });
+                                }
+                              }
+                            });
+                          } else {
+                            message(
+                                "Le numéro doit commencer par 243 et contenir 12 caractères.",
+                                context);
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -175,21 +221,4 @@ payAbonnement(context, card) async {
       });
     },
   );
-}
-
-void paimentValidation(card, quantity) {
-  var price = card['card']['current_subscription_price']
-      .where((element) => element['is_current'] == true)
-      .first;
-  var transaction = {
-    "type": "ABONNEMENT",
-    "amount": price.toString(),
-    "currency": devise.toString(),
-    "status": true.toString(),
-    "date": DateTime.now().toIso8601String(),
-  };
-  print(DateTime.now().toIso8601String());
-  getbuyAbonnement(card['number'], quantity, transaction).then((value) {
-    print(value.toString());
-  });
 }

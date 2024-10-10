@@ -19,12 +19,28 @@ Future apigetDataNoAuth(endpoint) async {
   var response = await http.get(Uri.parse("$serveradress$endpoint"));
   return response.statusCode == 200 ? jsonDecode(response.body) : null;
 }
+Future apipostDataJSON(endpoint, data) async {
+  SharedPreferences auth = await SharedPreferences.getInstance();
+  var token = auth.getString("token") ?? "";
+  var response = await http.post(Uri.parse("$serveradress$endpoint"),
+      headers: {
+        "Authorization": "Token $token",
+        'Content-Type': 'application/json'
+      },
+      body: data);
+  return response.statusCode != 404 || response.statusCode != 406
+      ? jsonDecode(response.body)
+      : null;
+}
 
 Future apipostData(endpoint, data) async {
   SharedPreferences auth = await SharedPreferences.getInstance();
   var token = auth.getString("token") ?? "";
   var response = await http.post(Uri.parse("$serveradress$endpoint"),
-      headers: {"Authorization": "Token $token"}, body: data);
+      headers: {
+        "Authorization": "Token $token",
+      },
+      body: data);
   return response.statusCode != 404 || response.statusCode != 406
       ? jsonDecode(response.body)
       : null;

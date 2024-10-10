@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -334,23 +337,41 @@ class _CardDetailState extends State<CardDetail> {
     void checkPayment(payement, useState, card, price) {
       var transaction = {
         "type": "ACHAT CARTE APPC",
-        "amount": price.toString(),
+        "amount": double.parse(price.toString()),
         "currency": devise.toString(),
         "status": true.toString(),
         "date": DateTime.now().toIso8601String(),
       };
 
-      checkPaymentBilling(payement['orderNumber']).then((checking) {
-        // if (checking['code'].toString().contains("0")) {
-        //   createCard(card['id'], transaction).then((card) {
-        //     useState(() => isPaying = false);
-        //     back(context);
-        //     cardSuccessDialod(context,
-        //         'Félicitations, votre commande a été enregistrée, veuillez patienter 24h pour que votre carte APPC vous soit livrée !');
-        //   });
-        // } else {
-        //   message("Désolé, la transaction n'est pas verifiée..", context);
-        // }
+      int time = 0;
+      Timer.periodic(const Duration(seconds: 5), (timer) async {
+        time += 1;
+        checkPaymentBilling(payement['orderNumber']).then((checking) {
+          if (checking['transaction']['status'].toString().contains("0")) {
+            createCard(card['id'], transaction).then((response) {
+              if (response['number'] != null) {
+                useState(() => isPaying = false);
+                goTo(
+                  context,
+                  TransactionSuccess(
+                      amount: price,
+                      type: "ACHAT CARTE APPC",
+                      currency: devise,
+                      transactionId: response['number']),
+                );
+              }
+              timer.cancel();
+              useState(() => isPaying = false);
+            });
+          } else if (checking['transaction']['status']
+              .toString()
+              .contains("2")) {
+          } else {
+            message("Désolé, la transaction n'est pas verifiée..", context);
+            useState(() => isPaying = false);
+            timer.cancel();
+          }
+        });
       });
     }
 
@@ -364,7 +385,7 @@ class _CardDetailState extends State<CardDetail> {
           return Scaffold(
             body: Container(
               // height: 400,
-              
+
               color: Colors.white,
               width: fullWidth(context),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
@@ -462,8 +483,8 @@ class _CardDetailState extends State<CardDetail> {
                             if (ctrNumber.text.startsWith("243") &&
                                 ctrNumber.text.length == 12) {
                               useState(() => isPaying = true);
-                              payementBilling(ctrNumber.text, "1.0", devise)
-                                  // ctrNumber.text, price['price'], devise)
+                              payementBilling(
+                                      ctrNumber.text, price['price'], devise)
                                   .then((payement) {
                                 if (payement['code'].toString().contains("0")) {
                                   checkPayment(
@@ -506,33 +527,28 @@ class _CardDetailState extends State<CardDetail> {
       },
     );
   }
-
-
 }
 
-
-  methodePayment(title) {
-    return Container(
-        decoration: BoxDecoration(
-            color: colorRandom(), borderRadius: BorderRadius.circular(2)),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-        child: Row(
-          children: [
-            const Icon(
-              CupertinoIcons.square_grid_2x2,
-              size: 15,
-              color: Color.fromARGB(255, 197, 198, 208),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700),
-            ),
-          ],
-        ));
-  }
+methodePayment(title) {
+  return Container(
+      decoration: BoxDecoration(
+          color: colorRandom(), borderRadius: BorderRadius.circular(2)),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      child: Row(
+        children: [
+          const Icon(
+            CupertinoIcons.square_grid_2x2,
+            size: 15,
+            color: Color.fromARGB(255, 197, 198, 208),
+          ),
+          const SizedBox(
+            width: 3,
+          ),
+          Text(
+            title,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
+          ),
+        ],
+      ));
+}

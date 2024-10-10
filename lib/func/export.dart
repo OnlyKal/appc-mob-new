@@ -30,3 +30,4 @@ export '../pages/statistique.dart';
 export '../api/socket.init.dart';
 export '../pages/notifications.dart';
 export '../func/payabonnement.dart';
+export '../pages/successtrans.dart';

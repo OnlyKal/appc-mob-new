@@ -105,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                                   enlargeCenterPage: true,
                                   enableInfiniteScroll: false),
                               items: localListCards.map((card) {
+                                print(card);
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
