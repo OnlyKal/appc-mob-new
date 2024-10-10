@@ -4,12 +4,9 @@ import 'package:html/parser.dart' as html_parser;
 import 'package:html/dom.dart' as html_dom;
 import 'package:get_time_ago/get_time_ago.dart';
 
-
 converToUpperCase(word) {
   return word.toUpperCase();
 }
-
-
 
 hideKeyboard() => SystemChannels.textInput.invokeMethod('TextInput.hide');
 
@@ -19,7 +16,6 @@ String newVal(dynamic value) {
   }
   return value.toString();
 }
-
 
 String convertHtmlToText(String htmlContent) {
   html_dom.Document document = html_parser.parse(htmlContent);
@@ -39,4 +35,30 @@ newUtf(encodedString) {
   List<int> bytes = encodedString.codeUnits;
   String decodedString = utf8.decode(bytes);
   return decodedString;
+}
+
+String convertirJours(int jours) {
+  int annee = 0;
+  int mois = 0;
+  int joursRestants = jours;
+  if (jours >= 365) {
+    annee = jours ~/ 365;
+    joursRestants = jours % 365;
+  }
+
+  if (joursRestants >= 30) {
+    mois = joursRestants ~/ 30;
+    joursRestants = joursRestants % 30;
+  }
+
+  String resultat = "";
+  if (annee > 0) {
+    resultat += "$annee ${annee == 1 ? 'année' : 'années'}, ";
+  }
+  if (mois > 0) {
+    resultat += "$mois ${mois == 1 ? 'mois' : 'mois'}, ";
+  }
+  resultat += "$joursRestants ${joursRestants == 1 ? 'jour' : 'jours'}";
+
+  return resultat;
 }

@@ -1,9 +1,11 @@
 import 'package:appc/func/size.dart';
+import 'package:appc/main.dart';
 import 'package:appc/pages/signin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> storeUserDetails(id,matricule, name, lastname, email, phone, url,
+Future<void> storeUserDetails(id, matricule, name, lastname, email, phone, url,
     token, function, image) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('matricule', matricule);
@@ -58,6 +60,17 @@ void logout(context) async {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
+void rebootApp(context) async {
+  final snackBar = SnackBar(
+    content: const Text("Réactualiser l'application.."),
+    action: SnackBarAction(
+      label: 'OK',
+      onPressed: () => Phoenix.rebirth(context),
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 message(stringMessage, context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(content: Text(stringMessage)),
@@ -67,6 +80,11 @@ message(stringMessage, context) {
 Future enableNoti() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString("state-notif");
+}
+
+Future enableMode() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("theme-mode");
 }
 
 Future<void> addNotifCount() async {

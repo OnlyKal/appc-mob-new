@@ -39,10 +39,10 @@ class _SignUpState extends State<SignUp> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
           child: Container(

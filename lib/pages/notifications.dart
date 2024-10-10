@@ -18,10 +18,10 @@ class _NotificationPageState extends State<NotificationPage> {
           icon: const Icon(CupertinoIcons.back),
           onPressed: () => goTo(context, const HomePage()),
         ),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           "Notifications",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
     );

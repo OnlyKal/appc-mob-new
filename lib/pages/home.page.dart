@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 238, 237, 237),
+          // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             leading: InkWell(
               onTap: () => goTo(context, const PresentationPage()),
               child: Image.asset(
@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             title: const Text(
-              "APPC SERVICES",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              "TABLEAU DE BORD",
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
             actions: [
               IconButton(
@@ -105,7 +105,6 @@ class _HomePageState extends State<HomePage> {
                                   enlargeCenterPage: true,
                                   enableInfiniteScroll: false),
                               items: localListCards.map((card) {
-                                print(card);
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
@@ -123,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 5),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        // color: const Color.fromARGB(255, 62, 62, 62),
                         borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(13),
@@ -137,25 +136,33 @@ class _HomePageState extends State<HomePage> {
                             "Passer une commande d'une nouvelle carte",
                             CupertinoIcons.creditcard,
                             () => goTo(context, const OrderCard())),
-                        const Divider(),
+                        const Divider(
+                          color: Colors.grey,
+                        ),
                         optionElement(
                             "Profile",
                             "Gestions votre compte membre APPC",
                             CupertinoIcons.person,
                             () => goTo(context, const ProfilePage())),
-                        const Divider(),
+                        const Divider(
+                          color: Colors.grey,
+                        ),
                         optionElement(
                             "Actualités",
                             "Les actualités sur toutes les plateformes APPC",
                             CupertinoIcons.news,
                             () => goTo(context, const Actualities())),
-                        const Divider(),
+                        const Divider(
+                          color: Colors.grey,
+                        ),
                         optionElement(
                             "Discussion",
                             "Decouvrer plus sur la plateforme APPC et ses projets",
                             CupertinoIcons.bubble_middle_bottom,
                             () => goTo(context, const QuestionsReponses())),
-                        const Divider(),
+                        const Divider(
+                          color: Colors.grey,
+                        ),
                         optionElement(
                             "Statistique",
                             "Contrôle de la fréquence d'utilisation",
@@ -169,10 +176,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.white,
             onPressed: () => goTo(context, const OrderCard()),
             child: const Icon(
-              color: Colors.blue,
               CupertinoIcons.creditcard,
             ),
           )),

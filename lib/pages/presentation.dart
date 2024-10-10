@@ -34,7 +34,7 @@ class _PresentationPageState extends State<PresentationPage> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           actions: [
             if (tokenCkeck == "")
               InkWell(

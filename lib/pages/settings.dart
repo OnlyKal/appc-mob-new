@@ -1,7 +1,9 @@
 import 'package:appc/func/export.dart';
+import 'package:appc/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -31,14 +33,15 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
-        title: Text(
+        // backgroundColor: Colors.white,
+        title: const Text(
           "Paramètres",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -60,6 +63,25 @@ class _SettingsState extends State<Settings> {
                     } else {
                       notif.setString("state-notif", "desable");
                     }
+                  }),
+            ),
+            ListTile(
+              leading: themeProvider.isDarkMode == false
+                  ? const Icon(
+                      CupertinoIcons.sun_dust_fill,
+                      color: Colors.amber,
+                    )
+                  : const Icon(
+                      CupertinoIcons.moon,
+                      color: Colors.grey,
+                    ),
+              title: const Text("Mode Sombre",
+                  style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: const Text("Activer/Désactiver le thème"),
+              trailing: Switch(
+                  value: themeProvider.isDarkMode,
+                  onChanged: (value) async {
+                    themeProvider.toggleTheme();
                   }),
             )
           ],

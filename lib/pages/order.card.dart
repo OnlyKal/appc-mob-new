@@ -13,13 +13,13 @@ class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 242, 242, 242),
+      // backgroundColor: const Color.fromARGB(255, 242, 242, 242),
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
-        title: Text(
+        // backgroundColor: Colors.white,
+        title: const Text(
           "Acheter une carte",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -49,7 +49,7 @@ class _OrderCardState extends State<OrderCard> {
                                         color: Colors.blue, width: 5),
                                   )),
                                   child: ListTile(
-                                      tileColor: Colors.white,
+                                      tileColor: mainColor.withOpacity(0.2),
                                       onTap: () {
                                         goTo(
                                             context,
@@ -120,8 +120,8 @@ class _OrderCardState extends State<OrderCard> {
                                             Text(
                                               "Réduction ${cardsList[i]['reduction'].toString()}%",
                                               style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.black),
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             )
                                           ],
                                         ),

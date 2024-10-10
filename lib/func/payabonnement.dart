@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appc/func/export.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -37,31 +38,28 @@ payAbonnement(context, card) async {
       return StatefulBuilder(builder: (context, useState) {
         return Scaffold(
           body: Container(
-            color: Colors.white,
+            // color: Colors.white,
             width: fullWidth(context),
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
             child: Column(
               children: [
                 Container(
-                  color: mainColor,
+                  // color: mainColor,
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "ABONNEMENT | PAIEMENT",
+                        "ABONNEMENT | PAIEMENT MOBILE",
                         style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
+                            fontSize: 14, fontWeight: FontWeight.w700),
                       ),
-                      Text(
-                        "${card['number']}",
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400),
-                      ),
+                      IconButton(
+                          onPressed: () => back(context),
+                          icon: const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          ))
                     ],
                   ),
                 ),

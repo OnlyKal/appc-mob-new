@@ -8,7 +8,7 @@
     <application
         android:requestLegacyExternalStorage="true"
         android:enableOnBackInvokedCallback="true"
-        android:label="APPC SERVICES"
+        android:label="APPC"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">

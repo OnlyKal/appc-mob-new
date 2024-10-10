@@ -58,13 +58,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           "Actualité détaillée",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
           InkWell(
@@ -174,7 +174,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           actuality['image_attachement'].isNotEmpty)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          color: Colors.white,
+                          // color: Colors.white,
                           width: fullWidth(context),
                           height: 100,
                           child: ListView(

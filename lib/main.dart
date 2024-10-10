@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:appc/func/export.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,10 +10,22 @@ main() async {
   NotificationClass.openNotifMono("APPC ALERTE",
       "Bienvenue chez APPC SERVICES-DRC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain");
   initBackgroundFetch();
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: PopScope(canPop: false, child: SplashScreen()),
-  ));
+
+  var theme = await enableMode();
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => ThemeProvider()..loadThemeFromPreferences(),
+        child:
+            Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+          return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              // theme: theme.toString().contains("desable")
+              //     ? darkTheme()
+              //     : lightTheme(),
+              theme: themeProvider.getTheme(), 
+              home: const PopScope(canPop: false, child: SplashScreen()));
+        })),
+  );
 }
 
 class SplashScreen extends StatefulWidget {
@@ -114,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.all(20),
                 child: Container(
                   child: const Text(
-                    "APPC SERVICES © 2024",
+                    "APPC IT Team©2024",
                     style: TextStyle(color: Color.fromARGB(255, 112, 111, 111)),
                   ),
                 ),
@@ -124,5 +137,80 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+}
+
+ThemeData darkTheme() {
+  return ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: Colors.blue,
+    buttonTheme: const ButtonThemeData(
+      buttonColor: Colors.blue,
+      textTheme: ButtonTextTheme.primary,
+    ),
+    colorScheme: const ColorScheme.dark(
+      primary: Colors.blue,
+      onPrimary: Colors.white,
+      secondary: Colors.amber,
+      onSecondary: Color.fromARGB(255, 67, 67, 67),
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color.fromARGB(255, 67, 67, 67),
+      foregroundColor: Colors.white,
+    ),
+  );
+}
+
+ThemeData lightTheme() {
+  return ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.blue,
+    buttonTheme: const ButtonThemeData(
+      buttonColor: Colors.blue,
+      textTheme: ButtonTextTheme.primary,
+    ),
+    colorScheme: const ColorScheme.light(
+      primary: Colors.blue,
+      onPrimary: Colors.white,
+      secondary: Colors.amber,
+      onSecondary: Colors.black,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.blue,
+    ),
+  );
+}
+
+class ThemeProvider extends ChangeNotifier {
+  ThemeData _selectedTheme;
+  bool _isDarkMode;
+
+  ThemeProvider({bool isDarkMode = false})
+      : _isDarkMode = isDarkMode,
+        _selectedTheme = isDarkMode ? darkTheme() : lightTheme();
+
+  ThemeData getTheme() => _selectedTheme;
+
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_isDarkMode) {
+      _selectedTheme = lightTheme();
+      _isDarkMode = false;
+    } else {
+      _selectedTheme = darkTheme();
+      _isDarkMode = true;
+    }
+    notifyListeners();
+    await prefs.setBool('isDarkMode', _isDarkMode);
+  }
+
+  Future<void> loadThemeFromPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    _selectedTheme = _isDarkMode ? darkTheme() : lightTheme();
+    notifyListeners();
   }
 }

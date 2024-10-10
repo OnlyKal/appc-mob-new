@@ -27,13 +27,13 @@ class _ActualitiesState extends State<Actualities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+      // backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
-        title: Text(
+        // backgroundColor: Colors.white,
+        title: const Text(
           "Nos Actualités",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Column(
@@ -66,8 +66,8 @@ class _ActualitiesState extends State<Actualities> {
                                   child: Container(
                                     width: fullHeight(context),
                                     decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                    ),
+                                        // color: Colors.white,
+                                        ),
                                     padding: const EdgeInsets.all(6),
                                     margin: const EdgeInsets.only(bottom: 2),
                                     child: Row(
@@ -95,7 +95,7 @@ class _ActualitiesState extends State<Actualities> {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            color: Colors.white,
+                                            // color: Colors.white,
                                             height: 100,
                                             child: Column(
                                               mainAxisAlignment:

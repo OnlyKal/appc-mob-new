@@ -30,9 +30,9 @@ htmlWiget(htm, double sized) {
 inputText(context, controller, hint, onchange, isRequired, isReadOnly) {
   return Container(
       width: fullWidth(context),
-      color: isReadOnly
-          ? const Color.fromARGB(255, 226, 225, 225)
-          : const Color.fromARGB(255, 246, 249, 251),
+      // color: isReadOnly
+      //     ? Color.fromARGB(126, 226, 225, 225)
+      //     : const Color.fromARGB(255, 246, 249, 251),
       child: TextField(
         readOnly: isReadOnly,
         controller: controller,
@@ -121,7 +121,7 @@ Widget noCardy(context) {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: Color.fromARGB(255, 140, 140, 140),
       ),
     ),
   );
@@ -183,13 +183,36 @@ Widget cardMember(card, BuildContext context) {
                   ),
                 ],
               ),
-              Text(
-                card['number'] ?? '',
-                style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 21,
-                    color: Colors.white,
-                    letterSpacing: 2.2),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FutureBuilder(
+                      future: getImageSession(),
+                      builder: (context, AsyncSnapshot user) {
+                        if (user.data != null) {
+                          return Container(
+                            height: 67,
+                            width: 67,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: Colors.white,
+                                border: Border.all(color: Colors.white),
+                                image: DecorationImage(
+                                    image: NetworkImage(user.data['image']))),
+                          );
+                        }
+                        return Container();
+                      }),
+                  Text(
+                    card['number'] ?? '',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                        color: Colors.white,
+                        letterSpacing: 2.2),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,10 +262,15 @@ Widget cardMember(card, BuildContext context) {
                             color: Colors.white, fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        "${card['stock']} Jours",
+                        convertirJours(int.parse(card['stock'].toString())),
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       ),
+                      // Text(
+                      //   "${card['stock']} Jours",
+                      //   style: const TextStyle(
+                      //       color: Colors.white, fontWeight: FontWeight.w700),
+                      // ),
                     ],
                   ),
                 ],
@@ -361,7 +389,10 @@ Widget cardMember(card, BuildContext context) {
                     color: Colors.white),
                 child: const Text(
                   "PAYER ABONNEMENT",
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black),
                 ),
               ),
             )

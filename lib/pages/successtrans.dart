@@ -20,10 +20,10 @@ class TransactionSuccess extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           "Détails de la transaction",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
           TextButton(

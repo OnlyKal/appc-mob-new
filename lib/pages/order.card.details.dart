@@ -27,13 +27,13 @@ class _CardDetailState extends State<CardDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           "Détails",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -224,8 +224,8 @@ class _CardDetailState extends State<CardDetail> {
                                                 color: Colors.blue, width: 5),
                                           )),
                                           child: ListTile(
-                                              tileColor: const Color.fromARGB(
-                                                  255, 239, 239, 239),
+                                              tileColor:
+                                                  mainColor.withOpacity(0.2),
                                               onTap: () {
                                                 setState(() {
                                                   currentCard = cardsList[i];
@@ -261,7 +261,9 @@ class _CardDetailState extends State<CardDetail> {
                                                   ),
                                                 ],
                                               ),
-                                              subtitle: SizedBox(
+                                              subtitle: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8.0),
                                                 width: fullWidth(context),
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -271,44 +273,39 @@ class _CardDetailState extends State<CardDetail> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     if (currentPrice.isNotEmpty)
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                        child: Row(
-                                                          children: currentPrice
-                                                              .where((price) =>
-                                                                  price[
-                                                                      'is_current'] ==
-                                                                  true)
-                                                              .map(
-                                                                  (price) =>
-                                                                      Container(
-                                                                        padding: const EdgeInsets
-                                                                            .all(
-                                                                            6),
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            167,
-                                                                            212,
-                                                                            247),
-                                                                        child:
-                                                                            Text(
-                                                                          "USD ${newVal(price['price'])}",
-                                                                          style:
-                                                                              const TextStyle(fontWeight: FontWeight.w400),
-                                                                        ),
-                                                                      ))
-                                                              .toList(),
-                                                        ),
+                                                      Row(
+                                                        children: currentPrice
+                                                            .where((price) =>
+                                                                price[
+                                                                    'is_current'] ==
+                                                                true)
+                                                            .map((price) =>
+                                                                Container(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          6),
+                                                                  color: const Color
+                                                                      .fromARGB(
+                                                                      255,
+                                                                      167,
+                                                                      212,
+                                                                      247),
+                                                                  child: Text(
+                                                                    "USD ${newVal(price['price'])}",
+                                                                    style: const TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ))
+                                                            .toList(),
                                                       ),
                                                     Text(
                                                       "Réduction ${cardsList[i]['reduction'].toString()}%",
                                                       style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.black),
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -386,7 +383,7 @@ class _CardDetailState extends State<CardDetail> {
             body: Container(
               // height: 400,
 
-              color: Colors.white,
+              // color: Colors.white,
               width: fullWidth(context),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
               child: Column(
@@ -403,8 +400,9 @@ class _CardDetailState extends State<CardDetail> {
                       ),
                       IconButton(
                           onPressed: () => back(context),
-                          icon: const Icon(
-                            Icons.close,
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.red,
                           ))
                     ],
                   ),

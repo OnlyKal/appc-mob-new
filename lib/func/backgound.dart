@@ -10,8 +10,8 @@ void callbackDispatcher() {
       switch (taskName) {
         case "welcome-event":
           NotificationClass.openNotifMono(
-            "APPC SERVICES-RDC",
-            "APPC SERVICES-RDC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain",
+            "APPC-RDC",
+            "APPC-RDC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain",
           );
           break;
         default:

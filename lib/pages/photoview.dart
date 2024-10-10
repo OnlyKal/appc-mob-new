@@ -15,10 +15,10 @@ class _PhotoViewerState extends State<PhotoViewer> {
     return Scaffold(
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           "",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: PhotoView(

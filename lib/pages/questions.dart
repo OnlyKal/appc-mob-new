@@ -40,13 +40,13 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 221, 221, 221),
+      // backgroundColor: const Color.fromARGB(255, 221, 221, 221),
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
-        title: Text(
-          "DISCUSSION",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+        // backgroundColor: Colors.white,
+        title: const Text(
+          "Discussion",
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Column(

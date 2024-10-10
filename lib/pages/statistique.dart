@@ -24,10 +24,10 @@ class _FrequentationState extends State<Frequentation> {
     return Scaffold(
         appBar: AppBar(
           leading: backPage(context),
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           title: Text(
             "Evaluation de fréquentation",
-            style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
         body: Center(

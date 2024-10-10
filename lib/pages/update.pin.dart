@@ -41,13 +41,13 @@ class _UpdatePinPageState extends State<UpdatePinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        backgroundColor: Colors.white,
-        title: Text(
+        // backgroundColor: Colors.white,
+        title: const Text(
           "Mettre à jour le PIN",
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(

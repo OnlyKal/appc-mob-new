@@ -27,7 +27,7 @@ class _ProvincesListState extends State<ProvincesList> {
 
   @override
   Widget build(BuildContext context) {
-    final List _filteredProvinces = _provinces
+    final List filteredProvinces = _provinces
         .where((province) =>
             province['name']
                 .toLowerCase()
@@ -39,15 +39,15 @@ class _ProvincesListState extends State<ProvincesList> {
         .toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => goTo(context, const SignIn()),
             icon: const Icon(CupertinoIcons.back)),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         title: Text(
           'Liste des provinces',
-          style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: _provinces.isEmpty
@@ -74,19 +74,19 @@ class _ProvincesListState extends State<ProvincesList> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: _filteredProvinces.length,
+                        itemCount: filteredProvinces.length,
                         padding: const EdgeInsets.only(bottom: 20),
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () => goTo(context,
-                                SignUp(province: _filteredProvinces[index])),
+                                SignUp(province: filteredProvinces[index])),
                             child: ListTile(
                               title: Text(
-                                _filteredProvinces[index]['name'],
+                                filteredProvinces[index]['name'],
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w600),
                               ),
-                              subtitle: Text(_filteredProvinces[index]['iso']),
+                              subtitle: Text(filteredProvinces[index]['iso']),
                             ),
                           );
                         },

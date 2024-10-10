@@ -21,9 +21,10 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
   bool isUpdating = false;
   getImageFrom(ImageSource imageSource) async {
     SharedPreferences auth = await SharedPreferences.getInstance();
-    setState(() => isUpdating = true);
+
     final XFile? pickedFile = await _picker.pickImage(source: imageSource);
     if (pickedFile != null) {
+      setState(() => isUpdating = true);
       setState(() {
         _image = File(pickedFile.path);
         final bytes = _image!.readAsBytesSync();
@@ -41,13 +42,13 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
     return PopScope(
         canPop: false,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             title: Text(
               "Image du profil",
-              style: TextStyle(color: mainColor, fontWeight: FontWeight.w600),
+            style: TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           body: SingleChildScrollView(
