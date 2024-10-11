@@ -34,11 +34,14 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final lngx = Provider.of<LocalizationProvider>(context);
+
     return Scaffold(
       // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
         // backgroundColor: Colors.white,
+
         title: const Text(
           "Paramètres",
           style: TextStyle(fontWeight: FontWeight.w600),
@@ -83,10 +86,81 @@ class _SettingsState extends State<Settings> {
                   onChanged: (value) async {
                     themeProvider.toggleTheme();
                   }),
+            ),
+            InkWell(
+              onTap: () => changeLan(lngx.changeLanguage, lngx.trans),
+              child: const ListTile(
+                leading: Icon(CupertinoIcons.globe),
+                title: Text("Changer langue ",
+                    style: TextStyle(fontWeight: FontWeight.w600)),
+                subtitle: Text("Personnaliser la langue"),
+                trailing: Icon(CupertinoIcons.forward),
+              ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  changeLan(lngx, trans) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: roundAlert(),
+          title: Text(trans("language")),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Text(
+                  '🇫🇷  FRANCAIS',
+                  style: TextStyle(fontSize: 17),
+                ),
+                trailing: InkWell(
+                    onTap: () {
+                      lngx("fr");
+                      back(context);
+                    },
+                    child: const Icon(CupertinoIcons.forward)),
+              ),
+              ListTile(
+                leading: const Text(
+                  '🇬🇧  ENGLISH',
+                  style: TextStyle(fontSize: 17),
+                ),
+                trailing: InkWell(
+                    onTap: () {
+                      lngx("en");
+                      back(context);
+                    },
+                    child: const Icon(CupertinoIcons.forward)),
+              ),
+              ListTile(
+                leading: const Text(
+                  '🇹🇿  SWAHILI',
+                  style: TextStyle(fontSize: 17),
+                ),
+                trailing: InkWell(
+                    onTap: () {
+                      lngx("sw");
+                      back(context);
+                    },
+                    child: const Icon(CupertinoIcons.forward)),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('ANNULER'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

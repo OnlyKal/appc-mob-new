@@ -24,8 +24,7 @@ class _FrequentationState extends State<Frequentation> {
     return Scaffold(
         appBar: AppBar(
           leading: backPage(context),
-          // backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Evaluation de fréquentation",
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
@@ -33,7 +32,7 @@ class _FrequentationState extends State<Frequentation> {
         body: Center(
             child: Container(
                 child: SfCircularChart(
-                    legend: Legend(isVisible: true),
+                    legend: const Legend(isVisible: true),
                     // Enables the tooltip for all the series in chart
                     tooltipBehavior: _tooltipBehavior,
                     series: <CircularSeries>[

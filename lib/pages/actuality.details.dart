@@ -62,7 +62,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
       appBar: AppBar(
         leading: backPage(context),
         // backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Actualité détaillée",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),

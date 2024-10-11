@@ -151,7 +151,7 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                   builder: (context) {
                     return Container(
                       padding: const EdgeInsets.all(8.0),
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      // color: Color.fromARGB(255, 255, 255, 255),
                       child: Row(
                         children: [
                           Expanded(
@@ -172,7 +172,7 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
-                                    color: Colors.white,
+                                    // color: Colors.white,
                                   ),
                                 )
                               : IconButton(

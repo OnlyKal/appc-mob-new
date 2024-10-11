@@ -60,16 +60,6 @@ void logout(context) async {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
-void rebootApp(context) async {
-  final snackBar = SnackBar(
-    content: const Text("Réactualiser l'application.."),
-    action: SnackBarAction(
-      label: 'OK',
-      onPressed: () => Phoenix.rebirth(context),
-    ),
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
 
 message(stringMessage, context) {
   ScaffoldMessenger.of(context).showSnackBar(

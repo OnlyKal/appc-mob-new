@@ -102,38 +102,6 @@ class _CardDetailState extends State<CardDetail> {
                                     ],
                                   )),
                             ),
-                            // const SizedBox(
-                            //   height: 4,
-                            // ),
-                            // GestureDetector(
-                            //   onTap: () {},
-                            //   child: Container(
-                            //       decoration: BoxDecoration(
-                            //           color: mainColor,
-                            //           borderRadius: BorderRadius.circular(5)),
-                            //       padding: const EdgeInsets.symmetric(
-                            //           horizontal: 15, vertical: 10),
-                            //       child: const Row(
-                            //         children: [
-                            //           Icon(
-                            //             CupertinoIcons.creditcard,
-                            //             size: 15,
-                            //             color:
-                            //                 Color.fromARGB(255, 197, 198, 208),
-                            //           ),
-                            //           SizedBox(
-                            //             width: 8,
-                            //           ),
-                            //           Text(
-                            //             " CARTE DE CREDIT ",
-                            //             style: TextStyle(
-                            //                 color: Colors.white,
-                            //                 fontSize: 11,
-                            //                 fontWeight: FontWeight.w700),
-                            //           ),
-                            //         ],
-                            //       )),
-                            // ),
                           ],
                         ),
                       ],
@@ -285,12 +253,8 @@ class _CardDetailState extends State<CardDetail> {
                                                                       const EdgeInsets
                                                                           .all(
                                                                           6),
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                      255,
-                                                                      167,
-                                                                      212,
-                                                                      247),
+                                                                  color:
+                                                                      mainColor,
                                                                   child: Text(
                                                                     "USD ${newVal(price['price'])}",
                                                                     style: const TextStyle(

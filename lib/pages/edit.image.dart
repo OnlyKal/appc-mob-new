@@ -46,7 +46,7 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             // backgroundColor: Colors.white,
-            title: Text(
+            title: const Text(
               "Image du profil",
             style: TextStyle(fontWeight: FontWeight.w600),
             ),

@@ -7,13 +7,11 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Profile",
-           style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
@@ -85,7 +83,9 @@ class ProfilePage extends StatelessWidget {
                   return Container();
                 }),
             const SizedBox(height: 24),
-            const Divider(),
+            const Divider(
+              color: Colors.grey,
+            ),
             _buildOption(context, 'Accueil', CupertinoIcons.home, null,
                 () => goTo(context, const HomePage())),
             _buildOption(context, 'Paramètres', CupertinoIcons.gear_alt, null,

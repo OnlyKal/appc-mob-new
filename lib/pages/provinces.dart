@@ -39,13 +39,11 @@ class _ProvincesListState extends State<ProvincesList> {
         .toList();
 
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => goTo(context, const SignIn()),
             icon: const Icon(CupertinoIcons.back)),
-        // backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'Liste des provinces',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),

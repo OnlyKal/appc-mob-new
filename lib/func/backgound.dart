@@ -26,6 +26,10 @@ void callbackDispatcher() {
 }
 
 Future<void> initBackgroundFetch() async {
+  NotificationClass.initializeNotif();
+  NotificationClass.openNotifMono("APPC ALERTE",
+      "Bienvenue chez APPC SERVICES-DRC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain");
+
   Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   Workmanager().registerPeriodicTask(
     "appc.notif.background",
@@ -35,4 +39,3 @@ Future<void> initBackgroundFetch() async {
     frequency: const Duration(minutes: 15),
   );
 }
-

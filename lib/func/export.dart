@@ -31,3 +31,4 @@ export '../api/socket.init.dart';
 export '../pages/notifications.dart';
 export '../func/payabonnement.dart';
 export '../pages/successtrans.dart';
+export '../func/lng.config.dart';

@@ -6,27 +6,47 @@ import 'package:provider/provider.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationClass.initializeNotif();
-  NotificationClass.openNotifMono("APPC ALERTE",
-      "Bienvenue chez APPC SERVICES-DRC, où nous inspirons notre peuple à créer le changement et à oser inventer son avenir. Ensemble, façonnons un futur prometteur pour notre nation. Soyez les artisans de demain");
   initBackgroundFetch();
-
-  var theme = await enableMode();
+  Map<String, dynamic> translations = await loadTranslations();
   runApp(
-    ChangeNotifierProvider(
-        create: (context) => ThemeProvider()..loadThemeFromPreferences(),
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) =>
+                LocalizationProvider(translations)..loadSavedLanguage(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ThemeProvider()..loadThemeFromPreferences(),
+          ),
+        ],
         child:
             Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
-          return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              // theme: theme.toString().contains("desable")
-              //     ? darkTheme()
-              //     : lightTheme(),
-              theme: themeProvider.getTheme(), 
-              home: const PopScope(canPop: false, child: SplashScreen()));
+          return Consumer<LocalizationProvider>(
+              builder: (context, localizationProvider, child) {
+            return MaterialApp(
+                locale: Locale(localizationProvider.currentLang),
+                debugShowCheckedModeBanner: false,
+                theme: themeProvider.getTheme(),
+                home: const PopScope(canPop: false, child: SplashScreen()));
+          });
         })),
   );
 }
+// main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   initBackgroundFetch();
+//   runApp(
+//     ChangeNotifierProvider(
+//         create: (context) => ThemeProvider()..loadThemeFromPreferences(),
+//         child:
+//             Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+//           return MaterialApp(
+//               debugShowCheckedModeBanner: false,
+//               theme: themeProvider.getTheme(),
+//               home: const PopScope(canPop: false, child: SplashScreen()));
+//         })),
+//   );
+// }
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

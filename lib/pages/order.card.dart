@@ -104,9 +104,7 @@ class _OrderCardState extends State<OrderCard> {
                                                           padding:
                                                               const EdgeInsets
                                                                   .all(6),
-                                                          color: const Color
-                                                              .fromARGB(255,
-                                                              167, 212, 247),
+                                                          color: mainColor,
                                                           child: Text(
                                                             "USD ${newVal(price['price'])}",
                                                             style: const TextStyle(

@@ -8,6 +8,11 @@ converToUpperCase(word) {
   return word.toUpperCase();
 }
 
+Future<Map<String, dynamic>> loadTranslations() async {
+  String jsonString = await rootBundle.loadString('assets/translations.json');
+  return json.decode(jsonString);
+}
+
 hideKeyboard() => SystemChannels.textInput.invokeMethod('TextInput.hide');
 
 String newVal(dynamic value) {
