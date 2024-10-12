@@ -2,6 +2,7 @@ import 'package:appc/func/color.dart';
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProvincesList extends StatefulWidget {
   const ProvincesList({super.key});
@@ -27,6 +28,7 @@ class _ProvincesListState extends State<ProvincesList> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     final List filteredProvinces = _provinces
         .where((province) =>
             province['name']
@@ -43,9 +45,9 @@ class _ProvincesListState extends State<ProvincesList> {
         leading: IconButton(
             onPressed: () => goTo(context, const SignIn()),
             icon: const Icon(CupertinoIcons.back)),
-        title: const Text(
-          'Liste des provinces',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("province_list"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: _provinces.isEmpty
@@ -59,7 +61,7 @@ class _ProvincesListState extends State<ProvincesList> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Rechercher une province',
+                            hintText: lngx.trans("search_province"),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             prefixIcon: const Icon(CupertinoIcons.search)),

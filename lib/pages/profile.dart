@@ -1,17 +1,19 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: backPage(context),
-        title: const Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("profile"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
@@ -86,25 +88,33 @@ class ProfilePage extends StatelessWidget {
             const Divider(
               color: Colors.grey,
             ),
-            _buildOption(context, 'Accueil', CupertinoIcons.home, null,
+            _buildOption(context, lngx.trans("home"), CupertinoIcons.home, null,
                 () => goTo(context, const HomePage())),
-            _buildOption(context, 'Paramètres', CupertinoIcons.gear_alt, null,
-                () => goTo(context, const Settings())),
-            _buildOption(context, 'Nouvelle Carte', CupertinoIcons.creditcard,
-                null, () => goTo(context, const OrderCard())),
-            _buildOption(context, 'Changer le PIN', CupertinoIcons.lock, null,
-                () => goTo(context, const UpdatePinPage())),
             _buildOption(
                 context,
-                'Compte Revendeur',
+                lngx.trans("settings"),
+                CupertinoIcons.gear_alt,
+                null,
+                () => goTo(context, const Settings())),
+            _buildOption(
+                context,
+                lngx.trans("new_card"),
+                CupertinoIcons.creditcard,
+                null,
+                () => goTo(context, const OrderCard())),
+            _buildOption(context, lngx.trans("change_pin"), CupertinoIcons.lock,
+                null, () => goTo(context, const UpdatePinPage())),
+            _buildOption(
+                context,
+                lngx.trans("reseller_account"),
                 Icons.business,
                 const Icon(
                   CupertinoIcons.circle_fill,
                   size: 15,
                 ),
-                () => message("Pas encore disponible", context)),
-            _buildOption(context, 'Déconnexion', Icons.logout, null,
-                () => logout(context)),
+                () => message(lngx.trans("not_yet_available"), context)),
+            _buildOption(context, lngx.trans("logout"), Icons.logout, null,
+                () => logout(context, lngx.trans)),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   final province;
@@ -36,13 +37,12 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
-        // backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          // backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -51,18 +51,19 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "PAGE D'ADHÉSION",
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+                Text(
+                  lngx.trans("membership_page"),
+                  style: const TextStyle(
+                      fontSize: 32, fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(
                   height: 6,
                 ),
-                const Text(
-                  "Connectez-vous, veuillez saisir scrupuleusement les éléments demandés.",
+                Text(
+                  lngx.trans("login_prompt"),
                   textAlign: TextAlign.center,
-                  style:
-                      TextStyle(height: 1.8, fontSize: 16, color: Colors.grey),
+                  style: const TextStyle(
+                      height: 1.8, fontSize: 16, color: Colors.grey),
                 ),
                 const SizedBox(
                   height: 30,
@@ -70,17 +71,17 @@ class _SignUpState extends State<SignUp> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          "Définissez votre CODE-PIN",
-                          style: TextStyle(
+                          lngx.trans("enter_pin"),
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Icon(
+                        const Icon(
                           CupertinoIcons.staroflife_fill,
                           size: 8,
                           color: Colors.red,
@@ -100,19 +101,20 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 30,
                     ),
-                    inputText(context, controllerProvice, "Provice", null,
-                        false, true),
-                    inputText(context, controllerNom, "Nom", null, true, true),
-                    inputText(context, controllerPostNom, "Postnom", null, true,
-                        false),
-                    inputText(context, controllerEmail, "Adresse mail", null,
-                        false, false),
-                    inputText(context, controllerPhone, "Téléphone", null,
-                        false, false),
-                    inputText(context, controllerFunction, "Votre fonction",
+                    inputText(context, controllerProvice,
+                        lngx.trans("province"), null, true, true),
+                    inputText(context, controllerNom, lngx.trans("name"), null,
+                        true, false),
+                    inputText(context, controllerPostNom, lngx.trans("surname"),
                         null, true, false),
-                    inputText(context, controllerAdress, "Adresse de résidence",
-                        null, true, false),
+                    inputText(context, controllerEmail, lngx.trans("email"),
+                        null, false, false),
+                    inputText(context, controllerPhone,
+                        "${lngx.trans("phone")} (243)", null, true, false),
+                    inputText(context, controllerFunction,
+                        lngx.trans("your_function"), null, true, false),
+                    inputText(context, controllerAdress,
+                        lngx.trans("residence_address"), null, true, false),
                   ],
                 ),
                 const SizedBox(
@@ -122,34 +124,46 @@ class _SignUpState extends State<SignUp> {
                     ? loading(context)
                     : InkWell(
                         onTap: () {
-                          setState(() => isAdding = true);
-                          addMember(
-                                  widget.province['id'],
-                                  ctrcodepin,
-                                  controllerNom.text,
-                                  controllerPostNom.text,
-                                  controllerEmail.text,
-                                  controllerPhone.text,
-                                  controllerFunction.text,
-                                  controllerAdress.text)
-                              .then((member) {
-                            setState(() => isAdding = false);
-                          
-                            if (member['id'] != null) {
-                              storeUserDetails(
-                                  member['id'].toString(),
-                                  member['matricule'],
-                                  member['first_name'],
-                                  member['last_name'],
-                                  member['email'],
-                                  member['phone_number'],
-                                  member['url'],
-                                  member['auth_token'],
-                                  member['function'],
-                                  null);
-                              goTo(context, ProfileImagePage(member: member));
-                            }
-                          });
+                          if (controllerNom.text == "") {
+                            message("Nom field is empty", context);
+                          } else if (controllerEmail.text == "") {
+                            message("Email field is empty", context);
+                          } else if (controllerPhone.text == "") {
+                            message("Phone field is empty", context);
+                          } else if (controllerFunction.text == "") {
+                            message("Function field is empty", context);
+                          } else if (controllerAdress.text == "") {
+                            message("Address field is empty", context);
+                          } else {
+                            setState(() => isAdding = true);
+                            addMember(
+                                    widget.province['id'],
+                                    ctrcodepin,
+                                    controllerNom.text,
+                                    controllerPostNom.text,
+                                    controllerEmail.text,
+                                    controllerPhone.text,
+                                    controllerFunction.text,
+                                    controllerAdress.text)
+                                .then((member) {
+                              setState(() => isAdding = false);
+
+                              if (member['id'] != null) {
+                                storeUserDetails(
+                                    member['id'].toString(),
+                                    member['matricule'],
+                                    member['first_name'],
+                                    member['last_name'],
+                                    member['email'],
+                                    member['phone_number'],
+                                    member['url'],
+                                    member['auth_token'],
+                                    member['function'],
+                                    null);
+                                goTo(context, ProfileImagePage(member: member));
+                              }
+                            });
+                          }
                         },
                         child: Container(
                           height: 50,
@@ -157,10 +171,10 @@ class _SignUpState extends State<SignUp> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10)),
                           width: fullHeight(context),
-                          child: const Center(
+                          child: Center(
                               child: Text(
-                            "VALIDER",
-                            style: TextStyle(
+                            lngx.trans("validate"),
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: Colors.white),
@@ -173,18 +187,18 @@ class _SignUpState extends State<SignUp> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Etes-vous déjà un membre APPC ? ",
+                    Text(
+                      lngx.trans("already_member"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           height: 1.8, fontSize: 16, color: Colors.grey),
                     ),
                     TextButton(
                       onPressed: () => goTo(context, const SignIn()),
-                      child: const Text(
-                        "Connectez-vous",
+                      child: Text(
+                        lngx.trans("login"),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             height: 1.8, fontSize: 16, color: Colors.blue),
                       ),
                     ),
@@ -192,10 +206,10 @@ class _SignUpState extends State<SignUp> {
                 ),
                 TextButton(
                   onPressed: () => goTo(context, const ProvincesList()),
-                  child: const Text(
-                    "Changer la province",
+                  child: Text(
+                    lngx.trans("change_province"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         height: 1.8, fontSize: 16, color: Colors.blue),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Actualities extends StatefulWidget {
@@ -26,13 +27,12 @@ class _ActualitiesState extends State<Actualities> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: const Text(
-          "Nos Actualités",
+        title: Text(
+          lngx.trans("news_title"),
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
@@ -94,7 +94,7 @@ class _ActualitiesState extends State<Actualities> {
                                           width: 10,
                                         ),
                                         Expanded(
-                                          child: Container(
+                                          child: SizedBox(
                                             // color: Colors.white,
                                             height: 100,
                                             child: Column(

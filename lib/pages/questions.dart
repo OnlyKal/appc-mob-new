@@ -1,13 +1,11 @@
-import 'package:appc/func/color.dart';
-import 'package:appc/func/constant.dart';
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:provider/provider.dart';
 
 class QuestionsReponses extends StatefulWidget {
   const QuestionsReponses({super.key});
-
   @override
   State<QuestionsReponses> createState() => _QuestionsReponsesState();
 }
@@ -39,14 +37,13 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 221, 221, 221),
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: const Text(
-          "Discussion",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("discussion"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Column(
@@ -67,10 +64,12 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                                     return Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(3),
-                                        color: const Color.fromARGB(
-                                            255, 244, 241, 241),
-                                      ),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
+                                          border: const Border(
+                                              bottom: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 186, 186, 186)))),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -78,12 +77,7 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                                           Text(
                                             newUtf(
                                                 "Q$i. ${questionData[i]['question']}"),
-                                            style: TextStyle(
-                                                color: questionData[i][
-                                                            'already_answered'] ==
-                                                        false
-                                                    ? Colors.grey
-                                                    : Colors.black,
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           const SizedBox(
@@ -160,9 +154,9 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                               keyboardType: TextInputType.multiline,
                               style: const TextStyle(),
                               maxLines: null,
-                              decoration: const InputDecoration(
-                                hintText: 'Écrivez votre question ici...',
-                                hintStyle: TextStyle(color: Colors.grey),
+                              decoration: InputDecoration(
+                                hintText: lngx.trans("write_your_question"),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 border: InputBorder.none,
                               ),
                             ),
@@ -172,8 +166,8 @@ class _QuestionsReponsesState extends State<QuestionsReponses> {
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
-                                    // color: Colors.white,
-                                  ),
+                                      // color: Colors.white,
+                                      ),
                                 )
                               : IconButton(
                                   icon: CircleAvatar(

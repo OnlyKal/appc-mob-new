@@ -42,7 +42,7 @@ newUtf(encodedString) {
   return decodedString;
 }
 
-String convertirJours(int jours) {
+String convertirJours(int jours, lngx) {
   int annee = 0;
   int mois = 0;
   int joursRestants = jours;
@@ -58,12 +58,14 @@ String convertirJours(int jours) {
 
   String resultat = "";
   if (annee > 0) {
-    resultat += "$annee ${annee == 1 ? 'année' : 'années'}, ";
+    resultat += "$annee ${annee == 1 ? lngx("year") : '${lngx("year")}s'}, ";
   }
   if (mois > 0) {
-    resultat += "$mois ${mois == 1 ? 'mois' : 'mois'}, ";
+    resultat +=
+        "$mois ${mois == 1 ? '${lngx("month")}' : '${lngx("month")}s '}, ";
   }
-  resultat += "$joursRestants ${joursRestants == 1 ? 'jour' : 'jours'}";
+  resultat +=
+      "$joursRestants ${joursRestants == 1 ? '${lngx("day")}' : '${lngx("day")}s'}";
 
   return resultat;
 }

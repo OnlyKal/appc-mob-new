@@ -1,5 +1,6 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UpdatePinPage extends StatefulWidget {
   const UpdatePinPage({super.key});
@@ -11,7 +12,7 @@ class _UpdatePinPageState extends State<UpdatePinPage> {
   final TextEditingController newCtrl = TextEditingController();
   final TextEditingController _cftCtrl = TextEditingController();
   bool isUpdating = false;
-  void _updatePin() {
+  void _updatePin(lngx) {
     if (_oldCtlr.text.length == 4) {
       if (newCtrl.text.length == 4) {
         if (_cftCtrl.text.length == 4) {
@@ -22,32 +23,31 @@ class _UpdatePinPageState extends State<UpdatePinPage> {
                 pin['matricule'].toString().contains("APPC")) {
               _oldCtlr.text = newCtrl.text = _cftCtrl.text = "";
               back(context);
-              message("Code PIN modifié avec succès", context);
+              message(lngx("pin_modified_success"), context);
             } else {
               message(pin['detail'], context);
             }
           });
         } else {
-          message("Le code doit avoir 4 chiffres", context);
+          message(lngx("pin_must_have_4_digits"), context);
         }
       } else {
-        message("Le code doit avoir 4 chiffres", context);
+        message(lngx("pin_must_have_4_digits"), context);
       }
     } else {
-      message("Le code doit avoir 4 chiffres", context);
+      message(lngx("pin_must_have_4_digits"), context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: const Text(
-          "Mettre à jour le PIN",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("update_pin"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
@@ -55,25 +55,27 @@ class _UpdatePinPageState extends State<UpdatePinPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            inputText(context, _oldCtlr, "Ancien PIN", null, true, false),
-            inputText(context, newCtrl, "Nouveau PIN", null, true, false),
-            inputText(context, _cftCtrl, "Confirmer le nouveau PIN", null, true,
-                false),
+            inputText(
+                context, _oldCtlr, lngx.trans("old_pin"), null, true, false),
+            inputText(
+                context, newCtrl, lngx.trans("new_pin"), null, true, false),
+            inputText(context, _cftCtrl, lngx.trans("confirm_new_pin"), null,
+                true, false),
             const SizedBox(height: 20),
             isUpdating == true
                 ? loading(context)
                 : InkWell(
-                    onTap: _updatePin,
+                    onTap: () => _updatePin(lngx.trans),
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(10)),
                       width: fullHeight(context),
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        "METTRE A JOUR",
-                        style: TextStyle(
+                        lngx.trans("update").toUpperCase(),
+                        style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                             color: Colors.white),

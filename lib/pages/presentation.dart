@@ -1,6 +1,7 @@
 import 'package:appc/func/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../func/export.dart';
@@ -24,17 +25,16 @@ class _PresentationPageState extends State<PresentationPage> {
   checkSession() async {
     SharedPreferences auth = await SharedPreferences.getInstance();
     setState(() => tokenCkeck = auth.getString("token")!);
-    print(tokenCkeck);
   }
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          // backgroundColor: Colors.white,
           actions: [
             if (tokenCkeck == "")
               InkWell(
@@ -46,8 +46,8 @@ class _PresentationPageState extends State<PresentationPage> {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "CRÉER UN COMPTE",
+                  child: Text(
+                    lngx.trans("create_account"),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -62,9 +62,9 @@ class _PresentationPageState extends State<PresentationPage> {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "CONNEXION",
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    lngx.trans("login_title"),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -78,9 +78,9 @@ class _PresentationPageState extends State<PresentationPage> {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "ACTUALITÉS",
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    lngx.trans("news").toUpperCase(),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -94,9 +94,9 @@ class _PresentationPageState extends State<PresentationPage> {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "COMMENDER UNE CARTE",
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    lngx.trans("order_card"),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -129,9 +129,9 @@ class _PresentationPageState extends State<PresentationPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'EXCELENCE',
-                      style: TextStyle(
+                    Text(
+                      lngx.trans("excellence"),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -165,10 +165,10 @@ class _PresentationPageState extends State<PresentationPage> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10)),
                           width: fullHeight(context),
-                          child: const Center(
+                          child: Center(
                               child: Text(
-                            "TABLEAU DE BORD",
-                            style: TextStyle(
+                            lngx.trans("dashboard"),
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: Colors.white),

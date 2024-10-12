@@ -4,6 +4,7 @@ import 'package:appc/func/export.dart';
 import 'package:appc/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileImagePage extends StatefulWidget {
@@ -39,16 +40,15 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return PopScope(
         canPop: false,
         child: Scaffold(
-          // backgroundColor: Colors.white,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            // backgroundColor: Colors.white,
-            title: const Text(
-              "Image du profil",
-            style: TextStyle(fontWeight: FontWeight.w600),
+            title: Text(
+              lngx.trans("profile_image"),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           body: SingleChildScrollView(
@@ -85,18 +85,18 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
                                 width: 120,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(color: mainColor),
-                                child: const Row(
+                                child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.camera_alt,
                                       color: Colors.white,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 8,
                                     ),
                                     Text(
-                                      'CAMERA',
-                                      style: TextStyle(
+                                      lngx.trans("camera"),
+                                      style: const TextStyle(
                                         color: Colors.white,
                                       ),
                                     ),
@@ -113,18 +113,18 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
                                 width: 120,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(color: mainColor),
-                                child: const Row(
+                                child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.image,
                                       color: Colors.white,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 8,
                                     ),
                                     Text(
-                                      'GALLERIE',
-                                      style: TextStyle(
+                                      lngx.trans("gallery"),
+                                      style: const TextStyle(
                                         color: Colors.white,
                                       ),
                                     ),
@@ -138,11 +138,13 @@ class _ProfileImagePageState extends State<ProfileImagePage> {
                     height: 50,
                   ),
                   TextButton(
-                    onPressed: () => goTo(context, const SplashScreen()),
-                    child: const Text(
-                      "COMMENCER",
+                    onPressed: () => base64String == ""
+                        ? message(lngx.trans('select_image'), context)
+                        : goTo(context, const SplashScreen()),
+                    child: Text(
+                      lngx.trans("start"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           height: 1.8, fontSize: 16, color: Colors.blue),
                     ),
                   ),

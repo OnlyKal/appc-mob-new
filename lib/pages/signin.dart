@@ -5,6 +5,7 @@ import 'package:appc/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,6 +61,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -99,18 +101,19 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(
                     height: 20,
                   ),
-                const Text(
-                  "PAGE D'ACCÈS",
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+                Text(
+                  lngx.trans("access_page"),
+                  style: const TextStyle(
+                      fontSize: 32, fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(
                   height: 6,
                 ),
-                const Text(
-                  "Connectez-vous, veuillez saisir scrupuleusement les éléments demandés.",
+                Text(
+                  lngx.trans("login_prompt"),
                   textAlign: TextAlign.center,
-                  style:
-                      TextStyle(height: 1.8, fontSize: 16, color: Colors.grey),
+                  style: const TextStyle(
+                      height: 1.8, fontSize: 16, color: Colors.grey),
                 ),
                 const SizedBox(
                   height: 30,
@@ -118,13 +121,13 @@ class _SignInState extends State<SignIn> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                         width: fullWidth(context),
-                        color: const Color.fromARGB(255, 246, 249, 251),
+                        // color: const Color.fromARGB(255, 246, 249, 251),
                         child: TextField(
                           controller: ctrmatricule,
                           decoration: InputDecoration(
-                              hintText: "Entrer votre matricule",
+                              hintText: lngx.trans("enter_registration_number"),
                               contentPadding: const EdgeInsets.all(10),
                               suffixIcon: IconButton(
                                   onPressed: () {
@@ -141,10 +144,10 @@ class _SignInState extends State<SignIn> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Text(
-                      "Entrer votre CODE-PIN",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    Text(
+                      lngx.trans("enter_pin"),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
                       height: 15,
@@ -169,7 +172,7 @@ class _SignInState extends State<SignIn> {
                           login(ctrmatricule.text, ctrcodepin).then((member) {
                             //print(member);
                             setState(() => isLoading = false);
-                         
+
                             if (member['id'] != null) {
                               storeUserDetails(
                                   member['id'].toString(),
@@ -195,10 +198,10 @@ class _SignInState extends State<SignIn> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(10)),
                           width: fullHeight(context),
-                          child: const Center(
+                          child: Center(
                               child: Text(
-                            "VALIDER",
-                            style: TextStyle(
+                            lngx.trans("validate"),
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: Colors.white),
@@ -211,18 +214,18 @@ class _SignInState extends State<SignIn> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Etes-vous déjà un membre APPC ? ",
+                    Text(
+                      lngx.trans("already_member"),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           height: 1.8, fontSize: 16, color: Colors.grey),
                     ),
                     TextButton(
                       onPressed: () => goTo(context, const ProvincesList()),
-                      child: const Text(
-                        "Adhérer maintenant ",
+                      child: Text(
+                        lngx.trans("join_now"),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             height: 1.8, fontSize: 16, color: Colors.blue),
                       ),
                     ),

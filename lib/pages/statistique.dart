@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../func/export.dart';
@@ -21,21 +22,20 @@ class _FrequentationState extends State<Frequentation> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
         appBar: AppBar(
           leading: backPage(context),
-          title: const Text(
-            "Evaluation de fréquentation",
-            style: TextStyle(fontWeight: FontWeight.w600),
+          title: Text(
+            lngx.trans("attendance_evaluation"),
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
         body: Center(
-            child: Container(
-                child: SfCircularChart(
-                    legend: const Legend(isVisible: true),
-                    // Enables the tooltip for all the series in chart
-                    tooltipBehavior: _tooltipBehavior,
-                    series: <CircularSeries>[
+            child: SfCircularChart(
+                legend: const Legend(isVisible: true),
+                tooltipBehavior: _tooltipBehavior,
+                series: <CircularSeries>[
               // Initialize line series
               PieSeries<ChartData, String>(
                   // Enables the tooltip for individual series
@@ -58,12 +58,15 @@ class _FrequentationState extends State<Frequentation> {
                   dataLabelMapper: (datum, index) {
                     return "${datum.x} (${datum.y})";
                   },
-                  name: "Statistiques de fréquentation APPC Services",
+                  name: lngx.trans("attendance_statistics"),
                   dataLabelSettings: const DataLabelSettings(isVisible: true),
                   xValueMapper: (ChartData data, _) => data.x,
                   yValueMapper: (ChartData data, _) => data.y)
-            ]))));
+            ])));
   }
+
+
+  
   // late TooltipBehavior _tooltipBehavior;
 
   // @override

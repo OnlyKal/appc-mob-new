@@ -35,16 +35,12 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final lngx = Provider.of<LocalizationProvider>(context);
-
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-
-        title: const Text(
-          "Paramètres",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("settings"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -52,9 +48,11 @@ class _SettingsState extends State<Settings> {
           children: [
             ListTile(
               leading: const Icon(CupertinoIcons.bell),
-              title: const Text("Notification",
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text("Activer/Désactiver les notifications"),
+              title: Text(lngx.trans("notifications"),
+                  style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(
+                lngx.trans("toggle_notifications"),
+              ),
               trailing: Switch(
                   value: isSwidhed,
                   onChanged: (value) async {
@@ -78,9 +76,9 @@ class _SettingsState extends State<Settings> {
                       CupertinoIcons.moon,
                       color: Colors.grey,
                     ),
-              title: const Text("Mode Sombre",
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: const Text("Activer/Désactiver le thème"),
+              title: Text(lngx.trans("dark_mode"),
+                  style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(lngx.trans("toggle_theme")),
               trailing: Switch(
                   value: themeProvider.isDarkMode,
                   onChanged: (value) async {
@@ -89,12 +87,12 @@ class _SettingsState extends State<Settings> {
             ),
             InkWell(
               onTap: () => changeLan(lngx.changeLanguage, lngx.trans),
-              child: const ListTile(
-                leading: Icon(CupertinoIcons.globe),
-                title: Text("Changer langue ",
-                    style: TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text("Personnaliser la langue"),
-                trailing: Icon(CupertinoIcons.forward),
+              child: ListTile(
+                leading: const Icon(CupertinoIcons.globe),
+                title: Text(lngx.trans("customize_language"),
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
+                subtitle: Text(lngx.trans("change_language")),
+                trailing: const Icon(CupertinoIcons.forward),
               ),
             )
           ],
@@ -149,6 +147,18 @@ class _SettingsState extends State<Settings> {
                     },
                     child: const Icon(CupertinoIcons.forward)),
               ),
+              ListTile(
+                leading: const Text(
+                  '🇨🇩  LINGALA',
+                  style: TextStyle(fontSize: 17),
+                ),
+                trailing: InkWell(
+                    onTap: () {
+                      lngx("ln");
+                      back(context);
+                    },
+                    child: const Icon(CupertinoIcons.forward)),
+              ),
             ],
           ),
           actions: [
@@ -156,7 +166,7 @@ class _SettingsState extends State<Settings> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text('ANNULER'),
+              child: Text(trans("cancel")),
             ),
           ],
         );

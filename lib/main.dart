@@ -32,21 +32,6 @@ main() async {
         })),
   );
 }
-// main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   initBackgroundFetch();
-//   runApp(
-//     ChangeNotifierProvider(
-//         create: (context) => ThemeProvider()..loadThemeFromPreferences(),
-//         child:
-//             Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
-//           return MaterialApp(
-//               debugShowCheckedModeBanner: false,
-//               theme: themeProvider.getTheme(),
-//               home: const PopScope(canPop: false, child: SplashScreen()));
-//         })),
-//   );
-// }
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -115,12 +100,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/bgsplash2.png"), fit: BoxFit.cover),
+                opacity: 0.3,
+                image: AssetImage("assets/bgsplash2.png"),
+                fit: BoxFit.cover),
           ),
           height: fullHeight(context),
           width: fullWidth(context),
@@ -131,13 +118,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 220,
-                  width: 220,
+                  width: 280,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(110),
                     color: Colors.transparent,
                   ),
                   child: Image.asset(
-                    "assets/giflogo.gif",
+                    height: 200,
+                    width: 280,
+                    "assets/logo.png",
+                    // "assets/giflogo.gif",
                   ),
                 ),
               ),

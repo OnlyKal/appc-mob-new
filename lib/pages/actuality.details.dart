@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:provider/provider.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final Map<String, dynamic> article;
@@ -57,14 +58,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: const Text(
-          "Actualité détaillée",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("detailed_news"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
           InkWell(
@@ -234,13 +234,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "COMMENTAIRES (${actuality['comment'].length})",
+                            "${lngx.trans("comments").toUpperCase()} (${actuality['comment'].length})",
                             style: const TextStyle(fontWeight: FontWeight.w700),
                           ),
                         ),
                         TextButton(
                           onPressed: () {
-                            commenterZone('Laissez un commentaire', () {
+                            commenterZone(lngx.trans("leave_comment"), () {
                               if (ctrollerComent.text.isNotEmpty) {
                                 setState(() => isPosting = true);
                                 postNewsComment(
@@ -255,8 +255,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                   back(context);
                                 });
                               } else {
-                                message(
-                                    "Veuillez entrer un commentaire", context);
+                                message(lngx.trans("comment"), context);
                               }
                             }, ctrollerComent);
                           },
@@ -270,7 +269,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       strokeWidth: 1,
                                     )),
                               Text(
-                                "Commenter",
+                                lngx.trans("comment"),
                                 style: TextStyle(color: mainColor),
                               ),
                             ],
@@ -292,11 +291,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           List commentairesList = comment.data.toList();
                           return Column(
                             children: commentairesList.reversed
-                                .map<Widget>((c) => commentaireElement(c))
+                                .map<Widget>(
+                                    (c) => commentaireElement(c, lngx.trans))
                                 .toList(),
                           );
                         }
-                        return const Text("Aucune donnée");
+                        return Text(lngx.trans("no_data"));
                       },
                     ),
                   ),
@@ -310,13 +310,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     );
   }
 
-  Widget commentaireElement(Map<String, dynamic> comment) {
+  Widget commentaireElement(Map<String, dynamic> comment, lngx) {
     return comment['parent_comment'] == null
         ? Column(
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 221, 219, 219),
+                    // color: const Color.fromARGB(255, s221, 219, 219),
                     borderRadius: BorderRadius.circular(8)),
                 margin:
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
@@ -380,8 +380,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                   },
                                   child: Text(
                                     comment['sub_comment'].length == 1
-                                        ? "Réponse (${comment['sub_comment'].length})"
-                                        : "Réponses (${comment['sub_comment'].length})",
+                                        ? "${lngx("response")} (${comment['sub_comment'].length})"
+                                        : "${lngx("response")}s (${comment['sub_comment'].length})",
                                     style: TextStyle(
                                       color: mainColor,
                                       fontWeight: FontWeight.w600,
@@ -396,7 +396,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   ],
                 ),
               ),
-              subComment(comment),
+              subComment(comment, lngx),
             ],
           )
         : Container();
@@ -411,7 +411,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     });
   }
 
-  Widget subComment(comment) {
+  Widget subComment(comment, lngx) {
     return StatefulBuilder(builder: (context, useState) {
       return Column(
         children: [
@@ -424,7 +424,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
-                    color: const Color.fromARGB(255, 242, 241, 241),
+                    // color: const Color.fromARGB(255, 242, 241, 241),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -464,7 +464,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             Text(
                               timeAgo(comment['created_at']),
                               style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w600),
+                                  fontSize: 11, fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
@@ -481,7 +481,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               children: [
                 InkWell(
                   onTap: () {
-                    commenterZone("Répondre au commentaire", () {
+                    commenterZone(lngx('respond'), () {
                       if (subCommentCtrl.text.isNotEmpty) {
                         setState(() => isPostingSub = true);
                         postNewssubComment(
@@ -497,7 +497,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           });
                         });
                       } else {
-                        message("Veuillez entrer une réponse", context);
+                        message(lngx('respond'), context);
                       }
                     }, subCommentCtrl);
                   },
@@ -519,7 +519,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           width: 10,
                         ),
                         Text(
-                          showField ? "Cacher la zone" : "Répondre",
+                          showField ? lngx("hide_area") : lngx("reply"),
                           style: TextStyle(
                             color: mainColor,
                             fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({super.key});
@@ -12,14 +13,13 @@ class OrderCard extends StatefulWidget {
 class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 242, 242, 242),
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
-        title: const Text(
-          "Acheter une carte",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("buy_card"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -116,7 +116,7 @@ class _OrderCardState extends State<OrderCard> {
                                                     .toList(),
                                               ),
                                             Text(
-                                              "Réduction ${cardsList[i]['reduction'].toString()}%",
+                                              "${lngx.trans("discount")} ${cardsList[i]['reduction'].toString()}%",
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                               ),

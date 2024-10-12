@@ -149,7 +149,7 @@ backPage(context) {
       onPressed: () => back(context), icon: const Icon(CupertinoIcons.back));
 }
 
-Widget cardMember(card, BuildContext context) {
+Widget cardMember(card, BuildContext context, lngx) {
   return Stack(
     children: [
       Container(
@@ -262,7 +262,8 @@ Widget cardMember(card, BuildContext context) {
                             color: Colors.white, fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        convertirJours(int.parse(card['stock'].toString())),
+                        convertirJours(
+                            int.parse(card['stock'].toString()), lngx),
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       ),
@@ -299,10 +300,10 @@ Widget cardMember(card, BuildContext context) {
                       builder: (context) {
                         return AlertDialog(
                           shape: roundAlert(),
-                          title: const Text(
-                            "VERIFICATION DE LA CARTE",
+                          title: Text(
+                            lngx("card_verification"),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w700),
                           ),
                           content: SizedBox(
@@ -331,8 +332,8 @@ Widget cardMember(card, BuildContext context) {
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800),
                                 ),
-                                const Text(
-                                  "Veuillez scanner cette pour vérifier la validité de l'abonnement.",
+                                Text(
+                                  lngx("scan_to_verify_card"),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.grey),
@@ -343,14 +344,14 @@ Widget cardMember(card, BuildContext context) {
                           actions: [
                             TextButton(
                                 onPressed: () {},
-                                child: const Text(
-                                  "HISTORIQUE D'ABONNEMENTS",
+                                child: Text(
+                                  lngx("subscription_history"),
                                   style: TextStyle(fontSize: 18),
                                 )),
                             TextButton(
                                 onPressed: () => back(context),
-                                child: const Text(
-                                  "TERMINER",
+                                child: Text(
+                                  lngx("complete"),
                                   style: TextStyle(fontSize: 18),
                                 )),
                           ],
@@ -364,22 +365,7 @@ Widget cardMember(card, BuildContext context) {
                 )),
             InkWell(
               onTap: () {
-                // print(card['card']['current_subscription_price']);
-
-                // var price = card['card']['current_subscription_price']
-                //     .where((element) => element['is_current'] == true)
-                //     .first;
-                // print(price['price']);
-                // print(card['number']);
-                // var transaction = {
-                //   "type": "ACHAT CARTE APPC",
-                //   "amount": price.toString(),
-                //   "currency": devise.toString(),
-                //   "status": true.toString(),
-                //   "date": DateTime.now().toIso8601String(),
-                // };
-
-                payAbonnement(context, card);
+                payAbonnement(context, card, lngx);
               },
               child: Container(
                 padding:
@@ -387,9 +373,9 @@ Widget cardMember(card, BuildContext context) {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
                     color: Colors.white),
-                child: const Text(
-                  "PAYER ABONNEMENT",
-                  style: TextStyle(
+                child: Text(
+                  lngx("pay_subscription"),
+                  style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),

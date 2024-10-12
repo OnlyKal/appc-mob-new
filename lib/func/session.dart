@@ -1,8 +1,6 @@
 import 'package:appc/func/size.dart';
-import 'package:appc/main.dart';
 import 'package:appc/pages/signin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> storeUserDetails(id, matricule, name, lastname, email, phone, url,
@@ -42,24 +40,23 @@ Future getImageSession() async {
   };
 }
 
-void logout(context) async {
+void logout(context, lngx) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final snackBar = SnackBar(
-    content: const Text('Confirmation de la déconnexion...'),
+    content: Text(lngx("logout_confirmation")),
     action: SnackBarAction(
       label: 'OK',
       onPressed: () async {
         await prefs.clear();
         goTo(context, const SignIn());
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Déconnecté avec succès')),
+          SnackBar(content: Text(lngx("logged_out_success"))),
         );
       },
     ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
-
 
 message(stringMessage, context) {
   ScaffoldMessenger.of(context).showSnackBar(

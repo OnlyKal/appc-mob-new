@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../func/export.dart';
 
@@ -17,18 +18,19 @@ class TransactionSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: backPage(context),
-        title: const Text(
-          "Détails de la transaction",
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          lngx.trans("transaction_details"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
           TextButton(
               onPressed: () => goTo(context, const HomePage()),
               child: Text(
-                "Terminé",
+                lngx.trans("completed"),
                 style: TextStyle(
                     color: mainColor,
                     fontSize: 20.5,
@@ -51,13 +53,13 @@ class TransactionSuccess extends StatelessWidget {
               size: 80.0,
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Transaction réussie',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              lngx.trans("transaction_successful"),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Text(
-              'Merci, votre transaction de $amount $currency a été effectuée avec succès.',
+              lngx.trans("thanks_transaction_successful"),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
@@ -71,10 +73,10 @@ class TransactionSuccess extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    title: const Text(
-                      'Type',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    title: Text(
+                      lngx.trans("type"),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     trailing: Text(
                       type,
@@ -83,10 +85,10 @@ class TransactionSuccess extends StatelessWidget {
                   ),
                   const Divider(),
                   ListTile(
-                    title: const Text(
-                      'Identifiant de la Transaction',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    title: Text(
+                      lngx.trans("transaction_id"),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     trailing: Text(
                       transactionId,
@@ -95,10 +97,10 @@ class TransactionSuccess extends StatelessWidget {
                   ),
                   const Divider(),
                   ListTile(
-                    title: const Text(
-                      'Date&Heure',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    title: Text(
+                      lngx.trans("date_time"),
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                     trailing: Text(
                       DateFormat('dd,MM,yyyy hh:mm').format(DateTime.now()),

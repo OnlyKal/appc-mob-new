@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,21 +38,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return PopScope(
       canPop: false,
       child: Scaffold(
-          // backgroundColor: const Color.fromARGB(255, 238, 237, 237),
           appBar: AppBar(
-            // backgroundColor: Colors.white,
             leading: InkWell(
               onTap: () => goTo(context, const PresentationPage()),
               child: Image.asset(
                 "assets/logo.png",
               ),
             ),
-            title: const Text(
-              "TABLEAU DE BORD",
-              style: TextStyle(fontWeight: FontWeight.w600),
+            title: Text(
+              lngx.trans("dashboard"),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             actions: [
               IconButton(
@@ -109,7 +109,8 @@ class _HomePageState extends State<HomePage> {
                                   builder: (BuildContext context) {
                                     return Container(
                                       margin: const EdgeInsets.only(top: 10),
-                                      child: cardMember(card, context),
+                                      child:
+                                          cardMember(card, context, lngx.trans),
                                     );
                                   },
                                 );
@@ -121,51 +122,47 @@ class _HomePageState extends State<HomePage> {
                       }),
                   const SizedBox(height: 5),
                   Container(
-                    decoration: BoxDecoration(
-                        // color: const Color.fromARGB(255, 62, 62, 62),
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.all(13),
                     child: Column(
                       children: [
-                        // optionElement("Abonnement", "Gestions des abonnements",
-                        //     CupertinoIcons.square_line_vertical_square, () {}),
-                        // const Divider(),
                         optionElement(
-                            "Cartes",
-                            "Passer une commande d'une nouvelle carte",
+                            lngx.trans("cards"),
+                            lngx.trans("order_new_card"),
                             CupertinoIcons.creditcard,
                             () => goTo(context, const OrderCard())),
                         const Divider(
                           color: Colors.grey,
                         ),
                         optionElement(
-                            "Profile",
-                            "Gestions votre compte membre APPC",
+                            lngx.trans("profile"),
+                            lngx.trans("manage_member_account"),
                             CupertinoIcons.person,
                             () => goTo(context, const ProfilePage())),
                         const Divider(
                           color: Colors.grey,
                         ),
                         optionElement(
-                            "Actualités",
-                            "Les actualités sur toutes les plateformes APPC",
+                            lngx.trans("news"),
+                            lngx.trans("news_desc"),
                             CupertinoIcons.news,
                             () => goTo(context, const Actualities())),
                         const Divider(
                           color: Colors.grey,
                         ),
                         optionElement(
-                            "Discussion",
-                            "Decouvrer plus sur la plateforme APPC et ses projets",
+                            lngx.trans("discussion"),
+                            lngx.trans("discover_more"),
                             CupertinoIcons.bubble_middle_bottom,
                             () => goTo(context, const QuestionsReponses())),
                         const Divider(
                           color: Colors.grey,
                         ),
                         optionElement(
-                            "Statistique",
-                            "Contrôle de la fréquence d'utilisation",
+                            lngx.trans("usage_statistics"),
+                            lngx.trans("manage_member_account"),
                             CupertinoIcons.chart_bar_alt_fill,
                             () => goTo(context, const Frequentation())),
                       ],

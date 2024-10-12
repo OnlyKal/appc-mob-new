@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:appc/func/export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardDetail extends StatefulWidget {
   final card;
@@ -26,14 +27,13 @@ class _CardDetailState extends State<CardDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final lngx = Provider.of<LocalizationProvider>(context);
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: AppBar(
         leading: backPage(context),
-        // backgroundColor: Colors.white,
         title: Text(
-          "Détails",
-          style: TextStyle(fontWeight: FontWeight.w600),
+          lngx.trans("details"),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       body: SingleChildScrollView(
@@ -74,27 +74,28 @@ class _CardDetailState extends State<CardDetail> {
                         Column(
                           children: [
                             GestureDetector(
-                              onTap: () => payementMobileModal(currentCard),
+                              onTap: () =>
+                                  payementMobileModal(currentCard, lngx.trans),
                               child: Container(
                                   decoration: BoxDecoration(
                                       color: mainColor,
                                       borderRadius: BorderRadius.circular(5)),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 10),
-                                  child: const Row(
+                                  child: Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         CupertinoIcons.device_phone_portrait,
                                         size: 15,
                                         color:
                                             Color.fromARGB(255, 197, 198, 208),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 8,
                                       ),
                                       Text(
-                                        "PAIEMENT MOBILE",
-                                        style: TextStyle(
+                                        lngx.trans("mobile_payment"),
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 11,
                                             fontWeight: FontWeight.w700),
@@ -112,9 +113,10 @@ class _CardDetailState extends State<CardDetail> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "TYPE DE LA CARTE",
-                              style: TextStyle(fontWeight: FontWeight.w300),
+                            Text(
+                              lngx.trans("card_type"),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w300),
                             ),
                             const SizedBox(
                               height: 4,
@@ -136,7 +138,7 @@ class _CardDetailState extends State<CardDetail> {
                                       ['is_current'] ==
                                   true)
                                 Text(
-                                  "TARIFICATION : USD ${currentCard['current_price'][i]['price']}",
+                                  "${lngx.trans("pricing")} : USD ${currentCard['current_price'][i]['price']}",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w300),
                                 ),
@@ -265,7 +267,7 @@ class _CardDetailState extends State<CardDetail> {
                                                             .toList(),
                                                       ),
                                                     Text(
-                                                      "Réduction ${cardsList[i]['reduction'].toString()}%",
+                                                      "${lngx.trans("discount")} ${cardsList[i]['reduction'].toString()}%",
                                                       style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w700,
@@ -290,7 +292,7 @@ class _CardDetailState extends State<CardDetail> {
   bool isUsd = true;
   String devise = 'USD';
   bool isPaying = false;
-  payementMobileModal(card) {
+  payementMobileModal(card, lngx) {
     var price = card['current_price']
         .where((element) => element['is_current'] == true)
         .first;
@@ -328,7 +330,7 @@ class _CardDetailState extends State<CardDetail> {
               .toString()
               .contains("2")) {
           } else {
-            message("Désolé, la transaction n'est pas verifiée..", context);
+            message(lngx("no_verified_account"), context);
             useState(() => isPaying = false);
             timer.cancel();
           }
@@ -358,13 +360,13 @@ class _CardDetailState extends State<CardDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "ACHAT CARTE APPC | PAIEMENT MOBILE (${card['name']})",
+                        "${lngx("order_card")} (${card['name']})",
                         style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                       IconButton(
                           onPressed: () => back(context),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.cancel,
                             color: Colors.red,
                           ))
@@ -373,9 +375,10 @@ class _CardDetailState extends State<CardDetail> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Mode de paiement pris en charge :",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                  Text(
+                    "${lngx("supported_payment_methods")} :",
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w300),
                   ),
                   const SizedBox(
                     height: 8,
@@ -417,9 +420,10 @@ class _CardDetailState extends State<CardDetail> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Si vous ne souhaitez pas utiliser ce numéro, veuillez le remplacer par celui qui contient suffisamment d'argent pour payer la carte APPC.",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  Text(
+                    lngx("replace_number"),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
                     height: 10,
@@ -429,11 +433,9 @@ class _CardDetailState extends State<CardDetail> {
                     controller: ctrNumber,
                     maxLength: 12,
                     onChanged: (value) {},
-                    decoration: const InputDecoration(
-                        labelText:
-                            "Le numéro de téléphone doit commencer par 243",
-                        hintText:
-                            "Le numéro de téléphone doit commencer par 243"),
+                    decoration: InputDecoration(
+                        labelText: lngx("phone_number_must_start_243"),
+                        hintText: lngx("phone_number_must_start_243")),
                   ),
                   const SizedBox(
                     height: 20,
@@ -455,14 +457,12 @@ class _CardDetailState extends State<CardDetail> {
                                     .toString()
                                     .contains("0")) {
                                   message(
-                                      "Désolé, la transaction a échoué, veuillez réessayer !!",
+                                      "${lngx("transaction_failed_retry")} !!",
                                       context);
                                 } else {}
                               });
                             } else {
-                              message(
-                                  "Le numéro doit commencer par 243 et contenir 12 caractères.",
-                                  context);
+                              message(lngx("phone_number_start_243"), context);
                             }
                           },
                           child: Container(
@@ -473,7 +473,7 @@ class _CardDetailState extends State<CardDetail> {
                             width: fullHeight(context),
                             child: Center(
                                 child: Text(
-                              "VALIDER TRANSACTION (${price['price']} $devise)",
+                              "${lngx("validate_transaction")} (${price['price']} $devise)",
                               style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,

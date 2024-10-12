@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:appc/func/export.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -12,7 +10,7 @@ bool isUsd = true;
 String devise = 'USD';
 bool isPaying = false;
 
-payAbonnement(context, card) async {
+payAbonnement(context, card, lngx) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   ctrNumberPhone.text = prefs.getString("phone")!;
   ctrQty.text = 1.toString();
@@ -49,8 +47,8 @@ payAbonnement(context, card) async {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "ABONNEMENT | PAIEMENT MOBILE",
+                      Text(
+                        lngx("subscription_mobile_payment"),
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w700),
                       ),
@@ -64,9 +62,10 @@ payAbonnement(context, card) async {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Mode de paiement pris en charge :",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                Text(
+                  lngx("supported_payment_methods"),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w300),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -101,9 +100,10 @@ payAbonnement(context, card) async {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Si vous ne souhaitez pas utiliser ce numéro, veuillez le remplacer par celui qui contient suffisamment d'argent pour payer la carte APPC.",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                Text(
+                  lngx("replace_number"),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -111,9 +111,9 @@ payAbonnement(context, card) async {
                   controller: ctrNumberPhone,
                   maxLength: 12,
                   onChanged: (value) {},
-                  decoration: const InputDecoration(
-                    labelText: "Le numéro de téléphone doit commencer par 243",
-                    hintText: "Le numéro de téléphone doit commencer par 243",
+                  decoration: InputDecoration(
+                    labelText: lngx("phone_number_must_start_243"),
+                    hintText: lngx("phone_number_must_start_243"),
                   ),
                 ),
                 TextField(
@@ -121,9 +121,9 @@ payAbonnement(context, card) async {
                   controller: ctrQty,
                   maxLength: 2,
                   onChanged: (value) {},
-                  decoration: const InputDecoration(
-                    labelText: "Nombre des mois",
-                    hintText: "Nombre des mois",
+                  decoration: InputDecoration(
+                    labelText: lngx("number_of_months"),
+                    hintText: lngx("number_of_months"),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -171,7 +171,8 @@ payAbonnement(context, card) async {
                                             useState(() => isPaying = false);
                                           } else {
                                             message(
-                                                "Désolé, la transaction a échoué, veuillez réessayer !!",
+                                                lngx(
+                                                    "transaction_failed_retry"),
                                                 context);
                                           }
                                         });
@@ -181,7 +182,7 @@ payAbonnement(context, card) async {
                                           .contains("2")) {
                                       } else {
                                         message(
-                                            "Désolé, la transaction n'est pas verifiée..",
+                                            lngx("transaction_not_verified"),
                                             context);
                                         useState(() => isPaying = false);
                                         timer.cancel();
@@ -193,7 +194,8 @@ payAbonnement(context, card) async {
                             });
                           } else {
                             message(
-                                "Le numéro doit commencer par 243 et contenir 12 caractères.",
+                                lngx(
+                                    "transaction_phone_number_start_243not_verified"),
                                 context);
                           }
                         },
@@ -203,8 +205,8 @@ payAbonnement(context, card) async {
                           decoration: BoxDecoration(
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(8)),
-                          child: const Text(
-                            "VALIDER TRANSACTION",
+                          child: Text(
+                            lngx("validate_transaction"),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
