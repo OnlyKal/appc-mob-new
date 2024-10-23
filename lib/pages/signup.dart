@@ -125,15 +125,16 @@ class _SignUpState extends State<SignUp> {
                     : InkWell(
                         onTap: () {
                           if (controllerNom.text == "") {
-                            message("Nom field is empty", context);
+                            message(lngx.trans("name_field_empty"), context);
                           } else if (controllerEmail.text == "") {
-                            message("Email field is empty", context);
+                            message(lngx.trans("email_field_empty"), context);
                           } else if (controllerPhone.text == "") {
-                            message("Phone field is empty", context);
+                            message(lngx.trans("phone_field_empty"), context);
                           } else if (controllerFunction.text == "") {
-                            message("Function field is empty", context);
+                            message(
+                                lngx.trans("function_field_empty"), context);
                           } else if (controllerAdress.text == "") {
-                            message("Address field is empty", context);
+                            message(lngx.trans("address_field_empty"), context);
                           } else {
                             setState(() => isAdding = true);
                             addMember(
@@ -173,7 +174,7 @@ class _SignUpState extends State<SignUp> {
                           width: fullHeight(context),
                           child: Center(
                               child: Text(
-                            lngx.trans("validate"),
+                            lngx.trans("validate").toUpperCase(),
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,

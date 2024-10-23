@@ -76,9 +76,10 @@ Widget noCardyet(context) {
     padding: const EdgeInsets.all(10),
     margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: const Color.fromARGB(255, 255, 255, 255),
-    ),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100))
+        // color: const Color.fromARG B(255, 255, 255, 255),
+        ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -88,7 +89,9 @@ Widget noCardyet(context) {
         ),
         const Text(
           "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
-          style: TextStyle(height: 1.8, color: Color.fromARGB(255, 65, 64, 64)),
+          style: TextStyle(
+            height: 1.8,
+          ),
           textAlign: TextAlign.center,
         ),
         InkWell(

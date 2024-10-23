@@ -58,14 +58,14 @@ String convertirJours(int jours, lngx) {
 
   String resultat = "";
   if (annee > 0) {
-    resultat += "$annee ${annee == 1 ? lngx("year") : '${lngx("year")}s'}, ";
+    resultat += "$annee ${annee == 1 ? lngx("year") : '${lngx("years")}'}, ";
   }
   if (mois > 0) {
     resultat +=
-        "$mois ${mois == 1 ? '${lngx("month")}' : '${lngx("month")}s '}, ";
+        "$mois ${mois == 1 ? '${lngx("month")}' : '${lngx("months")} '}, ";
   }
   resultat +=
-      "$joursRestants ${joursRestants == 1 ? '${lngx("day")}' : '${lngx("day")}s'}";
+      "$joursRestants ${joursRestants == 1 ? '${lngx("day")}' : '${lngx("days")}'}";
 
   return resultat;
 }

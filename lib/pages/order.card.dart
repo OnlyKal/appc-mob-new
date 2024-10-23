@@ -108,6 +108,8 @@ class _OrderCardState extends State<OrderCard> {
                                                           child: Text(
                                                             "USD ${newVal(price['price'])}",
                                                             style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400),

@@ -1,4 +1,7 @@
+import 'package:appc/func/export.dart';
+import 'package:appc/func/session.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 double fullHeight(context) {
   return MediaQuery.of(context).size.height;
@@ -12,15 +15,22 @@ double topHeight(context) {
   return MediaQuery.of(context).padding.top;
 }
 
-// void goTo(context, page) {
-//   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+void goTo(BuildContext context, Widget pageToMove) async {
+  final List<ConnectivityResult> connectivityResult =
+      await (Connectivity().checkConnectivity());
+
+  if (connectivityResult.contains(ConnectivityResult.mobile) ||
+      connectivityResult.contains(ConnectivityResult.wifi)) {
+    Navigator.of(context).push(createRoute(pageToMove));
+  } else {
+    showWaitingForInternet(context,pageToMove);
+  }
+}
+// void goTo(BuildContext context, Widget pageToMove) {
+//   Navigator.of(context).push(_createRoute(pageToMove));
 // }
 
-void goTo(BuildContext context, Widget pageToMove) {
-  Navigator.of(context).push(_createRoute(pageToMove));
-}
-
-Route _createRoute(Widget pageToMove) {
+Route createRoute(Widget pageToMove) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => pageToMove,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

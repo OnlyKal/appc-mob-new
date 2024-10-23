@@ -18,16 +18,26 @@ main() async {
           ChangeNotifierProvider(
             create: (context) => ThemeProvider()..loadThemeFromPreferences(),
           ),
+          ChangeNotifierProvider(
+              create: (_) => TextScalerProvider()..loadTextScaleFactor()),
         ],
         child:
             Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
           return Consumer<LocalizationProvider>(
               builder: (context, localizationProvider, child) {
-            return MaterialApp(
-                locale: Locale(localizationProvider.currentLang),
-                debugShowCheckedModeBanner: false,
-                theme: themeProvider.getTheme(),
-                home: const PopScope(canPop: false, child: SplashScreen()));
+            return Consumer<TextScalerProvider>(
+                builder: (context, textScalerProvider, child) {
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                    textScaler:
+                        TextScaler.linear(textScalerProvider.textScale)),
+                child: MaterialApp(
+                    locale: Locale(localizationProvider.currentLang),
+                    debugShowCheckedModeBanner: false,
+                    theme: themeProvider.getTheme(),
+                    home: const PopScope(canPop: false, child: SplashScreen())),
+              );
+            });
           });
         })),
   );
@@ -43,14 +53,14 @@ class _SplashScreenState extends State<SplashScreen> {
   checkSession() async {
     hideKeyboard();
     NotificationClass.askPermission(context);
-    Timer(const Duration(seconds: 3), () async {
+    Timer(const Duration(seconds: 5), () async {
       SharedPreferences auth = await SharedPreferences.getInstance();
       var matricule = auth.getString("matricule");
       if (matricule == null || matricule == "") {
         goTo(context, const SignIn());
       } else {
         goTo(context, const PresentationPage());
-        // goTo(context, const HomePage());
+        //goTo(context, const HomePage());
       }
     });
   }
@@ -100,34 +110,38 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                opacity: 0.3,
-                image: AssetImage("assets/bgsplash2.png"),
-                fit: BoxFit.cover),
-          ),
+          color: Colors.white,
+          // decoration: const BoxDecoration(
+          //   image: DecorationImage(
+          //       opacity: 0.3,
+          //       image: AssetImage("assets/bgsplash2.png"),
+          //       fit: BoxFit.cover),
+          // ),
           height: fullHeight(context),
           width: fullWidth(context),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
+                margin: EdgeInsets.only(top: 65),
                 height: fullHeight(context) * 0.62,
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 220,
-                  width: 280,
+                  height: fullWidth(context),
+                  width: fullWidth(context),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(110),
                     color: Colors.transparent,
                   ),
                   child: Image.asset(
-                    height: 200,
-                    width: 280,
-                    "assets/logo.png",
-                    // "assets/giflogo.gif",
+                    height: 300,
+                    width: fullWidth(context),
+                    // "assets/logo.png",
+                    "assets/APPC.gif",
                   ),
                 ),
               ),
@@ -137,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.all(20),
                 child: Container(
                   child: const Text(
-                    "APPC IT Team©2024",
+                    "APPC IT Department©2024",
                     style: TextStyle(color: Color.fromARGB(255, 112, 111, 111)),
                   ),
                 ),
@@ -147,80 +161,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-}
-
-ThemeData darkTheme() {
-  return ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: Colors.blue,
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Colors.blue,
-      textTheme: ButtonTextTheme.primary,
-    ),
-    colorScheme: const ColorScheme.dark(
-      primary: Colors.blue,
-      onPrimary: Colors.white,
-      secondary: Colors.amber,
-      onSecondary: Color.fromARGB(255, 67, 67, 67),
-    ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromARGB(255, 67, 67, 67),
-      foregroundColor: Colors.white,
-    ),
-  );
-}
-
-ThemeData lightTheme() {
-  return ThemeData(
-    brightness: Brightness.light,
-    primaryColor: Colors.blue,
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Colors.blue,
-      textTheme: ButtonTextTheme.primary,
-    ),
-    colorScheme: const ColorScheme.light(
-      primary: Colors.blue,
-      onPrimary: Colors.white,
-      secondary: Colors.amber,
-      onSecondary: Colors.black,
-    ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.blue,
-    ),
-  );
-}
-
-class ThemeProvider extends ChangeNotifier {
-  ThemeData _selectedTheme;
-  bool _isDarkMode;
-
-  ThemeProvider({bool isDarkMode = false})
-      : _isDarkMode = isDarkMode,
-        _selectedTheme = isDarkMode ? darkTheme() : lightTheme();
-
-  ThemeData getTheme() => _selectedTheme;
-
-  bool get isDarkMode => _isDarkMode;
-
-  void toggleTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (_isDarkMode) {
-      _selectedTheme = lightTheme();
-      _isDarkMode = false;
-    } else {
-      _selectedTheme = darkTheme();
-      _isDarkMode = true;
-    }
-    notifyListeners();
-    await prefs.setBool('isDarkMode', _isDarkMode);
-  }
-
-  Future<void> loadThemeFromPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    _selectedTheme = _isDarkMode ? darkTheme() : lightTheme();
-    notifyListeners();
   }
 }

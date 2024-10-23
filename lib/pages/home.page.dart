@@ -59,28 +59,30 @@ class _HomePageState extends State<HomePage> {
                   await clearNotifCount();
                   goTo(context, const NotificationPage());
                 },
-                icon: badges.Badge(
-                  badgeContent: FutureBuilder(
-                      future: notificationsCount,
-                      builder: (context, AsyncSnapshot notif) {
-                        print(notif.data);
-                        if (notif.hasData) {
-                          return Text(
-                            notif.data.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          );
-                        }
-                        return const Text(
-                          "0",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        );
-                      }),
-                  child: const Icon(CupertinoIcons.bell),
-                ),
+                icon: 1 == 1
+                    ? const Icon(Icons.abc, size: 0)
+                    : badges.Badge(
+                        badgeContent: FutureBuilder(
+                            future: notificationsCount,
+                            builder: (context, AsyncSnapshot notif) {
+                              print(notif.data);
+                              if (notif.hasData) {
+                                return Text(
+                                  notif.data.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                );
+                              }
+                              return const Text(
+                                "0",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            }),
+                        child: const Icon(CupertinoIcons.bell),
+                      ),
               ),
               const SizedBox(
                 width: 20,

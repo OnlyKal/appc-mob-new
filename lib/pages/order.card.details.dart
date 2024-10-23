@@ -260,6 +260,8 @@ class _CardDetailState extends State<CardDetail> {
                                                                   child: Text(
                                                                     "USD ${newVal(price['price'])}",
                                                                     style: const TextStyle(
+                                                                        color: Colors
+                                                                            .white,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),

@@ -31,10 +31,12 @@ class _SettingsState extends State<Settings> {
     super.initState();
   }
 
+  double _valueSlide = 0.0;
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final lngx = Provider.of<LocalizationProvider>(context);
+    final textScalerProvider = Provider.of<TextScalerProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: backPage(context),
@@ -93,6 +95,45 @@ class _SettingsState extends State<Settings> {
                     style: const TextStyle(fontWeight: FontWeight.w600)),
                 subtitle: Text(lngx.trans("change_language")),
                 trailing: const Icon(CupertinoIcons.forward),
+              ),
+            ),
+            InkWell(
+              onTap: () => changeLan(lngx.changeLanguage, lngx.trans),
+              child: ListTile(
+                leading: const Icon(CupertinoIcons.globe),
+                title: Text(
+                    "${lngx.trans("change_fontsize")} ${textScalerProvider.textScale.toStringAsFixed(1)}",
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
+                subtitle: Slider(
+                  min: 0.0,
+                  max: 1.3,
+                  activeColor: Colors.purple,
+                  inactiveColor: Colors.purple.shade100,
+                  thumbColor: Colors.pink,
+                  value: textScalerProvider.textScale,
+                  onChanged: (value) {
+                    setState(() {
+                      _valueSlide = value;
+                      textScalerProvider.setTextScale(_valueSlide);
+                    });
+                  },
+                ),
+                // subtitle: Container(
+                //     width: fullWidth(context) * 0.6,
+                // child: ListView(
+                //   children: [
+                //     for (var scale in [1.0, 0.8, 0.6, 0.5, 1.1])
+                //       ElevatedButton(
+                //         onPressed: () {
+                //           textScalerProvider
+                //               .setTextScale(scale); // Adjust text scale
+                //         },
+                //         child: Text('Scale: ${scale.toString()}'),
+                //       ),
+                //   ],
+                // )
+                // ),
+                // trailing: const Icon(CupertinoIcons.forward),
               ),
             )
           ],
