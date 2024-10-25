@@ -139,6 +139,7 @@ class _PresentationPageState extends State<PresentationPage> {
                     ),
                     const Text(
                       'Sylvestre DANGNONSI MAKAMBO',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -147,6 +148,7 @@ class _PresentationPageState extends State<PresentationPage> {
                     ),
                     const Text(
                       'Amour du Prochain et de la Patrie Congo "APPC"',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

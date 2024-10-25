@@ -1,6 +1,7 @@
 {
   "fr": {
     "cancel":"ANNULER",
+    "hurry_up_and_order_card": "Dépêchez-vous et commandez une carte pour bénéficier des services APPC",
     "change_fontsize":"Changer la taille de police",
     "name_field_empty": "Le champ Nom est vide",
     "email_field_empty": "Le champ Email est vide",
@@ -8,6 +9,8 @@
     "function_field_empty": "Le champ Fonction est vide",
     "address_field_empty": "Le champ Adresse est vide",
     "select_image":"Veuillez sélectionner une image",
+    "check_for_internet": "Vérification de la connexion Internet...",
+    "waiting_for_internet": "En attente d'Internet",
     "cards":"Cartes",
     "hide_area": "Cacher la zone",
     "reply": "Répondre",
@@ -211,6 +214,7 @@
     "no_data": "Hakuna data",
     "response": "Jibu",
     "responses": "Majibu",
+    "hurry_up_and_order_card": "Harakisha na uagize kadi ili upate huduma za APPC",
     "hide_area": "Ficha eneo",
     "name_field_empty": "Sehemu ya Jina iko wazi",
     "email_field_empty": "Sehemu ya Barua pepe iko wazi",
@@ -241,6 +245,8 @@
     "change_fontsize":"Badilisha ukubwa wa fonti",
     "professional_account": "Akaunti ya Kitaaluma",
     "validity": "Uhalali",
+    "check_for_internet": "Kuangalia muunganisho wa intaneti...",
+    "waiting_for_internet": "Kusubiri Intaneti",
     "card_verification": "UTHIBITISHAJI WA KADI",
     "scan_to_verify_card": "Tafadhali skana kadi hii ili kuthibitisha uhalali wa usajili.",
     "subscription_history": "HISTORIA YA USAJILI",
@@ -250,12 +256,15 @@
     "app_welcome_message": "Karibu katika APPC SERVICES-DRC, ambapo tunahamasisha watu wetu kuleta mabadiliko na kuthubutu kuvumbua mustakabali wao. Pamoja, tuunde mustakabali mzuri kwa taifa letu. Kuwa sehemu ya mabadiliko ya kesho."
   },
   "en": {
+    "check_for_internet": "Checking internet connection...",
+    "waiting_for_internet": "Waiting for Internet",
     "respond":"Set a comment",
     "change_fontsize":"Change font size",
     "select_image":"Please select an image",
     "order_new_card": "Place an order for a new card",
     "cancel":"CANCEL",
     "cards":"Cards",
+    "hurry_up_and_order_card": "Hurry up and order a card to enjoy APPC services",
     "replace_number":"Change this number to us that has enough money to pay for the APPC card.",
     "no_verified_account":"Sorry, the transaction is not verified.",
     "pin_modified_success": "PIN Code successfully changed",
@@ -376,6 +385,8 @@
   },
   "ln": {
     "respond":"Tia commentaire",
+    "check_for_internet": "Kotala liyangani ya Internet...",
+    "waiting_for_internet": "Kozela Internet",
     "select_image":"Svp pona image nayo",
     "respond_please":" Svp kotia eyano",
     "order_new_card": "Salá komande ya karte ya sika",
@@ -495,6 +506,7 @@
     "subscription_history": "Lisolo ya boni",
     "complete": "KOKOKA",
     "change_fontsize":"Bobongola bonene ya makomi",
+    "hurry_up_and_order_card": "Bókosa mbangu mpe bómíka kati mpo na kozwa ba services ya APPC",
     "pay_subscription": "LIPA BONI",
     "welcome_message": "APPC-RDC, esika topesi bato biso mpiko mpo bábonga mpe bákela makambo ya sika. Kosala yango lisanga mpe topesa ekolo na biso lobiko.",
     "app_welcome_message": "Mbote na APPC SERVICES-DRC, esika topesi bato biso mpiko mpo bábonga mpe bákela makambo ya sika. Topesa ekolo na biso lobiko!"

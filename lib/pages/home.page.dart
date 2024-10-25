@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                         if (user.hasData) {
                           localListCards = user.data.toList();
                           if (localListCards.isEmpty) {
-                            return noCardyet(context);
+                            return noCardyet(context,lngx.trans);
                           } else {
                             return CarouselSlider(
                               options: CarouselOptions(
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                         }
-                        return noCardy(context);
+                        return noCardy(context,lngx.trans);
                       }),
                   const SizedBox(height: 5),
                   Container(

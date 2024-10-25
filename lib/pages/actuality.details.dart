@@ -110,9 +110,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   InkWell(
                     onTap: () {
                       goTo(
-                        context,
-                        PhotoViewer(image: actuality['image'].toString()),
-                      );
+                          context,
+                          PhotoViewer(image: actuality['image'].toString()),
+                     );
                     },
                     child: Image.network(
                       actuality['image'].toString(),
@@ -193,7 +193,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                                   context,
                                                   PhotoViewer(
                                                       image: element['image']
-                                                          .toString()),
+                                                          .toString())
                                                 );
                                               },
                                               child: Image.network(

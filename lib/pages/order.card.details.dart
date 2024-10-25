@@ -322,7 +322,7 @@ class _CardDetailState extends State<CardDetail> {
                       amount: price,
                       type: "ACHAT CARTE APPC",
                       currency: devise,
-                      transactionId: response['number']),
+                      transactionId: response['number'])
                 );
               }
               timer.cancel();

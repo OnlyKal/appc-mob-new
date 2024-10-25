@@ -103,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                 null,
                 () => goTo(context, const OrderCard())),
             _buildOption(context, lngx.trans("change_pin"), CupertinoIcons.lock,
-                null, () => goTo(context, const UpdatePinPage())),
+                null, () => goTo(context, const UpdatePinPage(),)),
             _buildOption(
                 context,
                 lngx.trans("reseller_account"),

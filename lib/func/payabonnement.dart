@@ -164,7 +164,7 @@ payAbonnement(context, card, lngx) async {
                                                       .toString(),
                                                   currency: devise,
                                                   transactionId:
-                                                      "${Random().nextInt(1000)}APPC"),
+                                                      "${Random().nextInt(1000)}APPC")
                                             );
 
                                             timer.cancel();

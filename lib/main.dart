@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (matricule == null || matricule == "") {
         goTo(context, const SignIn());
       } else {
-        goTo(context, const PresentationPage());
+        goTo(context, const PresentationPage(),);
         //goTo(context, const HomePage());
       }
     });

@@ -70,7 +70,7 @@ loading(context) {
   );
 }
 
-Widget noCardyet(context) {
+Widget noCardyet(context, langx) {
   return Container(
     width: fullWidth(context),
     padding: const EdgeInsets.all(10),
@@ -87,9 +87,9 @@ Widget noCardyet(context) {
           "assets/Delivery-bro.png",
           height: 110,
         ),
-        const Text(
-          "Dépêchez-vous et commandez une carte pour\n bénéficier des services APPC",
-          style: TextStyle(
+        Text(
+          langx('hurry_up_and_order_card'),
+          style: const TextStyle(
             height: 1.8,
           ),
           textAlign: TextAlign.center,
@@ -103,9 +103,9 @@ Widget noCardyet(context) {
             ),
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.all(6),
-            child: const Text(
-              "COMMANDER",
-              style: TextStyle(color: Colors.white),
+            child: Text(
+              langx('order_now'),
+              style:const TextStyle(color: Colors.white),
             ),
           ),
         )
@@ -114,7 +114,7 @@ Widget noCardyet(context) {
   );
 }
 
-Widget noCardy(context) {
+Widget noCardy(context, lngx) {
   return InkWell(
     onTap: () => goTo(context, const OrderCard()),
     child: Container(
@@ -124,7 +124,7 @@ Widget noCardy(context) {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color.fromARGB(255, 140, 140, 140),
+        color: const Color.fromARGB(255, 140, 140, 140),
       ),
     ),
   );

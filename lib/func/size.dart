@@ -2,6 +2,7 @@ import 'package:appc/func/export.dart';
 import 'package:appc/func/session.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:provider/provider.dart';
 
 double fullHeight(context) {
   return MediaQuery.of(context).size.height;
@@ -16,6 +17,7 @@ double topHeight(context) {
 }
 
 void goTo(BuildContext context, Widget pageToMove) async {
+   
   final List<ConnectivityResult> connectivityResult =
       await (Connectivity().checkConnectivity());
 
